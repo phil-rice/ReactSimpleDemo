@@ -22,11 +22,11 @@ describe("Button", () => {
 describe("ButtonTitleValue", () => {
 
     it("should render", () => {
-        const button = shallow(<ButtonTitleValue titles={titles} titlelabel='someTitle' values={values} valuelabel="someValue"/>)
+        const button = shallow(<ButtonTitleValue titles={titles} titleLabel='someTitle' values={values} valueLabel="someValue"/>)
         expect(button.text()).toBe("TheTitle:TheValue")
     })
     it("should have an id if specified", () => {
-        const button = shallow(<ButtonTitleValue id='someId' titles={titles} titlelabel='someTitle' values={values} valuelabel="someValue"/>)
+        const button = shallow(<ButtonTitleValue id='someId' titles={titles} titleLabel='someTitle' values={values} valueLabel="someValue"/>)
         expect(button.props()["id"]).toBe("someId")
     })
 })

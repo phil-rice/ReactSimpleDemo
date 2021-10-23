@@ -12,11 +12,11 @@ export interface TitleValueButtonProperties<Titles, Values> {
     id?: string
     titles: Titles,
     values: Values,
-    titlelabel: keyof Titles
-    valuelabel: keyof Values
+    titleLabel: keyof Titles
+    valueLabel: keyof Values
 }
-export function ButtonTitleValue<Title, Values>({id, titles, values, titlelabel, valuelabel}: TitleValueButtonProperties<Title, Values>) {
-    return (<button id={id}>{stringFrom(titles, titlelabel)}:{stringFrom(values, valuelabel)}</button>)
+export function ButtonTitleValue<Title, Values>({id, titles, values, titleLabel, valueLabel}: TitleValueButtonProperties<Title, Values>) {
+    return (<button id={id}>{stringFrom(titles, titleLabel)}:{stringFrom(values, valueLabel)}</button>)
 }
 export function Button<Title>({id, titles, label}: ButtonProperties<Title>) {
     return (<button id={id}>{stringFrom(titles, label)}</button>)

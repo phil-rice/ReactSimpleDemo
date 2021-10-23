@@ -6,30 +6,27 @@ import {TitleAndValues, Values} from "../components/titleValues";
 import {Button, ButtonTitleValue} from "../components/button";
 import React from "react";
 import {Statement} from "./domain";
+import {TwoByTwo} from "../components/twoByTwo";
 
 
 export interface StatementPageProps extends LoadingProps {
     statement: Statement
 }
 
-export function StatementPage({statement, loading}: StatementPageProps) {
+export function StatementPage2x2({statement, loading}: StatementPageProps) {
     const {title, address, statementTitles, statementValues} = statement;
     return (<Page title={title}>
         <Loading loading={loading}>
-            <TwoRowPanel>
-                <TwoColumnPanel title={statementTitles.regularStatement}>
-                    <Values title={statementTitles.statementAddress} values={address} labels={["addLineOne", "addLineTwo", "addLineThree", "addLineFour", "pcd"]}/>
-                    <TitleAndValues titles={statementTitles} values={statementValues} labels={[
-                        ['statementFrequency', 'nbtStatementFreq'],
-                        ['nbtLastStatementDate', 'nbtLastStatementDate'],
-                        ['lastStatementNo', 'nbtLastStatementNo'],
-                        ['nextStatementDate', 'nbNextStatementDate']]}/>
-                </TwoColumnPanel>
-                <TwoColumnPanel title={statementTitles.interimStatement}>
-                    <Button id='buttonRequestInterim' titles={statementTitles} label='requestInterimPayment'/>
-                    <ButtonTitleValue id='buttonNextStatement' titles={statementTitles} titleLabel='lastStatementDate' values={statementValues} valueLabel='nbtLastStatementDate'/>
-                </TwoColumnPanel>
-            </TwoRowPanel></Loading>
+            <TwoByTwo title1={statementTitles.regularStatement} title2={statementTitles.interimStatement}>
+                <Values title={statementTitles.statementAddress} values={address} labels={["addLineOne", "addLineTwo", "addLineThree", "addLineFour", "pcd"]}/>
+                <TitleAndValues titles={statementTitles} values={statementValues} labels={[
+                    ['statementFrequency', 'nbtStatementFreq'],
+                    ['nbtLastStatementDate', 'nbtLastStatementDate'],
+                    ['lastStatementNo', 'nbtLastStatementNo'],
+                    ['nextStatementDate', 'nbNextStatementDate']]}/>
+                <Button id='buttonRequestInterim' titles={statementTitles} label='requestInterimPayment'/>
+                <ButtonTitleValue id='buttonNextStatement' titles={statementTitles} titleLabel='lastStatementDate' values={statementValues} valueLabel='nbtLastStatementDate'/>
+            </TwoByTwo></Loading>
     </Page>)
 
 }
