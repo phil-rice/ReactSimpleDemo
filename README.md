@@ -10,5 +10,6 @@ There is no attempt to make the gui 'beautiful': this is about how we break thin
 * `yarn start` will start the project running. (It might work with npm...)
 * `yarn storybook` will open the storybook for the project
 * `yarn test` will run the tests
+* `yarn test:coverage` incorrectly includes the stories at the moment
 
 
