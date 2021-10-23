@@ -3,7 +3,7 @@ import React from "react";
 import {SingleChildProps} from "../utils/utils";
 
 export interface LoadingProps {
-    loading: boolean
+    loading?: boolean
 }
 export function ShowLoading() {
     return (<p>Loading</p>)

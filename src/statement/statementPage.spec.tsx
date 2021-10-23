@@ -4,52 +4,59 @@ import {mount, shallow} from "enzyme";
 import React from "react";
 import {StatementPage} from "./statementPage";
 import {sampleStatement} from "./sampleStatement";
+import exp from "constants";
 
 enzymeSetup()
 
 describe("StatementPage", () => {
+    describe("when loading is false", () => {
+        it("should render without throwing an exception", () => {
+            const comp = mount(<StatementPage statement={sampleStatement}/>)
+        })
 
-    it("should render without throwing an exception", () => {
-        const comp = mount(<StatementPage statement={sampleStatement}/>)
-    })
+        it("should display the address in a values panel that has a 'Statement Address' title", () => {
+            const comp = shallow(<StatementPage statement={sampleStatement}/>)
+            const values = comp.find("Values")
+            expect(values.length).toBe(1)
+            const values0 = values.at(0)
+            let props: any = values0.props();
+            expect(props["title"]).toBe("Statement Address")
+            expect(props["values"]).toBe(sampleStatement.address)
+            expect(props["labels"]).toEqual(["addLineOne", "addLineTwo", "addLineThree", "addLineFour", "pcd"])
+        })
+        it("should display the statement details in a TitleAndValues panel without a title", () => {
+            const comp = shallow(<StatementPage statement={sampleStatement}/>)
+            const values = comp.find("TitleAndValues")
+            expect(values.length).toBe(1)
+            const values0 = values.at(0)
+            const props: any = values0.props()
+            expect(props["title"]).toBe(undefined)
+            expect(props["titles"]).toBe(sampleStatement.statementTitles)
+            expect(props["values"]).toBe(sampleStatement.statementValues)
+            expect(props["labels"]).toEqual([['statementFrequency', 'nbtStatementFreq'],
+                ['nbtLastStatementDate', 'nbtLastStatementDate'],
+                ['lastStatementNo', 'nbtLastStatementNo'],
+                ['nextStatementDate', 'nbNextStatementDate']])
+        })
 
-    it("should display the address in a values panel that has a 'Statement Address' title", () => {
-        const comp = shallow(<StatementPage statement={sampleStatement}/>)
-        const values = comp.find("Values")
-        expect(values.length).toBe(1)
-        const values0 = values.at(0)
-        let props: any = values0.props();
-        expect(props["title"]).toBe("Statement Address")
-        expect(props["values"]).toBe(sampleStatement.address)
-        expect(props["labels"]).toEqual(["addLineOne", "addLineTwo", "addLineThree", "addLineFour", "pcd"])
+        it("should have a request interim payment button", () => {
+            const comp = mount(<StatementPage statement={sampleStatement}/>)
+            const buttons = comp.find("button").find('#buttonRequestInterim')
+            expect(buttons.length).toBe(1)
+            const button = buttons.at(0)
+            expect(button.text()).toEqual("Request Interim Payment")
+        })
+        it("should have a nextStatement button", () => {
+            const comp = mount(<StatementPage statement={sampleStatement}/>)
+            const buttons = comp.find("button").find('#buttonNextStatement')
+            expect(buttons.length).toBe(1)
+            const button = buttons.at(0)
+            expect(button.text()).toEqual("Last Statement Date:31st March 2021")
+        })
     })
-    it("should display the statement details in a TitleAndValues panel without a title", () => {
-        const comp = shallow(<StatementPage statement={sampleStatement}/>)
-        const values = comp.find("TitleAndValues")
-        expect(values.length).toBe(1)
-        const values0 = values.at(0)
-        const props: any = values0.props()
-        expect(props["title"]).toBe(undefined)
-        expect(props["titles"]).toBe(sampleStatement.statementTitles)
-        expect(props["values"]).toBe(sampleStatement.statementValues)
-        expect(props["labels"]).toEqual([['statementFrequency', 'nbtStatementFreq'],
-            ['nbtLastStatementDate', 'nbtLastStatementDate'],
-            ['lastStatementNo', 'nbtLastStatementNo'],
-            ['nextStatementDate', 'nbNextStatementDate']])
-    })
-
-    it("should have a request interim payment button", () => {
-        const comp = mount(<StatementPage statement={sampleStatement}/>)
-        const buttons = comp.find("button").find('#buttonRequestInterim')
-        expect(buttons.length).toBe(1)
-        const button = buttons.at(0)
-        expect(button.text()).toEqual("Request Interim Payment")
-    })
-    it("should have a nextStatement button", () => {
-        const comp = mount(<StatementPage statement={sampleStatement}/>)
-        const buttons = comp.find("button").find('#buttonNextStatement')
-        expect(buttons.length).toBe(1)
-        const button = buttons.at(0)
-        expect(button.text()).toEqual("Last Statement Date:31st March 2021")
-    })
+    describe("when loading is true", () =>
+        it("should display loading text only ", () => {
+            const comp = mount(<StatementPage loading={true} statement={sampleStatement}/>)
+            expect(comp.text()).toEqual("StatementLoading")
+        }))
 })

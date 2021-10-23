@@ -6,6 +6,6 @@ import {StatementPage} from "./statement/statementPage";
 import {sampleStatement} from "./statement/sampleStatement";
 
 
-ReactDOM.render(<StatementPage statement={sampleStatement}/>, document.getElementById('root'));
+ReactDOM.render(<StatementPage loading={false} statement={sampleStatement}/>, document.getElementById('root'));
 
 
