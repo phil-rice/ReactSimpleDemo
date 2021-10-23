@@ -15,7 +15,7 @@ let state: Statement & LoadingProps = {
     statementTitles: {
         statementAddress: "Statement Address",
         regularStatement: "Regular Statement",
-        interimStatement: "Interim Statmenet",
+        interimStatement: "Interim Statement",
         statementFrequency: "Statement Frequency",
         nbtLastStatementDate: "Last Statement Date",
         lastStatementNo: "Last Statement No",
