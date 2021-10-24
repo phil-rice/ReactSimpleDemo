@@ -12,18 +12,18 @@ export default {
 
 const Template = (args: StatementPageProps) =>    <StatementPage {...args} />;
 
-export const LoadingTrue = Template.bind({});
-// @ts-ignore
-LoadingTrue.args = {
-    loading: true,
-    statement: sampleStatement
-};
 export const LoadingFalse = Template.bind({});
 // @ts-ignore
 LoadingFalse.args = {
     loading: false,
     statement: sampleStatement
 }
+export const LoadingTrue = Template.bind({});
+// @ts-ignore
+LoadingTrue.args = {
+    loading: true,
+    statement: sampleStatement
+};
 
 // export const Primary = () => <ButtonTitleValue id='1' titlelabel='title1' titles={sampleTitles} valuelabel='value1' values={sampleValues}/>;
 
