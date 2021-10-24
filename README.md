@@ -12,4 +12,8 @@ There is no attempt to make the gui 'beautiful': this is about how we break thin
 * `yarn test` will run the tests
 * `yarn test:coverage` incorrectly includes the stories at the moment
 
+# Web places
+* [Git Repo](https://github.com/phil-rice/ReactSimpleDemo)
+* [Github actions (CI pipeline)](https://github.com/phil-rice/ReactSimpleDemo/actions) 
+
 
