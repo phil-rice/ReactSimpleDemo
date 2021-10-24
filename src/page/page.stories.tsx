@@ -6,13 +6,7 @@ import {SingleChildProps} from "../utils/utils";
 
 export default {
     component: Page,
-    title: 'Page/Page',
-    argTypes: {
-        label: {
-            options: ['title1', 'title2'],
-            control: {type: 'radio'}
-        }
-    }
+    title: 'Page/Page'
 }
 
 

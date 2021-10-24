@@ -15,11 +15,3 @@ export const parameters = {
     },
 
 }
-export const decorators = [
-    (Story) => (
-        <div>
-            <link rel="stylesheet" type="text/css" href="../index.css" media="screen"/>
-            <Story/>
-        </div>
-    ),
-];

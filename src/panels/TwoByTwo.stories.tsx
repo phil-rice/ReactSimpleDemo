@@ -10,34 +10,38 @@ export default {
 }
 
 
-const Template = (args: FourChildrenProps & TitleProps) =>
+const Template = (args: FourChildrenProps ) =>
     <TwoByTwo {...args}>
     <p>Child1</p>
     <p>Child2</p>
     <p>Child3</p>
     <p>Child4</p>
 </TwoByTwo>;
-export const WithoutTitle = Template.bind({});
-// @ts-ignore
-WithoutTitle.args = {
-};
 
+
+export const WithTitle1and2 = Template.bind({});
+// @ts-ignore
+WithTitle1and2.args = {
+    title1: 'Some Title 1',
+    title2: 'Some Title 2',
+};
 export const WithTitle1 = Template.bind({});
 // @ts-ignore
 WithTitle1.args = {
-    title1: 'Some Title ',
+    title1: 'Some Title 1',
 };
+
 export const WithTitle2 = Template.bind({});
 // @ts-ignore
 WithTitle2.args = {
     title2: 'Some Title 2',
 };
-export const WithTitle1And2 = Template.bind({});
+
+export const WithoutTitle = Template.bind({});
 // @ts-ignore
-WithTitle1And2.args = {
-    title1: 'Some Title ',
-    title2: 'Some Title 2',
+WithoutTitle.args = {
 };
+
 
 // export const Primary = () => <ButtonTitleValue id='1' titlelabel='title1' titles={sampleTitles} valuelabel='value1' values={sampleValues}/>;
 
