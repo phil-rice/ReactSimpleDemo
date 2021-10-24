@@ -2,273 +2,177 @@
 
 exports[`Storyshots AttributeValues/TitleAndValues With Title 1`] = `
 <div>
-  <link
-    href="../index.css"
-    media="screen"
-    rel="stylesheet"
-    type="text/css"
-  />
-  <div>
-    <div>
-      <h2
-        className="title"
-      >
-        Some Title
-      </h2>
-      <table>
-        <tbody>
-          <tr>
-            <td>
-              Title One
-            </td>
-            <td>
-              Value One
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Title Two
-            </td>
-            <td>
-              Value Two
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Storyshots AttributeValues/TitleAndValues Without Title 1`] = `
-<div>
-  <link
-    href="../index.css"
-    media="screen"
-    rel="stylesheet"
-    type="text/css"
-  />
-  <div>
-    <div>
-      <table>
-        <tbody>
-          <tr>
-            <td>
-              Title One
-            </td>
-            <td>
-              Value One
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Title Two
-            </td>
-            <td>
-              Value Two
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Storyshots AttributeValues/Values With Title 1`] = `
-<div>
-  <link
-    href="../index.css"
-    media="screen"
-    rel="stylesheet"
-    type="text/css"
-  />
   <div>
     <h2
       className="title"
     >
       Some Title
     </h2>
-    <div
-      className="value"
+    <dl
+      className="table-display"
     >
-      Value One
-    </div>
-    <div
-      className="value"
+      <dt>
+        Title One
+      </dt>
+      <dd>
+        Value One
+      </dd>
+      <dt>
+        Title Two
+      </dt>
+      <dd>
+        Value Two
+      </dd>
+    </dl>
+  </div>
+</div>
+`;
+
+exports[`Storyshots AttributeValues/TitleAndValues Without Title 1`] = `
+<div>
+  <div>
+    <dl
+      className="table-display"
     >
-      Value Two
-    </div>
+      <dt>
+        Title One
+      </dt>
+      <dd>
+        Value One
+      </dd>
+      <dt>
+        Title Two
+      </dt>
+      <dd>
+        Value Two
+      </dd>
+    </dl>
+  </div>
+</div>
+`;
+
+exports[`Storyshots AttributeValues/Values With Title 1`] = `
+<div>
+  <h2
+    className="title"
+  >
+    Some Title
+  </h2>
+  <div
+    className="value"
+  >
+    Value One
+  </div>
+  <div
+    className="value"
+  >
+    Value Two
   </div>
 </div>
 `;
 
 exports[`Storyshots AttributeValues/Values Without Title 1`] = `
 <div>
-  <link
-    href="../index.css"
-    media="screen"
-    rel="stylesheet"
-    type="text/css"
-  />
-  <div>
-    <div
-      className="value"
-    >
-      Value One
-    </div>
-    <div
-      className="value"
-    >
-      Value Two
-    </div>
+  <div
+    className="value"
+  >
+    Value One
+  </div>
+  <div
+    className="value"
+  >
+    Value Two
   </div>
 </div>
 `;
 
 exports[`Storyshots Buttons/Button Primary 1`] = `
-<div>
-  <link
-    href="../index.css"
-    media="screen"
-    rel="stylesheet"
-    type="text/css"
-  />
-  <button
-    id="1"
-  >
-    Title One
-  </button>
-</div>
+<button
+  id="1"
+>
+  Title One
+</button>
 `;
 
 exports[`Storyshots Buttons/ButtonTitleValue Primary 1`] = `
-<div>
-  <link
-    href="../index.css"
-    media="screen"
-    rel="stylesheet"
-    type="text/css"
-  />
-  <button
-    id="1"
-  >
-    Title One
-    :
-    Value One
-  </button>
-</div>
+<button
+  id="1"
+>
+  Title One
+  :
+  Value One
+</button>
 `;
 
 exports[`Storyshots Loading/Loading Loading False 1`] = `
-<div>
-  <link
-    href="../index.css"
-    media="screen"
-    rel="stylesheet"
-    type="text/css"
-  />
-  <p>
-    The Component is now being displayed
-  </p>
-</div>
+<p>
+  The Component is now being displayed
+</p>
 `;
 
 exports[`Storyshots Loading/Loading Loading True 1`] = `
-<div>
-  <link
-    href="../index.css"
-    media="screen"
-    rel="stylesheet"
-    type="text/css"
-  />
-  <p>
-    Loading
-  </p>
-</div>
+<p>
+  Loading
+</p>
 `;
 
 exports[`Storyshots Page/Page With Out Title 1`] = `
-<div>
-  <link
-    href="../index.css"
-    media="screen"
-    rel="stylesheet"
-    type="text/css"
-  />
-  <div
-    className="page"
-  >
-    <div>
-      <h1 />
-    </div>
-    <p>
-      The page goes here
-    </p>
+<div
+  className="page"
+>
+  <div>
+    <h1 />
   </div>
+  <p>
+    The page goes here
+  </p>
 </div>
 `;
 
 exports[`Storyshots Page/Page With Title 1`] = `
-<div>
-  <link
-    href="../index.css"
-    media="screen"
-    rel="stylesheet"
-    type="text/css"
-  />
-  <div
-    className="page"
-  >
-    <div>
-      <h1>
-        The Page Title
-      </h1>
-    </div>
-    <p>
-      The page goes here
-    </p>
+<div
+  className="page"
+>
+  <div>
+    <h1>
+      The Page Title
+    </h1>
   </div>
+  <p>
+    The page goes here
+  </p>
 </div>
 `;
 
 exports[`Storyshots Panels/TwoByTwo With Title 1 1`] = `
 <div>
-  <link
-    href="../index.css"
-    media="screen"
-    rel="stylesheet"
-    type="text/css"
-  />
   <div>
-    <div>
-      <h2
-        className="title"
-      >
-        Some Title 
-      </h2>
-      <div
-        className="columns"
-      >
-        <p>
-          Child1
-        </p>
-        <p>
-          Child2
-        </p>
-      </div>
+    <h2
+      className="title"
+    >
+      Some Title 1
+    </h2>
+    <div
+      className="columns"
+    >
+      <p>
+        Child1
+      </p>
+      <p>
+        Child2
+      </p>
     </div>
-    <div>
-      <div
-        className="columns"
-      >
-        <p>
-          Child3
-        </p>
-        <p>
-          Child4
-        </p>
-      </div>
+  </div>
+  <div>
+    <div
+      className="columns"
+    >
+      <p>
+        Child3
+      </p>
+      <p>
+        Child4
+      </p>
     </div>
   </div>
 </div>
@@ -276,46 +180,38 @@ exports[`Storyshots Panels/TwoByTwo With Title 1 1`] = `
 
 exports[`Storyshots Panels/TwoByTwo With Title 1 And 2 1`] = `
 <div>
-  <link
-    href="../index.css"
-    media="screen"
-    rel="stylesheet"
-    type="text/css"
-  />
   <div>
-    <div>
-      <h2
-        className="title"
-      >
-        Some Title 
-      </h2>
-      <div
-        className="columns"
-      >
-        <p>
-          Child1
-        </p>
-        <p>
-          Child2
-        </p>
-      </div>
+    <h2
+      className="title"
+    >
+      Some Title 1
+    </h2>
+    <div
+      className="columns"
+    >
+      <p>
+        Child1
+      </p>
+      <p>
+        Child2
+      </p>
     </div>
-    <div>
-      <h2
-        className="title"
-      >
-        Some Title 2
-      </h2>
-      <div
-        className="columns"
-      >
-        <p>
-          Child3
-        </p>
-        <p>
-          Child4
-        </p>
-      </div>
+  </div>
+  <div>
+    <h2
+      className="title"
+    >
+      Some Title 2
+    </h2>
+    <div
+      className="columns"
+    >
+      <p>
+        Child3
+      </p>
+      <p>
+        Child4
+      </p>
     </div>
   </div>
 </div>
@@ -323,41 +219,33 @@ exports[`Storyshots Panels/TwoByTwo With Title 1 And 2 1`] = `
 
 exports[`Storyshots Panels/TwoByTwo With Title 2 1`] = `
 <div>
-  <link
-    href="../index.css"
-    media="screen"
-    rel="stylesheet"
-    type="text/css"
-  />
   <div>
-    <div>
-      <div
-        className="columns"
-      >
-        <p>
-          Child1
-        </p>
-        <p>
-          Child2
-        </p>
-      </div>
+    <div
+      className="columns"
+    >
+      <p>
+        Child1
+      </p>
+      <p>
+        Child2
+      </p>
     </div>
-    <div>
-      <h2
-        className="title"
-      >
-        Some Title 2
-      </h2>
-      <div
-        className="columns"
-      >
-        <p>
-          Child3
-        </p>
-        <p>
-          Child4
-        </p>
-      </div>
+  </div>
+  <div>
+    <h2
+      className="title"
+    >
+      Some Title 2
+    </h2>
+    <div
+      className="columns"
+    >
+      <p>
+        Child3
+      </p>
+      <p>
+        Child4
+      </p>
     </div>
   </div>
 </div>
@@ -365,36 +253,28 @@ exports[`Storyshots Panels/TwoByTwo With Title 2 1`] = `
 
 exports[`Storyshots Panels/TwoByTwo Without Title 1`] = `
 <div>
-  <link
-    href="../index.css"
-    media="screen"
-    rel="stylesheet"
-    type="text/css"
-  />
   <div>
-    <div>
-      <div
-        className="columns"
-      >
-        <p>
-          Child1
-        </p>
-        <p>
-          Child2
-        </p>
-      </div>
+    <div
+      className="columns"
+    >
+      <p>
+        Child1
+      </p>
+      <p>
+        Child2
+      </p>
     </div>
-    <div>
-      <div
-        className="columns"
-      >
-        <p>
-          Child3
-        </p>
-        <p>
-          Child4
-        </p>
-      </div>
+  </div>
+  <div>
+    <div
+      className="columns"
+    >
+      <p>
+        Child3
+      </p>
+      <p>
+        Child4
+      </p>
     </div>
   </div>
 </div>
@@ -402,282 +282,201 @@ exports[`Storyshots Panels/TwoByTwo Without Title 1`] = `
 
 exports[`Storyshots Panels/TwoColumnPanel With Title 1`] = `
 <div>
-  <link
-    href="../index.css"
-    media="screen"
-    rel="stylesheet"
-    type="text/css"
-  />
-  <div>
-    <h2
-      className="title"
-    >
-      Some Title
-    </h2>
-    <div
-      className="columns"
-    >
-      <p>
-        Child1
-      </p>
-      <p>
-        Child2
-      </p>
-    </div>
+  <h2
+    className="title"
+  >
+    Some Title
+  </h2>
+  <div
+    className="columns"
+  >
+    <p>
+      Child1
+    </p>
+    <p>
+      Child2
+    </p>
   </div>
 </div>
 `;
 
 exports[`Storyshots Panels/TwoColumnPanel Without Title 1`] = `
 <div>
-  <link
-    href="../index.css"
-    media="screen"
-    rel="stylesheet"
-    type="text/css"
-  />
-  <div>
-    <div
-      className="columns"
-    >
-      <p>
-        Child1
-      </p>
-      <p>
-        Child2
-      </p>
-    </div>
+  <div
+    className="columns"
+  >
+    <p>
+      Child1
+    </p>
+    <p>
+      Child2
+    </p>
   </div>
 </div>
 `;
 
 exports[`Storyshots Panels/TwoRowPanel With Title 1`] = `
 <div>
-  <link
-    href="../index.css"
-    media="screen"
-    rel="stylesheet"
-    type="text/css"
-  />
-  <div>
-    <h2
-      className="title"
-    >
-      Some Title
-    </h2>
-    <p>
-      Child1
-    </p>
-    <p>
-      Child2
-    </p>
-  </div>
-</div>
-`;
-
-exports[`Storyshots Panels/TwoRowPanel Without Title 1`] = `
-<div>
-  <link
-    href="../index.css"
-    media="screen"
-    rel="stylesheet"
-    type="text/css"
-  />
-  <div>
-    <p>
-      Child1
-    </p>
-    <p>
-      Child2
-    </p>
-  </div>
-</div>
-`;
-
-exports[`Storyshots Titles/OptionalTitle With Out Title 1`] = `
-<div>
-  <link
-    href="../index.css"
-    media="screen"
-    rel="stylesheet"
-    type="text/css"
-  />
-</div>
-`;
-
-exports[`Storyshots Titles/OptionalTitle With Title 1`] = `
-<div>
-  <link
-    href="../index.css"
-    media="screen"
-    rel="stylesheet"
-    type="text/css"
-  />
   <h2
     className="title"
   >
     Some Title
   </h2>
+  <p>
+    Child1
+  </p>
+  <p>
+    Child2
+  </p>
 </div>
+`;
+
+exports[`Storyshots Panels/TwoRowPanel Without Title 1`] = `
+<div>
+  <p>
+    Child1
+  </p>
+  <p>
+    Child2
+  </p>
+</div>
+`;
+
+exports[`Storyshots Titles/OptionalTitle With Out Title 1`] = `null`;
+
+exports[`Storyshots Titles/OptionalTitle With Title 1`] = `
+<h2
+  className="title"
+>
+  Some Title
+</h2>
 `;
 
 exports[`Storyshots Titles/WrapTitle With Out Title 1`] = `
 <div>
-  <link
-    href="../index.css"
-    media="screen"
-    rel="stylesheet"
-    type="text/css"
-  />
-  <div>
-    <p>
-      Here is the wrapped Component
-    </p>
-  </div>
+  <p>
+    Here is the wrapped Component
+  </p>
 </div>
 `;
 
 exports[`Storyshots Titles/WrapTitle With Title 1`] = `
 <div>
-  <link
-    href="../index.css"
-    media="screen"
-    rel="stylesheet"
-    type="text/css"
-  />
-  <div>
-    <h2
-      className="title"
-    >
-      Some Title
-    </h2>
-    <p>
-      Here is the wrapped Component
-    </p>
-  </div>
+  <h2
+    className="title"
+  >
+    Some Title
+  </h2>
+  <p>
+    Here is the wrapped Component
+  </p>
 </div>
 `;
 
 exports[`Storyshots statement/StatementPage Loading False 1`] = `
-<div>
-  <link
-    href="../index.css"
-    media="screen"
-    rel="stylesheet"
-    type="text/css"
-  />
-  <div
-    className="page"
-  >
+<div
+  className="page"
+>
+  <div>
+    <h1>
+      Statement
+    </h1>
+  </div>
+  <div>
     <div>
-      <h1>
-        Statement
-      </h1>
-    </div>
-    <div>
-      <div>
-        <h2
-          className="title"
-        >
-          Regular Statement
-        </h2>
-        <div
-          className="columns"
-        >
-          <div>
-            <h2
-              className="title"
-            >
-              Statement Address
-            </h2>
-            <div
-              className="value"
-            >
-              4 Privet Drive
-            </div>
-            <div
-              className="value"
-            >
-              Little Whinging
-            </div>
-            <div
-              className="value"
-            >
-              
-            </div>
-            <div
-              className="value"
-            >
-              Surrey
-            </div>
-            <div
-              className="value"
-            >
-              LW10 3SD
-            </div>
+      <h2
+        className="title"
+      >
+        Regular Statement
+      </h2>
+      <div
+        className="columns"
+      >
+        <div>
+          <h2
+            className="title"
+          >
+            Statement Address
+          </h2>
+          <div
+            className="value"
+          >
+            4 Privet Drive
           </div>
-          <div>
-            <table>
-              <tbody>
-                <tr>
-                  <td>
-                    Statement Frequency
-                  </td>
-                  <td>
-                    Monthly
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Last Statement Date
-                  </td>
-                  <td>
-                    31st March 2021
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Last Statement No
-                  </td>
-                  <td>
-                    00031
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Next Statement Date
-                  </td>
-                  <td>
-                    30th April 2021
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div
+            className="value"
+          >
+            Little Whinging
           </div>
+          <div
+            className="value"
+          >
+            
+          </div>
+          <div
+            className="value"
+          >
+            Surrey
+          </div>
+          <div
+            className="value"
+          >
+            LW10 3SD
+          </div>
+        </div>
+        <div>
+          <dl
+            className="table-display"
+          >
+            <dt>
+              Statement Frequency
+            </dt>
+            <dd>
+              Monthly
+            </dd>
+            <dt>
+              Last Statement Date
+            </dt>
+            <dd>
+              31st March 2021
+            </dd>
+            <dt>
+              Last Statement No
+            </dt>
+            <dd>
+              00031
+            </dd>
+            <dt>
+              Next Statement Date
+            </dt>
+            <dd>
+              30th April 2021
+            </dd>
+          </dl>
         </div>
       </div>
-      <div>
-        <h2
-          className="title"
+    </div>
+    <div>
+      <h2
+        className="title"
+      >
+        Interim Statement
+      </h2>
+      <div
+        className="columns"
+      >
+        <button
+          id="buttonRequestInterim"
         >
-          Interim Statement
-        </h2>
-        <div
-          className="columns"
+          Request Interim Payment
+        </button>
+        <button
+          id="buttonNextStatement"
         >
-          <button
-            id="buttonRequestInterim"
-          >
-            Request Interim Payment
-          </button>
-          <button
-            id="buttonNextStatement"
-          >
-            Last Statement Date
-            :
-            31st March 2021
-          </button>
-        </div>
+          Last Statement Date
+          :
+          31st March 2021
+        </button>
       </div>
     </div>
   </div>
@@ -685,148 +484,124 @@ exports[`Storyshots statement/StatementPage Loading False 1`] = `
 `;
 
 exports[`Storyshots statement/StatementPage Loading True 1`] = `
-<div>
-  <link
-    href="../index.css"
-    media="screen"
-    rel="stylesheet"
-    type="text/css"
-  />
-  <div
-    className="page"
-  >
-    <div>
-      <h1>
-        Statement
-      </h1>
-    </div>
-    <p>
-      Loading
-    </p>
+<div
+  className="page"
+>
+  <div>
+    <h1>
+      Statement
+    </h1>
   </div>
+  <p>
+    Loading
+  </p>
 </div>
 `;
 
 exports[`Storyshots statement/StatementPage2x2 Loading False 1`] = `
-<div>
-  <link
-    href="../index.css"
-    media="screen"
-    rel="stylesheet"
-    type="text/css"
-  />
-  <div
-    className="page"
-  >
+<div
+  className="page"
+>
+  <div>
+    <h1>
+      Statement
+    </h1>
+  </div>
+  <div>
     <div>
-      <h1>
-        Statement
-      </h1>
-    </div>
-    <div>
-      <div>
-        <h2
-          className="title"
-        >
-          Regular Statement
-        </h2>
-        <div
-          className="columns"
-        >
-          <div>
-            <h2
-              className="title"
-            >
-              Statement Address
-            </h2>
-            <div
-              className="value"
-            >
-              4 Privet Drive
-            </div>
-            <div
-              className="value"
-            >
-              Little Whinging
-            </div>
-            <div
-              className="value"
-            >
-              
-            </div>
-            <div
-              className="value"
-            >
-              Surrey
-            </div>
-            <div
-              className="value"
-            >
-              LW10 3SD
-            </div>
+      <h2
+        className="title"
+      >
+        Regular Statement
+      </h2>
+      <div
+        className="columns"
+      >
+        <div>
+          <h2
+            className="title"
+          >
+            Statement Address
+          </h2>
+          <div
+            className="value"
+          >
+            4 Privet Drive
           </div>
-          <div>
-            <table>
-              <tbody>
-                <tr>
-                  <td>
-                    Statement Frequency
-                  </td>
-                  <td>
-                    Monthly
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Last Statement Date
-                  </td>
-                  <td>
-                    31st March 2021
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Last Statement No
-                  </td>
-                  <td>
-                    00031
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Next Statement Date
-                  </td>
-                  <td>
-                    30th April 2021
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div
+            className="value"
+          >
+            Little Whinging
           </div>
+          <div
+            className="value"
+          >
+            
+          </div>
+          <div
+            className="value"
+          >
+            Surrey
+          </div>
+          <div
+            className="value"
+          >
+            LW10 3SD
+          </div>
+        </div>
+        <div>
+          <dl
+            className="table-display"
+          >
+            <dt>
+              Statement Frequency
+            </dt>
+            <dd>
+              Monthly
+            </dd>
+            <dt>
+              Last Statement Date
+            </dt>
+            <dd>
+              31st March 2021
+            </dd>
+            <dt>
+              Last Statement No
+            </dt>
+            <dd>
+              00031
+            </dd>
+            <dt>
+              Next Statement Date
+            </dt>
+            <dd>
+              30th April 2021
+            </dd>
+          </dl>
         </div>
       </div>
-      <div>
-        <h2
-          className="title"
+    </div>
+    <div>
+      <h2
+        className="title"
+      >
+        Interim Statement
+      </h2>
+      <div
+        className="columns"
+      >
+        <button
+          id="buttonRequestInterim"
         >
-          Interim Statement
-        </h2>
-        <div
-          className="columns"
+          Request Interim Payment
+        </button>
+        <button
+          id="buttonNextStatement"
         >
-          <button
-            id="buttonRequestInterim"
-          >
-            Request Interim Payment
-          </button>
-          <button
-            id="buttonNextStatement"
-          >
-            Last Statement Date
-            :
-            31st March 2021
-          </button>
-        </div>
+          Last Statement Date
+          :
+          31st March 2021
+        </button>
       </div>
     </div>
   </div>
@@ -834,24 +609,16 @@ exports[`Storyshots statement/StatementPage2x2 Loading False 1`] = `
 `;
 
 exports[`Storyshots statement/StatementPage2x2 Loading True 1`] = `
-<div>
-  <link
-    href="../index.css"
-    media="screen"
-    rel="stylesheet"
-    type="text/css"
-  />
-  <div
-    className="page"
-  >
-    <div>
-      <h1>
-        Statement
-      </h1>
-    </div>
-    <p>
-      Loading
-    </p>
+<div
+  className="page"
+>
+  <div>
+    <h1>
+      Statement
+    </h1>
   </div>
+  <p>
+    Loading
+  </p>
 </div>
 `;

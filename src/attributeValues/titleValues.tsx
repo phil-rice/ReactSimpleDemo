@@ -21,9 +21,9 @@ export function Values<Values>({title, values, labels}: ValuesProp<Values> & Tit
 }
 export function TitleAndValues<Titles, Values>({title, titles, values, labels}: TitleValuesProp<Titles, Values> & TitleProps) {
     return (<WrapTitle title={title}>
-        <dl className="table-display">
+        <dl key="1" className="table-display">
             {labels.map(([titleLabel, valueLabel]) => (
-                <React.Fragment>
+                <React.Fragment key={titleLabel}>
                     <dt>{stringFrom(titles, titleLabel)}</dt>
                     <dd>{stringFrom(values, valueLabel)}</dd>
                 </React.Fragment>
