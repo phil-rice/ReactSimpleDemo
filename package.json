@@ -31,12 +31,14 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
+    "test": "react-scripts test",
     "test:coverage": "CI=true yarn test --env=jsdom --coverage",
-    "test:ci": "CI=true NOSNAPSHOTS=true yarn test --env=jsdom --coverage -u"
+    "test:ci": "CI=true NOSNAPSHOTS=true yarn test --env=jsdom --coverage -u",
+    "test:nostorybook": "CI=true NOSNAPSHOTS=true yarn test --env=jsdom --coverage",
+    "test:nostorycoverage": "CI=true NOSNAPSHOTS=true yarn test --env=jsdom --coverage | grep -v 'stories'  | grep -v 'src/'"
   },
   "eslintConfig": {
     "extends": [

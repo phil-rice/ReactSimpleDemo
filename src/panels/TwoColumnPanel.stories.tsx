@@ -1,5 +1,5 @@
 import React from "react";
-import "../App.css";
+
 import {ButtonTitleValue, TitleValueButtonProperties} from "../Buttons/button";
 import {Values, ValuesProp} from "../attributeValues/titleValues";
 import {TwoChildrenProps, TwoColumnPanel, TwoRowPanel} from "./twoChildren";
