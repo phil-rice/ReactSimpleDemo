@@ -35,7 +35,8 @@
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
-    "test:coverage": "CI=true yarn test --env=jsdom --coverage"
+    "test:coverage": "CI=true yarn test --env=jsdom --coverage",
+    "test:ci": "CI=true NOSNAPSHOTS=true yarn test --env=jsdom --coverage -u"
   },
   "eslintConfig": {
     "extends": [

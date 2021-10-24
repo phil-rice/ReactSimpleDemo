@@ -8,6 +8,7 @@ export interface SingleChildProps {
     children:ReactElement
 }
 export function reportErrors(...details: any) {
+    //TODO sort out the console.error in the tests!
     console.error(details)
 }
 
