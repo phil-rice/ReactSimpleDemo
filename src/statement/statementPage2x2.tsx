@@ -21,9 +21,9 @@ export function StatementPage2x2({statement, loading}: StatementPageProps) {
                 <Values title={statementTitles.statementAddress} values={address} labels={["addLineOne", "addLineTwo", "addLineThree", "addLineFour", "pcd"]}/>
                 <TitleAndValues titles={statementTitles} values={statementValues} labels={[
                     ['statementFrequency', 'nbtStatementFreq'],
-                    ['nbtLastStatementDate', 'nbtLastStatementDate'],
+                    ['lastStatementDate', 'nbtLastStatementDate'],
                     ['lastStatementNo', 'nbtLastStatementNo'],
-                    ['nextStatementDate', 'nbNextStatementDate']]}/>
+                    ['nextStatementDate', 'nbtNextStatementDate']]}/>
                 <Button id='buttonRequestInterim' titles={statementTitles} label='requestInterimPayment'/>
                 <ButtonTitleValue id='buttonNextStatement' titles={statementTitles} titleLabel='lastStatementDate' values={statementValues} valueLabel='nbtLastStatementDate'/>
             </TwoByTwo></Loading>

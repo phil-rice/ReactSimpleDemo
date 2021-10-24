@@ -21,9 +21,9 @@ export function StatementPage({statement, loading}: StatementPageProps) {
                     <Values title={statementTitles.statementAddress} values={address} labels={["addLineOne", "addLineTwo", "addLineThree", "addLineFour", "pcd"]}/>
                     <TitleAndValues titles={statementTitles} values={statementValues} labels={[
                         ['statementFrequency', 'nbtStatementFreq'],
-                        ['nbtLastStatementDate', 'nbtLastStatementDate'],
+                        ['lastStatementDate', 'nbtLastStatementDate'],
                         ['lastStatementNo', 'nbtLastStatementNo'],
-                        ['nextStatementDate', 'nbNextStatementDate']]}/>
+                        ['nextStatementDate', 'nbtNextStatementDate']]}/>
                 </TwoColumnPanel>
                 <TwoColumnPanel title={statementTitles.interimStatement}>
                     <Button id='buttonRequestInterim' titles={statementTitles} label='requestInterimPayment'/>

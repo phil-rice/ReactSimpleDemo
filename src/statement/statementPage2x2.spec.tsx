@@ -35,9 +35,9 @@ describe("StatementPage2x2... note that they didn't need to change", () => {
             expect(props["titles"]).toBe(sampleStatement.statementTitles)
             expect(props["values"]).toBe(sampleStatement.statementValues)
             expect(props["labels"]).toEqual([['statementFrequency', 'nbtStatementFreq'],
-                ['nbtLastStatementDate', 'nbtLastStatementDate'],
+                ['lastStatementDate', 'nbtLastStatementDate'],
                 ['lastStatementNo', 'nbtLastStatementNo'],
-                ['nextStatementDate', 'nbNextStatementDate']])
+                ['nextStatementDate', 'nbtNextStatementDate']])
         })
 
         it("should have a request interim payment button", () => {

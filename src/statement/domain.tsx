@@ -20,7 +20,6 @@ export interface StatementTitles {
     regularStatement: string,
     interimStatement: string,
     statementFrequency: string,
-    nbtLastStatementDate: string,
     lastStatementNo: string,
     lastStatementDate: string,
     nextStatementDate: string,
@@ -29,5 +28,5 @@ export interface StatementValues {
     nbtStatementFreq: string,
     nbtLastStatementDate: string,
     nbtLastStatementNo: string,
-    nbNextStatementDate: string
+    nbtNextStatementDate: string
 }

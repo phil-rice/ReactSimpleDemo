@@ -10,15 +10,14 @@ export let sampleStatement: Statement & LoadingProps = {
         regularStatement: "Regular Statement",
         interimStatement: "Interim Statement",
         statementFrequency: "Statement Frequency",
-        nbtLastStatementDate: "Last Statement Date",
-        lastStatementNo: "Last Statement No",
         lastStatementDate: "Last Statement Date",
+        lastStatementNo: "Last Statement No",
         nextStatementDate: "Next Statement Date",
         requestInterimPayment: "Request Interim Payment"
     }, statementValues: {
         nbtStatementFreq: "Monthly",
         nbtLastStatementDate: "31st March 2021",
-        nbNextStatementDate: "30th April 2021",
+        nbtNextStatementDate: "30th April 2021",
         nbtLastStatementNo: "00031"
     }, address: {
         addLineOne: "4 Privet Drive",
