@@ -23,7 +23,7 @@ export function TitleAndValues<Titles, Values>({title, titles, values, labels}: 
     return (<WrapTitle title={title}>
         <dl key="1" className="table-display">
             {labels.map(([titleLabel, valueLabel]) => (
-                <React.Fragment key={titleLabel}>
+                <React.Fragment key={titleLabel.toString()}>
                     <dt>{stringFrom(titles, titleLabel)}</dt>
                     <dd>{stringFrom(values, valueLabel)}</dd>
                 </React.Fragment>
