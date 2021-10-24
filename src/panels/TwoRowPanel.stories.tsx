@@ -1,6 +1,4 @@
 import React from "react";
-import {ButtonTitleValue, TitleValueButtonProperties} from "../Buttons/button";
-import {Values, ValuesProp} from "../attributeValues/titleValues";
 import {TwoChildrenProps, TwoRowPanel} from "./twoChildren";
 import {TitleProps} from "../titles/titles";
 
