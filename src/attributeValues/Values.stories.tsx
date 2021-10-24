@@ -1,6 +1,6 @@
 import React from "react";
-import {ButtonTitleValue, TitleValueButtonProperties} from "../../components/button";
-import {Values, ValuesProp} from "../../components/titleValues";
+import {ButtonTitleValue, TitleValueButtonProperties} from "../Buttons/button";
+import {Values, ValuesProp} from "./titleValues";
 
 
 export default {
@@ -28,9 +28,9 @@ WithTitle.args = {
     labels: ['value1','value2'],
     values: sampleValues
 };
-export const WithOutTitle = Template.bind({});
+export const WithoutTitle = Template.bind({});
 // @ts-ignore
-WithOutTitle.args = {
+WithoutTitle.args = {
     labels: ['value1','value2'],
     values: sampleValues
 };

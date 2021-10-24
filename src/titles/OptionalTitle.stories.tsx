@@ -1,6 +1,6 @@
 import React from "react";
-import {ButtonTitleValue, TitleValueButtonProperties} from "../../components/button";
-import {OptionalTitle, TitleProps} from "../../components/titles";
+import {ButtonTitleValue, TitleValueButtonProperties} from "../Buttons/button";
+import {OptionalTitle, TitleProps} from "./titles";
 
 
 export default {

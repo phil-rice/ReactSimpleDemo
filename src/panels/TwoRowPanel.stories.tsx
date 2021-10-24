@@ -1,8 +1,8 @@
 import React from "react";
-import {ButtonTitleValue, TitleValueButtonProperties} from "../../components/button";
-import {Values, ValuesProp} from "../../components/titleValues";
-import {TwoChildrenProps, TwoRowPanel} from "../../components/twoChildren";
-import {TitleProps} from "../../components/titles";
+import {ButtonTitleValue, TitleValueButtonProperties} from "../Buttons/button";
+import {Values, ValuesProp} from "../attributeValues/titleValues";
+import {TwoChildrenProps, TwoRowPanel} from "./twoChildren";
+import {TitleProps} from "../titles/titles";
 
 
 export default {
@@ -21,9 +21,9 @@ export const WithTitle = Template.bind({});
 WithTitle.args = {
     title: 'Some Title',
 };
-export const WithOutTitle = Template.bind({});
+export const WithoutTitle = Template.bind({});
 // @ts-ignore
-WithOutTitle.args = {
+WithoutTitle.args = {
 };
 
 // export const Primary = () => <ButtonTitleValue id='1' titlelabel='title1' titles={sampleTitles} valuelabel='value1' values={sampleValues}/>;

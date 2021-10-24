@@ -22,6 +22,7 @@ describe("utils", () => {
         })
         it("should return undefined if the values are undefined", () => {
             // @ts-ignore Note the power of typescript that it's actually a compilation to do this...
+            //TODO sort out the console.error
             expect(stringFrom(undefined, 'value3')).toEqual(undefined)
 
         })

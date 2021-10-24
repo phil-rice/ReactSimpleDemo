@@ -1,7 +1,7 @@
 import React from "react";
-import {TwoColumnPanel} from "../../components/twoChildren";
-import {TitleProps} from "../../components/titles";
-import {FourChildrenProps, TwoByTwo} from "../../components/twoByTwo";
+import {TwoColumnPanel} from "./twoChildren";
+import {TitleProps} from "../titles/titles";
+import {FourChildrenProps, TwoByTwo} from "./twoByTwo";
 
 
 export default {
@@ -10,17 +10,16 @@ export default {
 }
 
 
-const Template = (args: FourChildrenProps & TitleProps) => <div>
-    <link rel="stylesheet" type="text/css" href="index.css" media="screen" />
+const Template = (args: FourChildrenProps & TitleProps) =>
     <TwoByTwo {...args}>
     <p>Child1</p>
     <p>Child2</p>
     <p>Child3</p>
     <p>Child4</p>
-</TwoByTwo></div>;
-export const WithOutTitle = Template.bind({});
+</TwoByTwo>;
+export const WithoutTitle = Template.bind({});
 // @ts-ignore
-WithOutTitle.args = {
+WithoutTitle.args = {
 };
 
 export const WithTitle1 = Template.bind({});

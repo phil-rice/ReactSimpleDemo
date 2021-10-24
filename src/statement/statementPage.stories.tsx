@@ -1,12 +1,12 @@
 import React from "react";
-import "../../App.css";
-import {ButtonTitleValue, TitleValueButtonProperties} from "../../components/button";
-import {Values, ValuesProp} from "../../components/titleValues";
-import {TwoChildrenProps, TwoColumnPanel, TwoRowPanel} from "../../components/twoChildren";
-import {TitleProps} from "../../components/titles";
-import {TwoByTwo} from "../../components/twoByTwo";
-import {StatementPage, StatementPageProps} from "../../statement/statementPage";
-import {sampleStatement} from "../../statement/sampleStatement";
+import "../App.css";
+import {ButtonTitleValue, TitleValueButtonProperties} from "../Buttons/button";
+import {Values, ValuesProp} from "../attributeValues/titleValues";
+import {TwoChildrenProps, TwoColumnPanel, TwoRowPanel} from "../panels/twoChildren";
+import {TitleProps} from "../titles/titles";
+import {TwoByTwo} from "../panels/twoByTwo";
+import {StatementPage, StatementPageProps} from "./statementPage";
+import {sampleStatement} from "./sampleStatement";
 
 
 export default {

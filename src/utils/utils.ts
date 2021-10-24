@@ -16,5 +16,5 @@ export function stringFrom<K extends keyof Data, Data>(data: Data|undefined, k: 
     if (data === undefined || k == undefined) return undefined;
     const result: any = data[k]
     if (result === undefined) reportErrors(`Could not retreive value ${k}`, k)
-    return result.toString()
+    return result
 }

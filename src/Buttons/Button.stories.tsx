@@ -1,17 +1,13 @@
 import React from "react";
-import {ButtonTitleValue, TitleValueButtonProperties} from "../../components/button";
+import {Button, ButtonProperties} from "./button";
 
 
 export default {
-    component: ButtonTitleValue,
-    title: 'Buttons/ButtonTitleValue',
+    component: Button,
+    title: 'Buttons/Button',
     argTypes: {
-        titleLabel: {
+        label: {
             options: ['title1', 'title2'],
-            control: { type: 'radio' }
-        },
-        valueLabel: {
-            options: ['value1', 'value2'],
             control: { type: 'radio' }
         }
     }
@@ -22,19 +18,13 @@ let sampleTitles = {
     title2: "Title Two"
 }
 
-let sampleValues = {
-    value1: "Value One",
-    value2: "Value Two"
-}
-const Template = (args: TitleValueButtonProperties<any, any>) => <ButtonTitleValue {...args} />;
+const Template = (args: ButtonProperties<any>) => <Button {...args} />;
 export const Primary = Template.bind({});
 // @ts-ignore
 Primary.args = {
     id: '1',
-    titleLabel: 'title1',
-    valueLabel: 'value1',
+    label: 'title1',
     titles: sampleTitles,
-    values: sampleValues
 };
 
 // export const Primary = () => <ButtonTitleValue id='1' titlelabel='title1' titles={sampleTitles} valuelabel='value1' values={sampleValues}/>;
