@@ -1,0 +1,8 @@
+name: React Demo Pipeline
+on: [push]
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - run: yarn test
+      - run: yarn test:coverage
