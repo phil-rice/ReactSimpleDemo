@@ -8,7 +8,7 @@ export default {
     title: 'Loading/Loading'
 }
 
-const Template = (args: LoadingProps) => <Loading {...args}><p>The Component is now being displayed</p></Loading>;
+    const Template = (args: LoadingProps) => <Loading {...args}><p>The Component is now being displayed</p></Loading>;
 export const LoadingFalse = Template.bind({});
 // @ts-ignore
 LoadingFalse.args = {

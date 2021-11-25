@@ -19,7 +19,7 @@ export function StatementPage({statement, loading}: StatementPageProps) {
             <TwoRowPanel>
                 <TwoColumnPanel title={statementTitles.regularStatement}>
                     <Values title={statementTitles.statementAddress} values={address} labels={["addLineOne", "addLineTwo", "addLineThree", "addLineFour", "pcd"]}/>
-                    <TitleAndValues titles={statementTitles} values={statementValues} labels={[
+                        <TitleAndValues titles={statementTitles} values={statementValues} labels={[
                         ['statementFrequency', 'nbtStatementFreq'],
                         ['lastStatementDate', 'nbtLastStatementDate'],
                         ['lastStatementNo', 'nbtLastStatementNo'],
@@ -29,7 +29,8 @@ export function StatementPage({statement, loading}: StatementPageProps) {
                     <Button id='buttonRequestInterim' titles={statementTitles} label='requestInterimPayment'/>
                     <ButtonTitleValue id='buttonNextStatement' titles={statementTitles} titleLabel='lastStatementDate' values={statementValues} valueLabel='nbtLastStatementDate'/>
                 </TwoColumnPanel>
-            </TwoRowPanel></Loading>
+            </TwoRowPanel>
+        </Loading>
     </Page>)
 
 }
