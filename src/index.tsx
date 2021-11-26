@@ -2,8 +2,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import {StatementPage} from "./statement/statementPage";
-import {sampleStatement} from "./statement/sampleStatement";
+import {StatementPage} from "./examples/statement/statementPage";
+import {sampleStatement} from "./examples/statement/sampleStatement";
 
 
 ReactDOM.render(<StatementPage loading={false} statement={sampleStatement}/>, document.getElementById('root'));
