@@ -1464,6 +1464,11 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@focuson/lens@^0.3.45":
+  version "0.3.45"
+  resolved "https://registry.yarnpkg.com/@focuson/lens/-/lens-0.3.45.tgz#5c00dded05212f80f9840ba99a787c154b2f0ffb"
+  integrity sha512-vC+TekDCv+h53GU9ueR+Kv/ZIELWVqn13d+W7AJO9Rad93KfyNw+kgcL8oAPtYF7nouRDWTgjax0ck8/pQGm2Q==
+
 "@gar/promisify@^1.0.1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.2.tgz#30aa825f11d438671d585bd44e7fd564535fc210"
