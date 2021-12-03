@@ -2,10 +2,10 @@
 import {TitleProps} from "../../components/data/titles/titles";
 import {GetOptioner, Lens, Lenses, Optional} from "@focuson/lens";
 import {or} from "../../utils/utils";
-import {HasPageSelection, OnePageDetails, PageSelection} from "../../components/multipage/multiPage.domain";
+import {OnePageDetails, PageSelection} from "../../components/multipage/multiPage.domain";
 import {fetcherWhenUndefined, ifEEqualsFetcher} from "@focuson/fetcher";
 import {StatementPage} from "./statementPage";
-import {HasCustomerId} from "../common/common.domain";
+import {StatementPage2x2} from "./statementPage2x2";
 
 
 export const statementUrl = <S>(customerIdL: GetOptioner<S, string>) =>
@@ -19,7 +19,9 @@ export function statementFetcher<S>(mainThingL: Lens<S, PageSelection<any>>, cus
 export function statementPageDetails<State>(lens: Optional<State, Statement>): OnePageDetails<State, Statement> {
     return ({lens, pageFunction: StatementPage});
 }
-
+export function statement2x2PageDetails<State>(lens: Optional<State, Statement>): OnePageDetails<State, Statement> {
+    return ({lens, pageFunction: StatementPage2x2});
+}
 export interface HasStatement {
     statement?: Statement
 }

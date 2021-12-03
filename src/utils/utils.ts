@@ -15,7 +15,7 @@ export function reportErrors(...details: any) {
 
 /** So that we get early notification with a nice error message when we mess up! */
 export function stringFrom<K extends keyof Data, Data>(data: Data | undefined, k: K | undefined): string | undefined {
-    if (data === undefined || k == undefined) return undefined;
+    if (data === undefined || k === undefined) return undefined;
     const result: any = data[k]
     if (result === undefined) reportErrors(`Could not retreive value ${k}`, k)
     return result

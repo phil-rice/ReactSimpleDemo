@@ -27,7 +27,7 @@ export function displaySinglePage<State, PageState>(state: LensState<State, Stat
     let props = pageDetails.lens.getOption(state.json());
     console.log('displaySinglePage',props)
     if (!props) return (<p>Cannot find props for main page ${pageSelectionName}</p>)
-    return pageDetails.pageFunction({state: state.chainLens(pageDetails.lens), loading: true})
+    return pageDetails.pageFunction({state: state.chainLens(pageDetails.lens), loading: false})
 }
 export function displayPage<State, Details extends MultiPageDetails<State>>(details: Details, state: LensState<State, State>, pageSelectionG: Getter<State, PageSelection<Details>>) {
     console.log('displayPage', state.json())

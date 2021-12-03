@@ -15,6 +15,7 @@ export interface StatementPageProps<State> extends LensProps<State, Statement>, 
 }
 
 export function StatementPage<State>({state, loading}: StatementPageProps<State>) {
+    console.log("StatementPage", state, loading)
     const {title, address, statementTitles, statementValues} = state.json();
     return (<Page title={title}>
         <Loading loading={loading}>

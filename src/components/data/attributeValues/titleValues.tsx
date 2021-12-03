@@ -2,7 +2,6 @@
 import React from "react";
 import {stringFrom} from "../../../utils/utils";
 import {TitleProps, WrapTitle} from "../titles/titles";
-import {ReactComponent} from "*.svg";
 
 export interface TitleValuesProp<Titles, Values> {
     titles: Titles,

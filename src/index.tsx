@@ -3,33 +3,34 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import {LensProps} from "@focuson/state";
-import {HasStatement, statementFetcher, statementPageDetails, stateStatementL} from "./examples/statement/statement.domain";
+import {HasStatement, statement2x2PageDetails, statementFetcher, statementPageDetails, stateStatementL} from "./examples/statement/statement.domain";
 import {fetcherTree, loggingFetchFn, setJsonForFetchers} from "@focuson/fetcher";
 import {fetchWithPrefix} from "./utils/utils";
 
 import {customerIdL, HasCustomerId} from "./examples/common/common.domain";
-import {displayPage, HasPageSelection, MultiPageDetails, pageSelectionlens} from "./components/multipage/multiPage.domain";
+import {changePage, displayPage, HasPageSelection, MultiPageDetails, pageSelectionlens} from "./components/multipage/multiPage.domain";
 import {sampleStatement} from "./examples/statement/sampleStatement";
 
 export interface FullState extends HasStatement, HasCustomerId, HasPageSelection<any> {
 }
-const emptyState: HasStatement = {}
 
 interface IndexProps extends LensProps<FullState, FullState> {
 }
 
 const demoAppPageDetails: MultiPageDetails<FullState> = {
-    statement: statementPageDetails(stateStatementL<FullState>())
+    statement: statementPageDetails(stateStatementL<FullState>()),
+    statement2x2: statement2x2PageDetails(stateStatementL<FullState>())
 }
 
 
 function Index({state}: IndexProps) {
+    const stateJson = state.json()
     const page = displayPage(demoAppPageDetails, state, pageSelectionlens())
     console.log("page", page)
     return (<>
         <ul>
-            <li>Statement</li>
-            <li>Statement2x2</li>
+            <li><a href="" onClick={() => state.setJson(changePage(pageSelectionlens())(stateJson, 'statement'))}>Statement</a></li>
+            <li><a  href="" onClick={() => state.setJson(changePage(pageSelectionlens())(stateJson, 'statement2x2'))}>Statement 2x2</a></li>
         </ul>
         {page}
     </>)
@@ -46,8 +47,14 @@ export function onError(s: FullState, e: any): FullState {
 
 
 const fetchFn = fetchWithPrefix("http://localhost:1234", loggingFetchFn)
+
+function mutateJsonEachCall(state: FullState): Promise<FullState> {
+    console.log("mutateJsonEachCall", state)
+    return Promise.resolve(state)
+}
+
 let setJson: (os: FullState, s: FullState) => Promise<FullState> = setJsonForFetchers(fetchFn, tree, 'mainLoop', onError, state =>
-    ReactDOM.render(<Index state={state}/>, document.getElementById('root')), fs => Promise.resolve(fs))
+    ReactDOM.render(<Index state={state}/>, document.getElementById('root')), mutateJsonEachCall)
 
 let startState: FullState = {
     pageSelection: {pageName: 'statement'},

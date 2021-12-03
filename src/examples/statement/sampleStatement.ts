@@ -3,7 +3,6 @@ import {Statement} from "./statement.domain";
 import {LoadingProps} from "../../components/loading/loading";
 
 export let sampleStatement: Statement & LoadingProps = {
-    loading: false,
     title: "Statement",
     statementTitles: {
         statementAddress: "Statement Address",
