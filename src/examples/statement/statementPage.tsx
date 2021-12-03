@@ -4,24 +4,24 @@ import {Loading, LoadingProps} from "../../components/loading/loading";
 import {TitleAndValues, Values} from "../../components/data/attributeValues/titleValues";
 import {Button} from "../../components/Buttons/button";
 import React from "react";
-import {Statement} from "./domain";
+import {Statement} from "./statement.domain";
 import {TwoRowPanel} from "../../components/layout/row/twoRow/twoRowPanel";
 import {TwoColumnPanel} from "../../components/layout/columns/twoColumnPanel";
 import {ButtonTitleValue} from "../../components/data/ButtonTitleValue/buttonTitleValue";
+import {LensProps} from "@focuson/state";
 
 
-export interface StatementPageProps extends LoadingProps {
-    statement: Statement
+export interface StatementPageProps<State> extends LensProps<State, Statement>, LoadingProps {
 }
 
-export function StatementPage({statement, loading}: StatementPageProps) {
-    const {title, address, statementTitles, statementValues} = statement;
+export function StatementPage<State>({state, loading}: StatementPageProps<State>) {
+    const {title, address, statementTitles, statementValues} = state.json();
     return (<Page title={title}>
         <Loading loading={loading}>
             <TwoRowPanel>
                 <TwoColumnPanel title={statementTitles.regularStatement}>
                     <Values title={statementTitles.statementAddress} values={address} labels={["addLineOne", "addLineTwo", "addLineThree", "addLineFour", "pcd"]}/>
-                        <TitleAndValues titles={statementTitles} values={statementValues} labels={[
+                    <TitleAndValues titles={statementTitles} values={statementValues} labels={[
                         ['statementFrequency', 'nbtStatementFreq'],
                         ['lastStatementDate', 'nbtLastStatementDate'],
                         ['lastStatementNo', 'nbtLastStatementNo'],

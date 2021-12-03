@@ -198,6 +198,190 @@ exports[`Storyshots Data/Titles/WrapTitle With Title 1`] = `
 </div>
 `;
 
+exports[`Storyshots Examples/AccountPersonalisation Loading False 1`] = `
+<div
+  className="page"
+>
+  <div>
+    <h1>
+      Account Personalisation
+    </h1>
+  </div>
+  <div>
+    <div>
+      <div
+        className="columns"
+      >
+        <div
+          className=""
+        >
+          <dl>
+            <dd>
+              status
+            </dd>
+            <dt>
+              Received Complete
+            </dt>
+            <dd>
+              estimatedCompletionDate
+            </dd>
+            <dt>
+              2020-10-01
+            </dt>
+          </dl>
+        </div>
+        <div
+          className=""
+        >
+          <dl>
+            <dd>
+              sortCode
+            </dd>
+            <dt>
+              10-11-12
+            </dt>
+            <dd>
+              bankAccountNumber
+            </dd>
+            <dt>
+              12334353
+            </dt>
+            <dd>
+              lastChanged
+            </dd>
+            <dt>
+              2020-09-01
+            </dt>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div
+        className="columns"
+      >
+        <div
+          className=""
+        >
+          <h2
+            className="title"
+          >
+            Books/cards
+          </h2>
+          <dl>
+            <dd>
+              personalisation
+            </dd>
+            <dt>
+              Mr Fred Bloggs
+            </dt>
+            <dd>
+              title
+            </dd>
+            <dt>
+              Mr
+            </dt>
+            <dd>
+              forename
+            </dd>
+            <dt>
+              Fred
+            </dt>
+            <dd>
+              middleName
+            </dd>
+            <dt>
+              
+            </dt>
+            <dd>
+              surname
+            </dd>
+            <dt>
+              Bloggs
+            </dt>
+            <dd>
+              personalisation
+            </dd>
+            <dt>
+              Mr Fred Bloggs
+            </dt>
+          </dl>
+        </div>
+        <div
+          className=""
+        >
+          <dl>
+            <dd>
+              personalisation
+            </dd>
+            <dt>
+              Mrs Matilda Bloggs
+            </dt>
+            <dd>
+              title
+            </dd>
+            <dt>
+              Mrs
+            </dt>
+            <dd>
+              forename
+            </dd>
+            <dt>
+              Matilda
+            </dt>
+            <dd>
+              middleName
+            </dd>
+            <dt>
+              
+            </dt>
+            <dd>
+              surname
+            </dd>
+            <dt>
+              Bloggs
+            </dt>
+            <dd>
+              personalisation
+            </dd>
+            <dt>
+              Mrs Matilda Bloggs
+            </dt>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div
+        className="columns"
+      >
+        <p>
+          Statements
+        </p>
+        <p>
+          First on fullfilment
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Examples/AccountPersonalisation Loading True 1`] = `
+<div
+  className="page"
+>
+  <div>
+    <h1>
+      Account Personalisation
+    </h1>
+  </div>
+  <p>
+    Loading
+  </p>
+</div>
+`;
+
 exports[`Storyshots Examples/Statement/StatementPage Loading False 1`] = `
 <div
   className="page"

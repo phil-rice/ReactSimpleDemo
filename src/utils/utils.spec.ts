@@ -1,6 +1,6 @@
 //Copyright (c)2020-2021 Philip Rice. <br />Permission is hereby granted, free of charge, to any person obtaining a copyof this software and associated documentation files (the Software), to dealin the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:  <br />The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED AS
 import {enzymeSetup} from '../enzymeAdapterSetup';
-import {stringFrom} from "./utils";
+import {or, stringFrom} from "./utils";
 
 enzymeSetup()
 
@@ -28,5 +28,13 @@ describe("utils", () => {
         // it("should write to console.error in the event of a failure", () => {
         //     //but I don't know how to write this
         // })
+    })
+
+    describe("or", () => {
+        it("should return the value or the default value if the value is undefined", () => {
+            expect(or(() =>"def")("1")).toEqual("1")
+            expect(or(() =>"def")(undefined)).toEqual("def")
+
+        })
     })
 })

@@ -14,6 +14,7 @@ export const LoadingFalse = Template.bind({});
 LoadingFalse.args = {
     loading: false
 };
+
 export const LoadingTrue = Template.bind({});
 // @ts-ignore
 LoadingTrue.args = {

@@ -2,10 +2,59 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import {StatementPage} from "./examples/statement/statementPage";
-import {sampleStatement} from "./examples/statement/sampleStatement";
+import {LensProps} from "@focuson/state";
+import {stateStatementL, HasStatement} from "./examples/statement/statement.domain";
+import {fetcherTree, loggingFetchFn, setJsonForFetchers} from "@focuson/fetcher";
+import {fetchWithPrefix} from "./utils/utils";
+import {statementFetcher} from "./examples/statement/statementFetcher";
+import {customerIdL} from "./examples/common/common.domain";
+import {displayPage, MultiPageDetails} from "./components/multipage/multiPage.domain";
+import {Optional} from "@focuson/lens";
 
 
-ReactDOM.render(<StatementPage loading={false} statement={sampleStatement}/>, document.getElementById('root'));
+interface FullState extends HasStatement {
+}
+const emptyState: HasStatement = {}
+interface IndexProps extends LensProps<FullState, FullState> {
+
+}
+
+interface DemoApp extends MultiPageDetails<FullState> {
+    statement: {
+        lens: Optional<State, PageState>,
+        pageFunction: (props: { state: PageState }) => JSX.Element,
+        initialState?: PageState  // if set then the PageState is set to this when the page is initially displayed
+
+    },
+
+}
+
+
+function Index({state}: IndexProps) {
+const page = displayPage(details, state, )
+    return (<>
+        <ul>
+            <li>Statement</li>
+            <li>Statement2x2</li>
+        </ul>
+        <Local/>
+    </>)
+}
+
+const sFetcher = statementFetcher<FullState>(mainThingL, customerIdL, stateStatementL())
+const tree = fetcherTree<FullState>(sFetcher)
+
+
+export function onError(s: FullState, e: any): FullState {
+    console.error("onError", e)
+    throw e
+}
+
+
+
+const fetchFn = fetchWithPrefix("http://localhost:1234", loggingFetchFn)
+setJsonForFetchers(fetchFn, tree, 'mainLoop', onError, state =>
+    ReactDOM.render(<Index state={state}/>, document.getElementById('root')), fs => Promise.resolve(fs))
+
 
 

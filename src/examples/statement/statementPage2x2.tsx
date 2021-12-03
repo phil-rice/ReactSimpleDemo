@@ -2,7 +2,7 @@
 
 
 import {Loading, LoadingProps} from "../../components/loading/loading";
-import {Statement} from "./domain";
+import {Statement} from "./statement.domain";
 import {Page} from "../../components/page/page";
 import {TwoByTwo} from "../../components/layout/grid/twobytwo/twoByTwo";
 import {TitleAndValues, Values} from "../../components/data/attributeValues/titleValues";
