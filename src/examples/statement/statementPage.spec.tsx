@@ -60,7 +60,7 @@ describe("StatementPage", () => {
     describe("when loading is true", () => {
         it("should display loading text only ", () => {
             const comp = mount(<StatementPage loading={true} state={statementState}/>)
-            expect(comp.text()).toEqual("StatementLoading")
+            expect(comp.text()).toEqual("MainStatementLoading")
         })
     })
 })

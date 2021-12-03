@@ -60,7 +60,7 @@ describe("StatementPage2x2... note that they didn't need to change", () => {
     describe("when loading is true", () => {
         it("should display loading text only ", () => {
             const comp = mount(<StatementPage2x2 loading={true} state={statementState}/>)
-            expect(comp.text()).toEqual("StatementLoading")
+            expect(comp.text()).toEqual("2x2StatementLoading")
         })
     })
 })
