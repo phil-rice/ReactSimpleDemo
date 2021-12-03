@@ -48,6 +48,7 @@ export function onError(s: FullState, e: any): FullState {
 
 const fetchFn = fetchWithPrefix("http://localhost:1234", loggingFetchFn)
 
+//This is the method where we will do the 'first time' and 'loading flag' and fetching of data. For now it's a stub
 function mutateJsonEachCall(state: FullState): Promise<FullState> {
     console.log("mutateJsonEachCall", state)
     return Promise.resolve(state)
