@@ -9,6 +9,7 @@ import {fetchWithPrefix} from "./utils/utils";
 
 import {customerIdL, HasCustomerId} from "./examples/common/common.domain";
 import {displayPage, HasPageSelection, MultiPageDetails, pageSelectionlens} from "./components/multipage/multiPage.domain";
+import {sampleStatement} from "./examples/statement/sampleStatement";
 
 export interface FullState extends HasStatement, HasCustomerId, HasPageSelection<any> {
 }
@@ -24,6 +25,7 @@ const demoAppPageDetails: MultiPageDetails<FullState> = {
 
 function Index({state}: IndexProps) {
     const page = displayPage(demoAppPageDetails, state, pageSelectionlens())
+    console.log("page", page)
     return (<>
         <ul>
             <li>Statement</li>
@@ -44,8 +46,13 @@ export function onError(s: FullState, e: any): FullState {
 
 
 const fetchFn = fetchWithPrefix("http://localhost:1234", loggingFetchFn)
-setJsonForFetchers(fetchFn, tree, 'mainLoop', onError, state =>
+let setJson: (os: FullState, s: FullState) => Promise<FullState> = setJsonForFetchers(fetchFn, tree, 'mainLoop', onError, state =>
     ReactDOM.render(<Index state={state}/>, document.getElementById('root')), fs => Promise.resolve(fs))
 
+let startState: FullState = {
+    pageSelection: {pageName: 'statement'},
+    statement: sampleStatement
+}
+setJson(startState, startState)
 
 

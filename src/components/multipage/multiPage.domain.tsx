@@ -16,23 +16,27 @@ export interface PageSelection<Details> {
     pageName: keyof Details,
     firstTime?: boolean
 }
-export interface HasPageSelection<Details>{
-    pageSelection:PageSelection<Details>
+export interface HasPageSelection<Details> {
+    pageSelection: PageSelection<Details>
 }
 
-export function pageSelectionlens<State extends HasPageSelection<any>>(){return Lenses.identity<State>('state').focusOn('pageSelection')}
+export function pageSelectionlens<State extends HasPageSelection<any>>() {return Lenses.identity<State>('state').focusOn('pageSelection')}
 
-export function displaySinglePage<State, PageState>(state: LensState<State, State>, pageSelectionName:string, pageDetails?: OnePageDetails<State, PageState>) {
+export function displaySinglePage<State, PageState>(state: LensState<State, State>, pageSelectionName: string, pageDetails?: OnePageDetails<State, PageState>) {
     if (!pageDetails) return (<p>Unrecognised main page ${pageSelectionName}</p>)
     let props = pageDetails.lens.getOption(state.json());
+    console.log('displaySinglePage',props)
     if (!props) return (<p>Cannot find props for main page ${pageSelectionName}</p>)
     return pageDetails.pageFunction({state: state.chainLens(pageDetails.lens), loading: true})
 }
 export function displayPage<State, Details extends MultiPageDetails<State>>(details: Details, state: LensState<State, State>, pageSelectionG: Getter<State, PageSelection<Details>>) {
+    console.log('displayPage', state.json())
     const pageSelection = pageSelectionG.get(state.json())
+    console.log('pageSelection',pageSelection)
     if (!pageSelection) return (<p>Unrecognised page selection ${state.optional}</p>)
     const pageDetails = details[pageSelection.pageName]
-    displaySinglePage(state, pageSelection.pageName.toString(), pageDetails)
+    console.log('pageDetails',pageDetails)
+    return displaySinglePage(state, pageSelection.pageName.toString(), pageDetails)
 }
 
 
