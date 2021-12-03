@@ -2,9 +2,11 @@
 import {TitleProps} from "../../components/data/titles/titles";
 import {GetOptioner, Lens, Lenses, Optional} from "@focuson/lens";
 import {or} from "../../utils/utils";
-import {OnePageDetails, PageSelection} from "../../components/multipage/multiPage.domain";
+import {HasPageSelection, OnePageDetails, PageSelection} from "../../components/multipage/multiPage.domain";
 import {fetcherWhenUndefined, ifEEqualsFetcher} from "@focuson/fetcher";
 import {StatementPage} from "./statementPage";
+import {HasCustomerId} from "../common/common.domain";
+
 
 export const statementUrl = <S>(customerIdL: GetOptioner<S, string>) =>
     (s: S) => `/statement/${or<string>(() => {throw new Error('cannot get statementUrl without customerId') })(customerIdL.getOption(s))}`;
@@ -14,14 +16,15 @@ export function statementFetcher<S>(mainThingL: Lens<S, PageSelection<any>>, cus
         fetcherWhenUndefined<S, Statement>(stateStatementL, s => [statementUrl<S>(customerIdL)(s), undefined]), 'statementFetcher')
 }
 
-export function statementPageDetails<State>(lens: Lens<State, Statement>): OnePageDetails<State, Statement> {
+export function statementPageDetails<State>(lens: Optional<State, Statement>): OnePageDetails<State, Statement> {
     return ({lens, pageFunction: StatementPage});
 }
 
 export interface HasStatement {
     statement?: Statement
 }
-export function stateStatementL<S extends HasStatement>() {return Lenses.identity<S>('state').focusQuery('statement')}
+// @ts-ignore
+export function stateStatementL<S extends HasStatement>(): Optional<S, Statement> {return Lenses.identity<S>('state').focusQuery('statement')}
 
 export interface Statement extends TitleProps {
     statementTitles: StatementTitles,

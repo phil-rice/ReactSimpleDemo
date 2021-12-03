@@ -8,13 +8,13 @@ import {TwoByTwo} from "../../components/layout/grid/twobytwo/twoByTwo";
 import {TitleAndValues, Values} from "../../components/data/attributeValues/titleValues";
 import {Button} from "../../components/Buttons/button";
 import {ButtonTitleValue} from "../../components/data/ButtonTitleValue/buttonTitleValue";
+import {LensProps} from "@focuson/state";
 
-export interface StatementPageProps extends LoadingProps {
-    statement: Statement
+export interface StatementPage2x2Props<State> extends LensProps<State, Statement>, LoadingProps{
 }
 
-export function StatementPage2x2({statement, loading}: StatementPageProps) {
-    const {title, address, statementTitles, statementValues} = statement;
+export function StatementPage2x2<State>({state, loading}: StatementPage2x2Props<State>) {
+    const {title, address, statementTitles, statementValues} = state.json();
     return (<Page title={title}>
         <Loading loading={loading}>
             <TwoByTwo title1={statementTitles.regularStatement} title2={statementTitles.interimStatement}>

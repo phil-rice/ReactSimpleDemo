@@ -5,11 +5,11 @@ import React from "react";
 import {StatementPage} from "./statementPage";
 import {sampleStatement} from "./sampleStatement";
 import {lensState} from "@focuson/state";
-import {StateForStatementTest} from "./statementPage.pact.spec";
+import {StateForStatement} from "./statementPage.pact.spec";
 
 enzymeSetup()
 
-const statementState = lensState<StateForStatementTest>({statement: sampleStatement, pageSelection: {pageName: 'statement'}}, (s: StateForStatementTest) => {}, 'statementState').focusOn('statement')
+const statementState = lensState<StateForStatement>({statement: sampleStatement, pageSelection: {pageName: 'statement'}}, (s: StateForStatement) => {}, 'statementState').focusOn('statement')
 
 describe("StatementPage", () => {
     describe("when loading is false", () => {

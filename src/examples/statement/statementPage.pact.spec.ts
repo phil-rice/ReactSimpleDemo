@@ -7,20 +7,20 @@ import {customerIdL, HasCustomerId} from "../common/common.domain";
 import {fetchWithPrefix} from "../../utils/utils";
 import {HasPageSelection, pageSelectionlens} from "../../components/multipage/multiPage.domain";
 
-export interface StateForStatementTest extends HasStatement, HasCustomerId, HasPageSelection<any> {
+export interface StateForStatement extends HasStatement, HasCustomerId, HasPageSelection<any> {
 
 }
 
-const emptyState: StateForStatementTest = {
+const emptyState: StateForStatement = {
     pageSelection: {pageName: 'empty'}
 }
-const emptyStatementState: StateForStatementTest = {
+const emptyStatementState: StateForStatement = {
     pageSelection: {pageName: 'statement'},
     customerId: "mycid"
 }
 
-const sFetcher = statementFetcher<StateForStatementTest>(pageSelectionlens(), customerIdL, stateStatementL())
-const statementFetcherTree = fetcherTree<StateForStatementTest>(sFetcher)
+const sFetcher = statementFetcher<StateForStatement>(pageSelectionlens(), customerIdL, stateStatementL())
+const statementFetcherTree = fetcherTree<StateForStatement>(sFetcher)
 
 
 describe("statement fetcher unit tests", () => {

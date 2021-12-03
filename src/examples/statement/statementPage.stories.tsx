@@ -2,7 +2,7 @@ import React from "react";
 import {StatementPage, StatementPageProps} from "./statementPage";
 import {sampleStatement} from "./sampleStatement";
 import {lensState} from "@focuson/state";
-import {StateForStatementTest} from "./statementPage.pact.spec";
+import {StateForStatement} from "./statementPage.pact.spec";
 
 
 export default {
@@ -10,10 +10,10 @@ export default {
     title: 'Examples/Statement/StatementPage',
 
 }
-const statementState = lensState<StateForStatementTest>({statement: sampleStatement, pageSelection: {pageName: 'statement'}}, (s: StateForStatementTest) => {}, 'statementState').focusOn('statement')
+const statementState = lensState<StateForStatement>({statement: sampleStatement, pageSelection: {pageName: 'statement'}}, (s: StateForStatement) => {}, 'statementState').focusOn('statement')
 
 
-const Template = (args: StatementPageProps<StateForStatementTest>) =>    <StatementPage {...args} />;
+const Template = (args: StatementPageProps<StateForStatement>) =>    <StatementPage {...args} />;
 
 export const LoadingFalse = Template.bind({});
 // @ts-ignore

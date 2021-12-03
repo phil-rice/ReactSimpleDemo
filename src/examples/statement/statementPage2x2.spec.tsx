@@ -2,21 +2,22 @@
 import {enzymeSetup} from '../../enzymeAdapterSetup';
 import {mount, shallow} from "enzyme";
 import React from "react";
-import {StatementPage} from "./statementPage";
 import {sampleStatement} from "./sampleStatement";
-import exp from "constants";
 import {StatementPage2x2} from "./statementPage2x2";
+import {lensState} from "@focuson/state";
+import {StateForStatement} from "./statementPage.pact.spec";
 
 enzymeSetup()
+const statementState = lensState<StateForStatement>({statement: sampleStatement, pageSelection: {pageName: 'statement'}}, (s: StateForStatement) => {}, 'statementState').focusOn('statement')
 
 describe("StatementPage2x2... note that they didn't need to change", () => {
     describe("when loading is false", () => {
         it("should render without throwing an exception", () => {
-            const comp = mount(<StatementPage2x2 statement={sampleStatement}/>)
+            const comp = mount(<StatementPage2x2 state={statementState}/>)
         })
 
         it("should display the address in a values panel that has a 'Statement Address' title", () => {
-            const comp = shallow(<StatementPage2x2 statement={sampleStatement}/>)
+            const comp = shallow(<StatementPage2x2  state={statementState}/>)
             const values = comp.find("Values")
             expect(values.length).toBe(1)
             const values0 = values.at(0)
@@ -26,7 +27,7 @@ describe("StatementPage2x2... note that they didn't need to change", () => {
             expect(props["labels"]).toEqual(["addLineOne", "addLineTwo", "addLineThree", "addLineFour", "pcd"])
         })
         it("should display the statement details in a TitleAndValues panel without a title", () => {
-            const comp = shallow(<StatementPage2x2 statement={sampleStatement}/>)
+            const comp = shallow(<StatementPage2x2  state={statementState}/>)
             const values = comp.find("TitleAndValues")
             expect(values.length).toBe(1)
             const values0 = values.at(0)
@@ -41,14 +42,14 @@ describe("StatementPage2x2... note that they didn't need to change", () => {
         })
 
         it("should have a request interim payment button", () => {
-            const comp = mount(<StatementPage2x2 statement={sampleStatement}/>)
+            const comp = mount(<StatementPage2x2  state={statementState}/>)
             const buttons = comp.find("button").find('#buttonRequestInterim')
             expect(buttons.length).toBe(1)
             const button = buttons.at(0)
             expect(button.text()).toEqual("Request Interim Payment")
         })
         it("should have a nextStatement button", () => {
-            const comp = mount(<StatementPage2x2 statement={sampleStatement}/>)
+            const comp = mount(<StatementPage2x2  state={statementState}/>)
             const buttons = comp.find("button").find('#buttonNextStatement')
             expect(buttons.length).toBe(1)
             const button = buttons.at(0)
@@ -57,7 +58,7 @@ describe("StatementPage2x2... note that they didn't need to change", () => {
     })
     describe("when loading is true", () =>
         it("should display loading text only ", () => {
-            const comp = mount(<StatementPage2x2 loading={true} statement={sampleStatement}/>)
+            const comp = mount(<StatementPage2x2 loading={true}  state={statementState}/>)
             expect(comp.text()).toEqual("StatementLoading")
         }))
 })

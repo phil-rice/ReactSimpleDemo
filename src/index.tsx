@@ -3,45 +3,37 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import {LensProps} from "@focuson/state";
-import {stateStatementL, HasStatement} from "./examples/statement/statement.domain";
+import {HasStatement, statementFetcher, statementPageDetails, stateStatementL} from "./examples/statement/statement.domain";
 import {fetcherTree, loggingFetchFn, setJsonForFetchers} from "@focuson/fetcher";
 import {fetchWithPrefix} from "./utils/utils";
-import {statementFetcher} from "./examples/statement/statementFetcher";
-import {customerIdL} from "./examples/common/common.domain";
-import {displayPage, MultiPageDetails} from "./components/multipage/multiPage.domain";
-import {Optional} from "@focuson/lens";
 
+import {customerIdL, HasCustomerId} from "./examples/common/common.domain";
+import {displayPage, HasPageSelection, MultiPageDetails, pageSelectionlens} from "./components/multipage/multiPage.domain";
 
-interface FullState extends HasStatement {
+export interface FullState extends HasStatement, HasCustomerId, HasPageSelection<any> {
 }
 const emptyState: HasStatement = {}
-interface IndexProps extends LensProps<FullState, FullState> {
 
+interface IndexProps extends LensProps<FullState, FullState> {
 }
 
-interface DemoApp extends MultiPageDetails<FullState> {
-    statement: {
-        lens: Optional<State, PageState>,
-        pageFunction: (props: { state: PageState }) => JSX.Element,
-        initialState?: PageState  // if set then the PageState is set to this when the page is initially displayed
-
-    },
-
+const demoAppPageDetails: MultiPageDetails<FullState> = {
+    statement: statementPageDetails(stateStatementL<FullState>())
 }
 
 
 function Index({state}: IndexProps) {
-const page = displayPage(details, state, )
+    const page = displayPage(demoAppPageDetails, state, pageSelectionlens())
     return (<>
         <ul>
             <li>Statement</li>
             <li>Statement2x2</li>
         </ul>
-        <Local/>
+        {page}
     </>)
 }
 
-const sFetcher = statementFetcher<FullState>(mainThingL, customerIdL, stateStatementL())
+const sFetcher = statementFetcher<FullState>(pageSelectionlens(), customerIdL, stateStatementL())
 const tree = fetcherTree<FullState>(sFetcher)
 
 
@@ -49,7 +41,6 @@ export function onError(s: FullState, e: any): FullState {
     console.error("onError", e)
     throw e
 }
-
 
 
 const fetchFn = fetchWithPrefix("http://localhost:1234", loggingFetchFn)
