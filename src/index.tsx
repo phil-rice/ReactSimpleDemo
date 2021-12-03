@@ -27,8 +27,9 @@ const demoAppPageDetails: MultiPageDetails<FullState> = {
 
 
 function Index({state}: IndexProps) {
-    const page = displayPage(demoAppPageDetails, state, pageSelectionlens())
-    console.log("page", page)
+    let debug = state.json().showPageDebug;
+    const page = displayPage(demoAppPageDetails, state, pageSelectionlens(), debug)
+    if (debug) console.log("page", page)
     return (<>
         <ul>
             <li>
@@ -59,7 +60,6 @@ const fetchFn = fetchWithPrefix("http://localhost:1234", loggingFetchFn)
 
 //This is the method where we will do the 'first time' and 'loading flag' and fetching of data. For now it's a stub
 function mutateJsonEachCall(state: FullState): Promise<FullState> {
-    console.log("mutateJsonEachCall", state)
     return Promise.resolve(state)
 }
 
@@ -70,54 +70,19 @@ export function wouldLoadSummary(wouldLoad: WouldLoad[]) {
 export function calledApiUrl(wouldLoad: WouldLoad[]) {
     return wouldLoad.filter(w => w.load).map(w => w?.reqData?.[0]).join(";")
 }
-// function setJsonForFetchers<State>(fetchFn: FetchFn,
-//                                    tree: FetcherTree<State>,
-//                                    description: string,
-//                                    onError: (os: State, e: any) => State,
-//                                    fn: (lc: LensState<State, State>) => void,
-//                                    mutate: (s: State) => Promise<State>,
-//                                    debugOptional?: Optional<State, FetcherDebug>): (os: State, s: State) => Promise<State> {
-//     return async (os: State, main: State): Promise<State> => {
-//         const debug = debugOptional?.getOption(main)
-//         let newStateFn = (fs: State) => fn(lensState(fs, state => setJsonForFetchers(fetchFn, tree, description, onError, fn, mutate, debugOptional)(fs, state), description))
-//         try {
-//             if (debug?.fetcherDebug) console.log('setJsonForFetchers - start', main)
-//             if (main) newStateFn(main)
-//
-//             let w = wouldLoad(tree, main)
-//             if (debug?.whatLoad) {console.log("wouldLoad", wouldLoadSummary(w), w)}
-//
-//             let newMain = await loadTree(tree, main, fetchFn, debug).//
-//                 then(s => s ? s : onError(s, Error('could not load tree'))).//
-//                 catch(e => onError(main, e))
-//             if (debug?.fetcherDebug) console.log('setJsonForFetchers - after load', newMain)
-//             let finalState = await mutate(newMain)
-//             if (debug?.fetcherDebug) console.log('setJsonForFetchers - final', finalState)
-//             newStateFn(finalState)
-//             return finalState
-//         } catch (e) {
-//             let newMain = onError(os, e);
-//             newStateFn(newMain)
-//             return newMain
-//         }
-//     }
-// }
 
-let setJson: (os: FullState, s: FullState) => Promise<FullState> = (os: FullState, s: FullState) => {
-    console.log("setJson", os, s)
-    return setJsonForFetchers(fetchFn, tree, 'mainLoop', onError,
-        state => ReactDOM.render(<Index state={state}/>, document.getElementById('root')),
-        mutateJsonEachCall, Lenses.identity<FullState>('state').focusQuery('fetcherDebug'))(os, s)
-}
+let setJson: (os: FullState, s: FullState) => Promise<FullState> = setJsonForFetchers(fetchFn, tree, 'mainLoop', onError,
+    state => ReactDOM.render(<Index state={state}/>, document.getElementById('root')),
+    mutateJsonEachCall, Lenses.identity<FullState>('state').focusQuery('fetcherDebug'))
 
 let startState: FullState = {
     pageSelection: {pageName: 'statement'},
     statement: sampleStatement,
-    showPageDebug: true,
+    showPageDebug: false,
     fetcherDebug: {
-        fetcherDebug: true,
-        loadTreeDebug: true,
-        whatLoad: true
+        fetcherDebug: false,
+        loadTreeDebug: false,
+        whatLoad: false
     }
 }
 setJson(startState, startState)
