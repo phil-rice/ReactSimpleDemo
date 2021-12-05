@@ -14,7 +14,7 @@ type  OnTagFetchErrorFn<S> = (s: S, status: number, req: any, response: any, ori
 
 export function onTagFetchError<S>(errorMessageL: Optional<S, string>): OnTagFetchErrorFn<S> {
     return (s: S, status: number, req: any, response: any, originalTags?: Tags, currentTags?: Tags) =>
-        errorMessageL.set(s, `Req: ${JSON.stringify(req).replaceAll('"', "'")}, Resp: ${response}, ${status}, ${originalTags}, ${currentTags}`);
+        errorMessageL.set(s, `Req: ${JSON.stringify(req)}, Resp: ${response}, ${status}, ${originalTags}, ${currentTags}`);
 }
 
 

@@ -47,7 +47,7 @@ function Index({state}: IndexProps) {
                 </button>
             </li>
             <li>
-                <button onClick={() => state.focusOn('pageSelection').setJson({pageName: 'statement2x2', firstTime: false})}>Statement2x2</button>
+                <button onClick={() => state.focusOn('pageSelection').setJson({pageName: 'statement', firstTime: false})}>Statement</button>
             </li>
             <li>
                 <button onClick={() =>

@@ -65,7 +65,7 @@ describe("tagFetcher", () => {
         const mutate: MutateFn<TagFetcherTestState, string> = loadInfo.mutate
         expect(mutate(start)(200, "someString")).toEqual({"tag1": "t1", "tag2": "t2", "tags": {"theseTags": ["t1", "t2"]}, "target": "someString"})
         expect(mutate(start)(300, "someString")).toEqual({
-            "errorMessage": "Req: ['/someUrl',{'method':'Options'}], Resp: someString, 300, undefined, t1,t2",
+            "errorMessage": "Req: [\"/someUrl\",{\"method\":\"Options\"}], Resp: someString, 300, undefined, t1,t2",
             "tag1": "t1",
             "tag2": "t2",
             "tags": {"theseTags": ["t1", "t2"]}
