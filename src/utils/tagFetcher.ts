@@ -1,7 +1,6 @@
-import {Lens, Optional} from "@focuson/lens";
+import {Optional} from "@focuson/lens";
 import {areAllDefined, arraysEqual, Fetcher, loadInfo, MutateFn, partialFnUsageError, ReqFn, Tags} from "@focuson/fetcher";
 import {or} from "./utils";
-import {PageSelection} from "../components/multipage/multiPage.domain";
 
 
 /** The tags are the 'bits of data' that tell us if we need to load something'

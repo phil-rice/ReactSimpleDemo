@@ -4,13 +4,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import {Lenses, Optional} from "@focuson/lens";
 import {LensProps, lensState, LensState} from "@focuson/state";
-import {HasStatement, statement2x2PageDetails, statementFetcher,  stateStatementL} from "./examples/statement/statement.domain";
+import {HasStatement, statement2x2PageDetails, statementFetcher, stateStatementL} from "./examples/statement/statement.domain";
 import {FetcherDebug, FetcherTree, fetcherTree, FetchFn, loadTree, loggingFetchFn, wouldLoad, WouldLoad} from "@focuson/fetcher";
 import {fetchWithPrefix, textChangedEvent} from "./utils/utils";
 
 import {customerIdL, HasCustomerId, HasTagHolder} from "./examples/common/common.domain";
 import {displayPage, HasPageSelection, MultiPageDetails, pageSelectionlens} from "./components/multipage/multiPage.domain";
 import {statementPageDetails} from "./examples/statement/statementPage";
+import path from "path";
 
 export interface FullState extends HasStatement, HasCustomerId, HasPageSelection<any>, HasTagHolder {
     fetcherDebug?: FetcherDebug
@@ -30,13 +31,13 @@ function Index({state}: IndexProps) {
     let debug = state.json().showPageDebug;
     const page = displayPage(demoAppPageDetails, state, pageSelectionlens(), debug)
     if (debug) console.log("page", page)
-    function changeCustomerId(e?: string ) {
+    function changeCustomerId(e?: string) {
         console.log('changeCustId', e);
         if (e) state.focusOn('customerId').setJson(e)
     }
     return (<>
         <ul>
-            <li>Customer Id<input id='customerId' type='text' onKeyPress={textChangedEvent('customerId',changeCustomerId)} onBlur={e => changeCustomerId(e.target?.value)}/></li>
+            <li>Customer Id<input id='customerId' type='text' onKeyPress={textChangedEvent('customerId', changeCustomerId)} onBlur={e => changeCustomerId(e.target?.value)}/></li>
             <li>
                 <button onClick={
                     () => state.focusOn('tags')
@@ -80,12 +81,12 @@ export function wouldLoadSummary(wouldLoad: WouldLoad[]) {
 const fetchFn = fetchWithPrefix("http://localhost:8080", loggingFetchFn)
 
 export function setJsonForFetchers<State>(fetchFn: FetchFn,
-                                                   tree: FetcherTree<State>,
-                                                   description: string,
-                                                   onError: (os: State, e: any) => State,
-                                                   fn: (lc: LensState<State, State>) => void,
-                                                   mutate: (s: State) => Promise<State>,
-                                                   debugOptional?: Optional<State, FetcherDebug>): (os: State, s: State) => Promise<State> {
+                                          tree: FetcherTree<State>,
+                                          description: string,
+                                          onError: (os: State, e: any) => State,
+                                          fn: (lc: LensState<State, State>) => void,
+                                          mutate: (s: State) => Promise<State>,
+                                          debugOptional?: Optional<State, FetcherDebug>): (os: State, s: State) => Promise<State> {
     return async (os: State, main: State): Promise<State> => {
         const debug = debugOptional?.getOption(main)
         let newStateFn = (fs: State) => fn(lensState(fs, state => setJsonForFetchers(fetchFn, tree, description, onError, fn, mutate, debugOptional)(fs, state), description))
@@ -96,9 +97,9 @@ export function setJsonForFetchers<State>(fetchFn: FetchFn,
                 let w = wouldLoad(tree, main);
                 console.log("wouldLoad", wouldLoadSummary(w), w)
             }
-            let newMain = await loadTree(tree, main, fetchFn, debug).//
-                then(s => s ? s : onError(s, Error('could not load tree'))).//
-                catch(e => onError(main, e))
+            let newMain = await loadTree(tree, main, fetchFn, debug)
+                .then(s => s ? s : onError(s, Error('could not load tree')))
+                .catch(e => onError(main, e))
             if (debug?.fetcherDebug) console.log('setJsonForFetchers - after load', newMain)
             let finalState = await mutate(newMain)
             if (debug?.fetcherDebug) console.log('setJsonForFetchers - final', finalState)
@@ -120,7 +121,7 @@ let setJson: (os: FullState, s: FullState) => Promise<FullState> = setJsonForFet
 let startState: FullState = {
     pageSelection: {pageName: 'statement'},
     customerId: "mycid",
-    tags:{},
+    tags: {},
     showPageDebug: false,
     fetcherDebug: {
         fetcherDebug: true,
@@ -128,6 +129,17 @@ let startState: FullState = {
         whatLoad: true
     }
 }
+
+var pact = require('@pact-foundation/pact-node');
+var server = pact.createStub({
+    cors: true,
+    port: 8080,
+    pactUrls: ['./pacts/browser-cmsbackend.json'],
+    log: path.resolve(process.cwd(), "logs", "pact.log"),
+    logLevel: "info",
+});
+server.start()
+
 setJson(startState, startState)
 
 
