@@ -1,4 +1,4 @@
-import {Optional, Getter, Lens, Lenses} from "@focuson/lens";
+import {Getter, Lens, Lenses, Optional} from "@focuson/lens";
 import {LensState} from "@focuson/state";
 import React from "react";
 

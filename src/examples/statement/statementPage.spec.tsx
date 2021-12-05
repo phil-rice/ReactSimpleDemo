@@ -9,7 +9,8 @@ import {StateForStatement} from "./statementPage.pact.spec";
 
 enzymeSetup()
 
-const statementState = lensState<StateForStatement>({statement: sampleStatement, pageSelection: {pageName: 'statement'}}, (s: StateForStatement) => {}, 'statementState').focusOn('statement')
+const statementState = lensState<StateForStatement>({statement:{tags:["someid"], t: sampleStatement}, pageSelection: {pageName: 'statement'}}, (s: StateForStatement) => {}, 'statementState').
+focusOn('statement').focusOn('t')
 
 describe("StatementPage", () => {
     describe("when loading is false", () => {

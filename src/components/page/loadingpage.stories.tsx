@@ -1,5 +1,4 @@
 import React from "react";
-import {Page} from "./page";
 import {TitleProps} from "../data/titles/titles";
 import {SingleChildProps} from "../../utils/utils";
 import {LoadingPage} from "./loadingPage";

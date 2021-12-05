@@ -1,12 +1,8 @@
 import React from "react";
-
-import {Values, ValuesProp} from "../../data/attributeValues/titleValues";
 import {TitleProps} from "../../data/titles/titles";
 import {TwoByTwo} from "../grid/twobytwo/twoByTwo";
-import {TwoRowPanel} from "../row/twoRow/twoRowPanel";
 import {TwoColumnPanel} from "./twoColumnPanel";
 import {TwoChildrenProps} from "../../../utils/childrenProps";
-import {ButtonTitleValue, TitleValueButtonProperties} from "../../data/ButtonTitleValue/buttonTitleValue";
 
 
 export default {

@@ -16,4 +16,10 @@ There is no attempt to make the gui 'beautiful': this is about how we break thin
 * [Git Repo](https://github.com/phil-rice/ReactSimpleDemo)
 * [Github actions (CI pipeline)](https://github.com/phil-rice/ReactSimpleDemo/actions) 
 
+#Running the pact server
+docker pull pactfoundation/pact-stub-server
+docker run -t -p 8080:8080 -v "$(pwd)/pacts/:/app/pacts" pactfoundation/pact-stub-server -p 8080 -d pacts
+
+test it by going to http://localhost:8080/statement/mycid
+
 

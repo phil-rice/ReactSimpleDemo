@@ -29,3 +29,12 @@ export function fetchWithPrefix(prefix: string, fetchFn: FetchFn): FetchFn {
         else throw new Error(`Cannot handle request ${re}`)
     }
 }
+
+export function textChangedEvent(id: string,fn: (value: string) => void): (e: any) => void {
+    return (e) => {
+        // @ts-ignore
+        const value: string=document.getElementById(id)?.value
+        console.log('keycode', e.keyCode, e.charCode, value, e)
+        if (e.charCode === 13 && value) fn(value)
+    }
+}

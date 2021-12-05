@@ -3,31 +3,41 @@ import {TitleProps} from "../../components/data/titles/titles";
 import {GetOptioner, Lens, Lenses, Optional} from "@focuson/lens";
 import {or} from "../../utils/utils";
 import {OnePageDetails, PageSelection} from "../../components/multipage/multiPage.domain";
-import {fetcherWhenUndefined, ifEEqualsFetcher} from "@focuson/fetcher";
-import {StatementPage} from "./statementPage";
+import {ifEEqualsFetcher} from "@focuson/fetcher";
 import {StatementPage2x2} from "./statementPage2x2";
+import {SpecificTagFetcher, specify, tagFetcher} from "../../utils/tagFetcher";
+import {commonFetch, HasCustomerId, HasErrorMessage, HasTagHolder} from "../common/common.domain";
 
+
+export type StatementRequirements = HasStatement & HasTagHolder & HasErrorMessage & HasCustomerId
 
 export const statementUrl = <S>(customerIdL: GetOptioner<S, string>) =>
     (s: S) => `/statement/${or<string>(() => {throw new Error('cannot get statementUrl without customerId') })(customerIdL.getOption(s))}`;
 
-export function statementFetcher<S>(mainThingL: Lens<S, PageSelection<any>>, customerIdL: GetOptioner<S, string>, stateStatementL: Optional<S, Statement>) {
-    return ifEEqualsFetcher(s => (customerIdL.getOption(s) !== undefined && mainThingL.get(s).pageName === 'statement'),
-        fetcherWhenUndefined<S, Statement>(stateStatementL, s => [statementUrl<S>(customerIdL)(s), undefined]), 'statementFetcher')
+export function statementSF<S extends StatementRequirements>(customerIdL: GetOptioner<S, string>): SpecificTagFetcher<S, Statement> {
+    return specify<S, Statement>(commonFetch<S>(), 'statement', s => [customerIdL.getOption(s)],
+        s => [statementUrl<S>(customerIdL)(s), undefined],
+        stateStatementL()
+    )
 }
 
-export function statementPageDetails<State>(lens: Optional<State, Statement>): OnePageDetails<State, Statement> {
-    return ({lens, pageFunction: StatementPage});
+export function statementFetcher<S extends StatementRequirements>(mainThingL: Lens<S, PageSelection<any>>, customerIdL: GetOptioner<S, string>) {
+    return ifEEqualsFetcher(s => (customerIdL.getOption(s) !== undefined && mainThingL.get(s).pageName === 'statement'),
+        tagFetcher<S, Statement>(statementSF<S>(customerIdL)))
 }
+
+
 export function statement2x2PageDetails<State>(lens: Optional<State, Statement>): OnePageDetails<State, Statement> {
     return ({lens, pageFunction: StatementPage2x2});
 }
+export function stateStatementL<S extends HasStatement>(): Optional<S, Statement> {
+    // @ts-ignore This ts-ignore is (I think) a typescript bug. It can't handle the  S extends HasStatement
+    return Lenses.identity<S>('state').focusQuery('statement')
+}
+
 export interface HasStatement {
     statement?: Statement
 }
-// @ts-ignore
-export function stateStatementL<S extends HasStatement>(): Optional<S, Statement> {return Lenses.identity<S>('state').focusQuery('statement')}
-
 export interface Statement extends TitleProps {
     statementTitles: StatementTitles,
     statementValues: StatementValues,

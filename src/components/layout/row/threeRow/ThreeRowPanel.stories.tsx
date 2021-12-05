@@ -1,8 +1,7 @@
 import React from "react";
 import {TitleProps} from "../../../data/titles/titles";
-import {TwoRowPanel} from "../twoRow/twoRowPanel";
 import {ThreeRowPanel} from "./threeRowPanel";
-import {ThreeChildrenProps, TwoChildrenProps} from "../../../../utils/childrenProps";
+import {ThreeChildrenProps} from "../../../../utils/childrenProps";
 
 
 export default {

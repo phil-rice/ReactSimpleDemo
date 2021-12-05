@@ -1,5 +1,4 @@
 import React from "react";
-import {TitleAndValues, TitleValuesProp} from "./titleValues";
 import {TitleValueComp, TitleValueCompProps} from "./titleValueComp";
 
 

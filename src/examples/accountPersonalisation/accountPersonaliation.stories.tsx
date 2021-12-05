@@ -3,7 +3,6 @@ import {AccountPersonalisationPage, AccountPersonalisationProps} from "./account
 import {sampleAccountPersonalisation} from "./sampleAccountPersonalisation";
 
 
-
 export default {
     component: AccountPersonalisationPage,
     title: 'Examples/AccountPersonalisation',

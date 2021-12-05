@@ -1,5 +1,4 @@
 import React from "react";
-import {Button, ButtonProperties} from "../Buttons/button";
 import {Loading, LoadingProps} from "./loading";
 
 

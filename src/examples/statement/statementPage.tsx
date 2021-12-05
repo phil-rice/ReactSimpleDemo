@@ -9,9 +9,15 @@ import {TwoRowPanel} from "../../components/layout/row/twoRow/twoRowPanel";
 import {TwoColumnPanel} from "../../components/layout/columns/twoColumnPanel";
 import {ButtonTitleValue} from "../../components/data/ButtonTitleValue/buttonTitleValue";
 import {LensProps} from "@focuson/state";
+import {Optional} from "@focuson/lens";
+import {OnePageDetails} from "../../components/multipage/multiPage.domain";
 
 
 export interface StatementPageProps<State> extends LensProps<State, Statement>, LoadingProps {
+}
+
+export function statementPageDetails<State>(lens: Optional<State, Statement>): OnePageDetails<State, Statement> {
+    return ({lens, pageFunction: StatementPage});
 }
 
 export function StatementPage<State>({state, loading}: StatementPageProps<State>) {

@@ -1,6 +1,5 @@
 import React from "react";
 import {Values, ValuesProp} from "./titleValues";
-import {ButtonTitleValue, TitleValueButtonProperties} from "../ButtonTitleValue/buttonTitleValue";
 
 
 export default {

@@ -1,6 +1,5 @@
 import React from "react";
 import {TwoByTwo} from "./twoByTwo";
-import {TwoColumnPanel} from "../../columns/twoColumnPanel";
 import {FourChildrenProps} from "../../../../utils/childrenProps";
 
 
