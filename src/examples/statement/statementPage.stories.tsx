@@ -2,7 +2,7 @@ import React from "react";
 import {StatementPage, StatementPageProps} from "./statementPage";
 import {sampleStatement} from "./sampleStatement";
 import {lensState} from "@focuson/state";
-import {StateForStatement} from "./statementPage.pact.spec";
+import {StateForStatement} from "./statement.pact.spec";
 
 
 export default {

@@ -13,7 +13,6 @@ export interface AccountPersonalisationProps extends LoadingProps {
 
 
 export function AccountPersonalisationPage({accountPersonalisationDetails, loading}: AccountPersonalisationProps) {
-    console.log(accountPersonalisationDetails, loading)
     const statusEnum = 'enum(Received Complete,Sent,Recevied incomplete,Defaults recorded)'
     return (<Page title='Account Personalisation'>
         <Loading loading={loading}>

@@ -5,7 +5,7 @@ import React from "react";
 import {sampleStatement} from "./sampleStatement";
 import {StatementPage2x2} from "./statementPage2x2";
 import {lensState} from "@focuson/state";
-import {StateForStatement} from "./statementPage.pact.spec";
+import {StateForStatement} from "./statement.pact.spec";
 
 
 enzymeSetup()

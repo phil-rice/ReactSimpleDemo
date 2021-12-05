@@ -12,6 +12,7 @@ import {customerIdL, HasCustomerId, HasTagHolder} from "./examples/common/common
 import {displayPage, HasPageSelection, MultiPageDetails, pageSelectionlens} from "./components/multipage/multiPage.domain";
 import {statementPageDetails} from "./examples/statement/statementPage";
 import path from "path";
+// import pact from '@pact-foundation/pact-node';
 
 export interface FullState extends HasStatement, HasCustomerId, HasPageSelection<any>, HasTagHolder {
     fetcherDebug?: FetcherDebug
@@ -130,15 +131,15 @@ let startState: FullState = {
     }
 }
 
-var pact = require('@pact-foundation/pact-node');
-var server = pact.createStub({
-    cors: true,
-    port: 8080,
-    pactUrls: ['./pacts/browser-cmsbackend.json'],
-    log: path.resolve(process.cwd(), "logs", "pact.log"),
-    logLevel: "info",
-});
-server.start()
+
+// var server = pact.createStub({
+//     cors: true,
+//     port: 8080,
+//     pactUrls: ['./pacts/browser-cmsbackend.json'],
+//     log: path.resolve(process.cwd(), "logs", "pact.log"),
+//     logLevel: "info",
+// });
+// server.start()
 
 setJson(startState, startState)
 

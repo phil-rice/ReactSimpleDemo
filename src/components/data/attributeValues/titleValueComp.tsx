@@ -11,10 +11,10 @@ export function TitleValueComp<T>({title, labels, values}: TitleValueCompProps<T
         <div className=''>
             <OptionalTitle title={title}/>
             <dl>
-                {labels.map(l => (<>
+                {labels.map((l,i) => (<React.Fragment key={i}>
                     <dd>{l}</dd>
                     <dt>{values[l]}</dt>
-                </>))}
+                </React.Fragment>))}
             </dl>
         </div>
     </>)
