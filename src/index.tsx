@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import {Lenses, Optional} from "@focuson/lens";
 import {LensProps, lensState, LensState} from "@focuson/state";
-import {HasStatement, statement2x2PageDetails, statementFetcher, stateStatementL} from "./examples/statement/statement.domain";
+import {HasStatement, HasStatement2x2, statement2x2Fetcher, statement2x2PageDetails, statementFetcher, stateStatement2x2L, stateStatementL} from "./examples/statement/statement.domain";
 import {FetcherDebug, FetcherTree, fetcherTree, FetchFn, loadTree, loggingFetchFn, wouldLoad, WouldLoad} from "@focuson/fetcher";
 import {fetchWithPrefix, textChangedEvent} from "./utils/utils";
 
@@ -12,9 +12,11 @@ import {customerIdL, HasCustomerId, HasTagHolder} from "./examples/common/common
 import {displayPage, HasPageSelection, MultiPageDetails, pageSelectionlens} from "./components/multipage/multiPage.domain";
 import {statementPageDetails} from "./examples/statement/statementPage";
 import path from "path";
+import {debugPageDetails} from "./components/debug/debug";
+import {SelectPage} from "./components/nav/selectPage";
 // import pact from '@pact-foundation/pact-node';
 
-export interface FullState extends HasStatement, HasCustomerId, HasPageSelection<any>, HasTagHolder {
+export interface FullState extends HasStatement,HasStatement2x2, HasCustomerId, HasPageSelection<any>, HasTagHolder {
     fetcherDebug?: FetcherDebug
     showPageDebug?: boolean
 }
@@ -24,7 +26,8 @@ interface IndexProps extends LensProps<FullState, FullState> {
 
 const demoAppPageDetails: MultiPageDetails<FullState> = {
     statement: statementPageDetails(stateStatementL<FullState>()),
-    statement2x2: statement2x2PageDetails(stateStatementL<FullState>())
+    statement2x2: statement2x2PageDetails(stateStatement2x2L<FullState>()),
+    debug: debugPageDetails()
 }
 
 
@@ -33,23 +36,8 @@ function Index({state}: IndexProps) {
     const page = displayPage(demoAppPageDetails, state, pageSelectionlens(), debug)
     if (debug) console.log("page", page)
 
-    //let startState: FullState = {
-    //     pageSelection: {pageName: 'statement'},
-    //     customerId: "mycid",
-    //     tags: {},
-    //     showPageDebug: false,
-    //     fetcherDebug: {
-    //         fetcherDebug: true,
-    //         loadTreeDebug: true,
-    //         whatLoad: true
-    //     }
-    // }
-
-    function changeCustomerId(e?: string) {
-        console.log('changeCustId', e);
-        if (e) state.focusOn('customerId').setJson(e)
-    }
-
+    const changeCustomerId = (e?: string) => { if (e) state.focusOn('customerId').setJson(e)};
+    let selectPageState = state.focusOn('pageSelection')
     return (<>
         <ul>
             <li>Customer Id<input id='customerId' type='text' onKeyPress={textChangedEvent('customerId', changeCustomerId)} onBlur={e => changeCustomerId(e.target?.value)}/></li>
@@ -57,25 +45,20 @@ function Index({state}: IndexProps) {
                 <button onClick={
                     () => state.focusOn('tags')
                         // @ts-ignore
-                        .setJson(undefined)}>Reload
+                        .setJson({})}>Reload
                 </button>
             </li>
-            <li>
-                <button onClick={() => state.focusOn('pageSelection').setJson({pageName: 'statement', firstTime: false})}>Statement</button>
-            </li>
-            <li>
-                <button onClick={() =>
-                    state.focusOn('pageSelection').setJson({pageName: 'statement2x2', firstTime: false})
-                }>Statement 2x2
-                </button>
-            </li>
+            <li><SelectPage pageName='Debug' state={selectPageState}/></li>
+            <li><SelectPage pageName='statement' state={selectPageState}/></li>
+            <li><SelectPage pageName='statement2x2' state={selectPageState}/></li>
         </ul>
         {page}
     </>)
 }
 
 const sFetcher = statementFetcher<FullState>(pageSelectionlens(), customerIdL)
-const tree = fetcherTree<FullState>(sFetcher)
+const s2x2Fetcher = statement2x2Fetcher<FullState>(pageSelectionlens(), customerIdL)
+const tree: FetcherTree<FullState> = {fetchers: [sFetcher, s2x2Fetcher], children: []}
 
 
 export function onError(s: FullState, e: any): FullState {

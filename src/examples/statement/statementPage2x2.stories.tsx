@@ -3,7 +3,7 @@ import {StatementPageProps} from "./statementPage";
 import {sampleStatement} from "./sampleStatement";
 import {StatementPage2x2} from "./statementPage2x2";
 import {lensState} from "@focuson/state";
-import {StateForStatement} from "./statement.pact.spec";
+import {StateForStatement2x2Test, StateForStatementTest} from "./statement.pact.spec";
 
 
 export default {
@@ -11,10 +11,10 @@ export default {
     title: 'Examples/Statement/StatementPage2x2',
 
 }
-const statementState = lensState<StateForStatement>({statement: sampleStatement,tags:{statement: ["someId"]}, pageSelection: {pageName: 'statement'}}, (s: StateForStatement) => {}, 'statementState')
-    .focusOn('statement')
+const statementState = lensState<StateForStatement2x2Test>({statement2x2: sampleStatement,tags:{statement: ["someId"]}, pageSelection: {pageName: 'statement2x2'}}, (s: StateForStatementTest) => {}, 'statementState')
+    .focusOn('statement2x2')
 
-const Template = (args: StatementPageProps<StateForStatement>) =>
+const Template = (args: StatementPageProps<StateForStatementTest>) =>
     <StatementPage2x2 {...args} />;
 
 export const LoadingFalse = Template.bind({});

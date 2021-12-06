@@ -1,7 +1,7 @@
-import {SpecificTagFetcher, specify, tagFetcher, TagHolder} from "./tagFetcher";
+import {SpecificTagFetcher,  tagFetcher, TagHolder} from "./tagFetcher";
 import {Lenses} from "@focuson/lens";
 import {LoadInfo, MutateFn} from "@focuson/fetcher";
-import {commonFetch} from "../examples/common/common.domain";
+import {commonFetch, specify} from "../examples/common/common.domain";
 import {HasPageSelection} from "../components/multipage/multiPage.domain";
 
 interface TagFetcherDetails {
@@ -83,3 +83,4 @@ describe("tagFetcher", () => {
     })
 
 })
+

@@ -931,6 +931,14 @@ exports[`Storyshots Loading/Loading Loading True 1`] = `
 </p>
 `;
 
+exports[`Storyshots Nav/SelectPage Select Statement 1`] = `
+<button
+  onClick={[Function]}
+>
+  Statement
+</button>
+`;
+
 exports[`Storyshots Page/Loading With Out Title Loading 1`] = `
 <div
   className="page"

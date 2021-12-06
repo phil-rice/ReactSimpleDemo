@@ -5,11 +5,11 @@ import React from "react";
 import {sampleStatement} from "./sampleStatement";
 import {StatementPage2x2} from "./statementPage2x2";
 import {lensState} from "@focuson/state";
-import {StateForStatement} from "./statement.pact.spec";
+import {StateForStatementTest} from "./statement.pact.spec";
 
 
 enzymeSetup()
-const statementState = lensState<StateForStatement>({statement: sampleStatement, tags: {}, pageSelection: {pageName: 'statement'}}, (s: StateForStatement) => {}, 'statementState')
+const statementState = lensState<StateForStatementTest>({statement: sampleStatement, tags: {}, pageSelection: {pageName: 'statement'}}, (s: StateForStatementTest) => {}, 'statementState')
     .focusOn('statement')
 
 describe("StatementPage2x2... note that they didn't need to change", () => {

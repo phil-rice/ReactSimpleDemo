@@ -1,6 +1,7 @@
 import {Iso, Lens, Optional} from "@focuson/lens";
 import {areAllDefined, arraysEqual, Fetcher, ifEEqualsFetcher, loadInfo, MutateFn, partialFnUsageError, ReqFn, Tags} from "@focuson/fetcher";
 import {or} from "./utils";
+import {specify} from "../examples/common/common.domain";
 
 
 /** The tags are the 'bits of data' that tell us if we need to load something'
@@ -18,42 +19,36 @@ export function onTagFetchError<S>(errorMessageL: Optional<S, string>): OnTagFet
 }
 
 
-export interface CommonTagFetcher<S, Details> {
-    identityL: Iso<S, S>,
-    mainThingL: Lens<S, keyof Details>,
-    tagHolderL: Optional<S, TagHolder>,
-    onTagFetchError: OnTagFetchErrorFn<S>
+/**S is the full state for our application.
+ *
+ * Details is things like {statement: Statement, accountPersonalisation: AccountPersonalisation} the data we load from the back end goes here
+ */
+export interface CommonTagFetcher<S extends Details, Details> {
+    identityL: Iso<S, S>, //An identity lens. Just avoid remaking it
+    mainThingL: Lens<S, keyof Details>,  //the name of the main thing being displayed. e.g. statement, accountpersonalisation...
+    tagHolderL: Optional<S, TagHolder>,  //focuses on the tags that record 'the current state' i.e. the ones that were last loaded
+    onTagFetchError: OnTagFetchErrorFn<S>, //What to do if there is a problem while fetching
+
 }
-export interface SpecificTagFetcher<S, Details, T> extends CommonTagFetcher<S, Details> {
-    targetLens: Optional<S, T>,
-    actualTags: (s: S) => Tags,
-    reqFn: ReqFn<S>,
-    tagLens: Optional<S, Tags>,
+
+/**S is the state. Details are where we put the resulting data that we fetch (typically a unique place per item fetched), T is the type this fetcher will fetch */
+export interface SpecificTagFetcher<S extends Details, Details, T> extends CommonTagFetcher<S, Details> {
+    tagFetcher(sf: SpecificTagFetcher<S, Details, T>): Fetcher<S, T>,
+    targetLens: Optional<S, T>,  //where we put the T
+    actualTags: (s: S) => Tags, // the tags that say 'if any of these change we need to reload'
+    reqFn: ReqFn<S>, // The url and other things needed to load the data
+    tagLens: Optional<S, Tags>, //A lens to where we store the tags. Will typically be under the targetHolderL of the CommonTagFetcher
     description?: string
 }
-export function specify<S, Details, T>(ctf: CommonTagFetcher<S, Details>, tagName: keyof S, actualTags: (s: S) => Tags, reqFn: ReqFn<S>, targetLens: Optional<S, T>, description?: string): SpecificTagFetcher<S, Details, T> {
-    return ({
-        ...ctf,
-        targetLens,
-        actualTags,
-        reqFn,
-        // @ts-ignore  We need this ignore here to avoid the effort of setting up Tag properly. This reduces the work of every page, so I think it's worth it
-        tagLens: ctf.tagHolderL.focusQuery(tagName),
-        description: tagName.toString()
-    })
-}
+
 
 
 //  return ifEEqualsFetcher(s => (customerIdL.getOption(s) !== undefined && (mainThingL.get(s).pageName === 'statement'||mainThingL.get(s).pageName === 'statement2x2')),
 //         tagFetcher<S, Statement>(statementSF<S>(customerIdL)))
 
-export function simpleTagFetcher<S, Details, K extends keyof S>(ctf: CommonTagFetcher<S, Details>, tagName: K, actualTags: (s: S) => Tags, reqFn: ReqFn<S>, description?: string) {
-    const stf = specify<S, Details, S[K]>(ctf, tagName, actualTags, reqFn, ctf.identityL.focusQuery(tagName))
-    ifEEqualsFetcher<S>(s => ctf.mainThingL.get(s) === tagName.toString(), tagFetcher(stf), description)
-}
 
 
-export function tagFetcher<S, Details, T>(sf: SpecificTagFetcher<S, Details, T>): Fetcher<S, T> {
+export function tagFetcher<S extends Details, Details, T>(sf: SpecificTagFetcher<S, Details, T>): Fetcher<S, T> {
     const result: Fetcher<S, T> = {
         shouldLoad(s: S) {
             const currentTags = sf.tagLens.getOption(s)

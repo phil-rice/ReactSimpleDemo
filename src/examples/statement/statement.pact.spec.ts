@@ -1,40 +1,41 @@
 import {sampleStatement} from "./sampleStatement";
 import {provider} from "../../utils/provider";
-import {statementFetcher, StatementRequirements, statementUrl} from "./statement.domain";
+import {Statement2x2Requirements, statementFetcher, StatementRequirements, statementUrl} from "./statement.domain";
 import {fetcherTree, loadTree, loggingFetchFn, wouldLoad} from "@focuson/fetcher";
 import wrapper from "@pact-foundation/pact-node"
 import {customerIdL} from "../common/common.domain";
 import {HasPageSelection, pageSelectionlens} from "../../components/multipage/multiPage.domain";
 import {fetchWithPrefix} from "../../utils/utils";
 
-export interface StateForStatement extends StatementRequirements, HasPageSelection<any> {
-
+export interface StateForStatementTest extends StatementRequirements, HasPageSelection<any> {
+}
+export interface StateForStatement2x2Test extends Statement2x2Requirements, HasPageSelection<any> {
 }
 
-const emptyState: StateForStatement = {
+const emptyState: StateForStatementTest = {
     pageSelection: {pageName: 'empty'},
     tags: {}
 }
-const emptyStatementState: StateForStatement = {
+const emptyStatementState: StateForStatementTest = {
     pageSelection: {pageName: 'statement'},
     customerId: "mycid",
     tags: {}
 }
-const withWrongStatementTags: StateForStatement = {
+const withWrongStatementTags: StateForStatementTest = {
     pageSelection: {pageName: 'statement'},
     customerId: "mycid",
     statement: {...sampleStatement, title: 'old title that will be changed'},
     tags: {statement: ["wrongTags"]}
 }
-const withCorrectStatementTags: StateForStatement = {
+const withCorrectStatementTags: StateForStatementTest = {
     pageSelection: {pageName: 'statement'},
     customerId: "mycid",
     statement: sampleStatement,
     tags: {statement: ["mycid"]}
 }
 
-const sFetcher = statementFetcher<StateForStatement>(pageSelectionlens(), customerIdL)
-const statementFetcherTree = fetcherTree<StateForStatement>(sFetcher)
+const sFetcher = statementFetcher<StateForStatementTest>(pageSelectionlens(), customerIdL)
+const statementFetcherTree = fetcherTree<StateForStatementTest>(sFetcher)
 
 
 describe("statement fetcher unit tests", () => {
