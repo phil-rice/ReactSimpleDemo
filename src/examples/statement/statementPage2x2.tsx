@@ -14,6 +14,7 @@ export interface StatementPage2x2Props<State> extends LensProps<State, Statement
 }
 
 export function StatementPage2x2<State>({state, loading}: StatementPage2x2Props<State>) {
+    console.log('2x2',state.json())
     const {title, address, statementTitles, statementValues} = state.json();
     return (<Page title={"2x2"+title}>
         <Loading loading={loading}>

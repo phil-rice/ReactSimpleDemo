@@ -22,7 +22,7 @@ export function statementSF<S extends StatementRequirements>(customerIdL: GetOpt
 }
 
 export function statementFetcher<S extends StatementRequirements>(mainThingL: Lens<S, PageSelection<any>>, customerIdL: GetOptioner<S, string>) {
-    return ifEEqualsFetcher(s => (customerIdL.getOption(s) !== undefined && mainThingL.get(s).pageName === 'statement'),
+    return ifEEqualsFetcher(s => (customerIdL.getOption(s) !== undefined && (mainThingL.get(s).pageName === 'statement'||mainThingL.get(s).pageName === 'statement2x2')),
         tagFetcher<S, Statement>(statementSF<S>(customerIdL)))
 }
 
