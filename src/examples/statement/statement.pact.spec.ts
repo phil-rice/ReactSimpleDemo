@@ -1,11 +1,13 @@
 import {sampleStatement} from "./sampleStatement";
 import {provider} from "../../utils/provider";
-import {Statement2x2Requirements, statementFetcher, StatementRequirements, statementUrl} from "./statement.domain";
+import { statementUrl} from "./statement.domain";
 import {fetcherTree, loadTree, loggingFetchFn, wouldLoad} from "@focuson/fetcher";
 import wrapper from "@pact-foundation/pact-node"
 import {customerIdL} from "../common/common.domain";
 import {HasPageSelection, pageSelectionlens} from "../../components/multipage/multiPage.domain";
 import {fetchWithPrefix} from "../../utils/utils";
+import {statementFetcher, StatementRequirements} from "./statementPage";
+import {Statement2x2Requirements} from "./statementPage2x2";
 
 export interface StateForStatementTest extends StatementRequirements, HasPageSelection<any> {
 }

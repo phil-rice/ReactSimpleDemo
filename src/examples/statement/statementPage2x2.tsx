@@ -2,21 +2,41 @@
 
 
 import {Loading, LoadingProps} from "../../components/loading/loading";
-import {Statement} from "./statement.domain";
+import {Statement, statementUrl} from "./statement.domain";
 import {Page} from "../../components/page/page";
 import {TwoByTwo} from "../../components/layout/grid/twobytwo/twoByTwo";
 import {TitleAndValues, Values} from "../../components/data/attributeValues/titleValues";
 import {Button} from "../../components/Buttons/button";
 import {ButtonTitleValue} from "../../components/data/ButtonTitleValue/buttonTitleValue";
 import {LensProps} from "@focuson/state";
+import {commonFetch, HasCustomerId, HasErrorMessage, HasTagHolder, simpleTagFetcher} from "../common/common.domain";
+import {HasPageSelection, OnePageDetails, PageSelection} from "../../components/multipage/multiPage.domain";
+import {GetOptioner, Lens, Optional} from "@focuson/lens";
 
-export interface StatementPage2x2Props<State> extends LensProps<State, Statement>, LoadingProps{
+export interface HasStatement2x2 {
+    statement2x2?: Statement
+}
+
+export type Statement2x2Requirements = HasStatement2x2 & HasTagHolder & HasErrorMessage & HasCustomerId
+
+export function statement2x2PageDetails<State>(lens: Optional<State, Statement>): OnePageDetails<State, Statement> {
+    return ({lens, pageFunction: StatementPage2x2});
+}
+
+export function statement2x2Fetcher<S extends Statement2x2Requirements & HasPageSelection<HasStatement2x2>>(mainThingL: Lens<S, PageSelection<any>>, customerIdL: GetOptioner<S, string>) {
+    return simpleTagFetcher<S, HasStatement2x2, 'statement2x2'>(commonFetch<S, HasStatement2x2>(),
+        'statement2x2',
+        s => [customerIdL.getOption(s)],
+        s => [statementUrl<S>(customerIdL)(s), undefined])
+}
+
+export interface StatementPage2x2Props<State> extends LensProps<State, Statement>, LoadingProps {
 }
 
 export function StatementPage2x2<State>({state, loading}: StatementPage2x2Props<State>) {
     // console.log('2x2',state.json())
     const {title, address, statementTitles, statementValues} = state.json();
-    return (<Page title={"2x2"+title}>
+    return (<Page title={"2x2" + title}>
         <Loading loading={loading}>
             <TwoByTwo title1={statementTitles.regularStatement} title2={statementTitles.interimStatement}>
 

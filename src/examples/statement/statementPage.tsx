@@ -4,20 +4,32 @@ import {Loading, LoadingProps} from "../../components/loading/loading";
 import {TitleAndValues, Values} from "../../components/data/attributeValues/titleValues";
 import {Button} from "../../components/Buttons/button";
 import React from "react";
-import {Statement} from "./statement.domain";
+import {Statement, statementUrl} from "./statement.domain";
 import {TwoRowPanel} from "../../components/layout/row/twoRow/twoRowPanel";
 import {TwoColumnPanel} from "../../components/layout/columns/twoColumnPanel";
 import {ButtonTitleValue} from "../../components/data/ButtonTitleValue/buttonTitleValue";
 import {LensProps} from "@focuson/state";
-import {Optional} from "@focuson/lens";
-import {OnePageDetails} from "../../components/multipage/multiPage.domain";
+import {GetOptioner, Lens, Optional} from "@focuson/lens";
+import {HasPageSelection, OnePageDetails, PageSelection} from "../../components/multipage/multiPage.domain";
+import {commonFetch, HasCustomerId, HasErrorMessage, HasTagHolder, simpleTagFetcher} from "../common/common.domain";
 
-
-export interface StatementPageProps<State> extends LensProps<State, Statement>, LoadingProps {
+export interface HasStatement {
+    statement?: Statement
 }
+
+export type StatementRequirements = HasStatement & HasTagHolder & HasErrorMessage & HasCustomerId
 
 export function statementPageDetails<State>(lens: Optional<State, Statement>): OnePageDetails<State, Statement> {
     return ({lens, pageFunction: StatementPage});
+}
+export function statementFetcher<S extends StatementRequirements & HasPageSelection<HasStatement>>(mainThingL: Lens<S, PageSelection<any>>, customerIdL: GetOptioner<S, string>) {
+    return simpleTagFetcher<S,HasStatement, 'statement'>(commonFetch<S, HasStatement>(),
+        'statement',
+        s => [customerIdL.getOption(s)],
+        s => [statementUrl<S>(customerIdL)(s), undefined])
+}
+
+export interface StatementPageProps<State> extends LensProps<State, Statement>, LoadingProps {
 }
 
 export function StatementPage<State>({state, loading}: StatementPageProps<State>) {

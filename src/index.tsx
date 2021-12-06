@@ -4,29 +4,31 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import {Lenses, Optional} from "@focuson/lens";
 import {LensProps, lensState, LensState} from "@focuson/state";
-import {HasStatement, HasStatement2x2, statement2x2Fetcher, statement2x2PageDetails, statementFetcher, stateStatement2x2L, stateStatementL} from "./examples/statement/statement.domain";
-import {FetcherDebug, FetcherTree, fetcherTree, FetchFn, loadTree, loggingFetchFn, wouldLoad, WouldLoad} from "@focuson/fetcher";
+import {} from "./examples/statement/statement.domain";
+import {FetcherDebug, FetcherTree, FetchFn, loadTree, loggingFetchFn, wouldLoad, WouldLoad} from "@focuson/fetcher";
 import {fetchWithPrefix, textChangedEvent} from "./utils/utils";
 
 import {customerIdL, HasCustomerId, HasTagHolder} from "./examples/common/common.domain";
 import {displayPage, HasPageSelection, MultiPageDetails, pageSelectionlens} from "./components/multipage/multiPage.domain";
-import {statementPageDetails} from "./examples/statement/statementPage";
-import path from "path";
+import {HasStatement, statementFetcher, statementPageDetails} from "./examples/statement/statementPage";
 import {debugPageDetails} from "./components/debug/debug";
 import {SelectPage} from "./components/nav/selectPage";
+import {HasStatement2x2, statement2x2Fetcher, statement2x2PageDetails} from "./examples/statement/statementPage2x2";
 // import pact from '@pact-foundation/pact-node';
 
-export interface FullState extends HasStatement,HasStatement2x2, HasCustomerId, HasPageSelection<any>, HasTagHolder {
+export interface FullState extends HasStatement, HasStatement2x2, HasCustomerId, HasPageSelection<any>, HasTagHolder {
     fetcherDebug?: FetcherDebug
     showPageDebug?: boolean
 }
+
+export const fullStateIdentityL = Lenses.identity<FullState>('state')
 
 interface IndexProps extends LensProps<FullState, FullState> {
 }
 
 const demoAppPageDetails: MultiPageDetails<FullState> = {
-    statement: statementPageDetails(stateStatementL<FullState>()),
-    statement2x2: statement2x2PageDetails(stateStatement2x2L<FullState>()),
+    statement: statementPageDetails(fullStateIdentityL.focusQuery('statement')),
+    statement2x2: statement2x2PageDetails(fullStateIdentityL.focusQuery('statement2x2')),
     debug: debugPageDetails()
 }
 
