@@ -9,9 +9,10 @@ import {TitleAndValues, Values} from "../../components/data/attributeValues/titl
 import {Button} from "../../components/Buttons/button";
 import {ButtonTitleValue} from "../../components/data/ButtonTitleValue/buttonTitleValue";
 import {LensProps} from "@focuson/state";
-import {commonFetch, HasCustomerId, HasErrorMessage, HasTagHolder, simpleTagFetcher} from "../common/common.domain";
+import { HasCustomerId, HasErrorMessage, HasTagHolder} from "../common/common.domain";
 import {HasPageSelection, OnePageDetails, PageSelection} from "../../components/multipage/multiPage.domain";
 import {GetOptioner, Lens, Optional} from "@focuson/lens";
+import {commonFetch, simpleTagFetcher} from "../../utils/tagFetcher";
 
 export interface HasStatement2x2 {
     statement2x2?: Statement

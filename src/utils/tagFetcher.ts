@@ -1,7 +1,8 @@
-import {Iso, Lens, Optional} from "@focuson/lens";
+import {Iso, Lens, Lenses, Optional} from "@focuson/lens";
 import {areAllDefined, arraysEqual, Fetcher, ifEEqualsFetcher, loadInfo, MutateFn, partialFnUsageError, ReqFn, Tags} from "@focuson/fetcher";
 import {or} from "./utils";
-import {specify} from "../examples/common/common.domain";
+import {HasErrorMessage, HasTagHolder} from "../examples/common/common.domain";
+import {HasPageSelection} from "../components/multipage/multiPage.domain";
 
 
 /** The tags are the 'bits of data' that tell us if we need to load something'
@@ -42,11 +43,35 @@ export interface SpecificTagFetcher<S extends Details, Details, T> extends Commo
 }
 
 
+export function commonFetch<S extends HasErrorMessage & HasTagHolder & HasPageSelection<Details> & Details, Details>(): CommonTagFetcher<S, Details> {
+    const identityL: Iso<S, S> = Lenses.identity<S>('state')//we need the any because of a typescript compiler bug
+    // @ts-ignore I don't know why this doesn't compile
+    let errorMessageL: Optional<S, string> = identityL.focusQuery('errorMessage');
+    return ({
+        identityL,
+        mainThingL: identityL.focusOn('pageSelection').focusOn('pageName'),
+        tagHolderL: identityL.focusQuery('tags'),
+        onTagFetchError: onTagFetchError(errorMessageL)
+    })
+}
 
-//  return ifEEqualsFetcher(s => (customerIdL.getOption(s) !== undefined && (mainThingL.get(s).pageName === 'statement'||mainThingL.get(s).pageName === 'statement2x2')),
-//         tagFetcher<S, Statement>(statementSF<S>(customerIdL)))
+export function simpleTagFetcher<S extends Details, Details, K extends keyof Details>(ctf: CommonTagFetcher<S, Details>, tagName: K, actualTags: (s: S) => Tags, reqFn: ReqFn<S>, description?: string) {
+    const stf = specify<S, Details, S[K]>(ctf, tagName, actualTags, reqFn, ctf.identityL.focusQuery(tagName))
+    return ifEEqualsFetcher<S>(s => ctf.mainThingL.get(s) === tagName.toString(), tagFetcher(stf), description)
+}
 
-
+export function specify<S extends Details, Details, T>(ctf: CommonTagFetcher<S, Details>, tagName: keyof S, actualTags: (s: S) => Tags, reqFn: ReqFn<S>, targetLens: Optional<S, T>, description?: string): SpecificTagFetcher<S, Details, T> {
+    return ({
+        ...ctf,
+        tagFetcher,
+        targetLens,
+        actualTags,
+        reqFn,
+        // @ts-ignore  We need this ignore here to avoid the effort of setting up Tag properly. This reduces the work of every page, so I think it's worth it
+        tagLens: ctf.tagHolderL.focusQuery(tagName),
+        description: tagName.toString()
+    })
+}
 
 export function tagFetcher<S extends Details, Details, T>(sf: SpecificTagFetcher<S, Details, T>): Fetcher<S, T> {
     const result: Fetcher<S, T> = {

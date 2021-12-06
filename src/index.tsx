@@ -2,26 +2,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import {Lenses, Optional} from "@focuson/lens";
-import {LensProps, lensState, LensState} from "@focuson/state";
-import {} from "./examples/statement/statement.domain";
-import {FetcherDebug, FetcherTree, FetchFn, loadTree, loggingFetchFn, wouldLoad, WouldLoad} from "@focuson/fetcher";
+import {Lenses} from "@focuson/lens";
+import {LensProps} from "@focuson/state";
+import {loggingFetchFn, setJsonForFetchers, WouldLoad} from "@focuson/fetcher";
 import {fetchWithPrefix, textChangedEvent} from "./utils/utils";
 
-import {customerIdL, HasCustomerId, HasTagHolder} from "./examples/common/common.domain";
-import {displayPage, HasPageSelection, MultiPageDetails, pageSelectionlens} from "./components/multipage/multiPage.domain";
-import {HasStatement, statementFetcher, statementPageDetails} from "./examples/statement/statementPage";
+import {FullState, fullStateIdentityL} from "./examples/common/common.domain";
+import {displayPage, MultiPageDetails, pageSelectionlens} from "./components/multipage/multiPage.domain";
+import {statementPageDetails} from "./examples/statement/statementPage";
 import {debugPageDetails} from "./components/debug/debug";
 import {SelectPage} from "./components/nav/selectPage";
-import {HasStatement2x2, statement2x2Fetcher, statement2x2PageDetails} from "./examples/statement/statementPage2x2";
+import {statement2x2PageDetails} from "./examples/statement/statementPage2x2";
+import {tree} from "./fetchers";
 // import pact from '@pact-foundation/pact-node';
 
-export interface FullState extends HasStatement, HasStatement2x2, HasCustomerId, HasPageSelection<any>, HasTagHolder {
-    fetcherDebug?: FetcherDebug
-    showPageDebug?: boolean
-}
-
-export const fullStateIdentityL = Lenses.identity<FullState>('state')
 
 interface IndexProps extends LensProps<FullState, FullState> {
 }
@@ -58,11 +52,6 @@ function Index({state}: IndexProps) {
     </>)
 }
 
-const sFetcher = statementFetcher<FullState>(pageSelectionlens(), customerIdL)
-const s2x2Fetcher = statement2x2Fetcher<FullState>(pageSelectionlens(), customerIdL)
-const tree: FetcherTree<FullState> = {fetchers: [sFetcher, s2x2Fetcher], children: []}
-
-
 export function onError(s: FullState, e: any): FullState {
     console.error("onError", e)
     throw e
@@ -80,40 +69,6 @@ export function wouldLoadSummary(wouldLoad: WouldLoad[]) {
 
 const fetchFn = fetchWithPrefix("http://localhost:8080", loggingFetchFn)
 
-export function setJsonForFetchers<State>(fetchFn: FetchFn,
-                                          tree: FetcherTree<State>,
-                                          description: string,
-                                          onError: (os: State, e: any) => State,
-                                          fn: (lc: LensState<State, State>) => void,
-                                          mutate: (s: State) => Promise<State>,
-                                          debugOptional?: Optional<State, FetcherDebug>): (os: State, s: State) => Promise<State> {
-    return async (os: State, main: State): Promise<State> => {
-        const debug = debugOptional?.getOption(main)
-        let newStateFn = (fs: State) => fn(lensState(fs, state => setJsonForFetchers(fetchFn, tree, description, onError, fn, mutate, debugOptional)(fs, state), description))
-        try {
-            if (debug?.fetcherDebug) console.log('setJsonForFetchers - start', main)
-            if (main) newStateFn(main)
-            if (debug?.whatLoad) {
-                let w = wouldLoad(tree, main);
-                console.log("wouldLoad", wouldLoadSummary(w), w)
-            }
-            let newMain = await loadTree(tree, main, fetchFn, debug)
-                .then(s => s ? s : onError(s, Error('could not load tree')))
-                .catch(e => onError(main, e))
-            if (debug?.fetcherDebug) console.log('setJsonForFetchers - after load', newMain)
-            let finalState = await mutate(newMain)
-            if (debug?.fetcherDebug) console.log('setJsonForFetchers - final', finalState)
-            newStateFn(finalState)
-            return finalState
-        } catch (e) {
-            console.error("An unexpected error occured. Rolling back the state", e)
-            let newMain = onError(os, e);
-            newStateFn(newMain)
-            return newMain
-        }
-    }
-}
-
 let setJson: (os: FullState, s: FullState) => Promise<FullState> = setJsonForFetchers(fetchFn, tree, 'mainLoop', onError,
     state => ReactDOM.render(<Index state={state}/>, document.getElementById('root')),
     mutateJsonEachCall, Lenses.identity<FullState>('state').focusQuery('fetcherDebug'))
@@ -130,15 +85,6 @@ let startState: FullState = {
     }
 }
 
-
-// var server = pact.createStub({
-//     cors: true,
-//     port: 8080,
-//     pactUrls: ['./pacts/browser-cmsbackend.json'],
-//     log: path.resolve(process.cwd(), "logs", "pact.log"),
-//     logLevel: "info",
-// });
-// server.start()
 
 setJson(startState, startState)
 
