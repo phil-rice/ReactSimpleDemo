@@ -1,11 +1,21 @@
-import {Lenses,Iso} from "@focuson/lens";
+import {Lenses, Iso, Optional} from "@focuson/lens";
 import {CommonTagFetcher, onTagFetchError, TagHolder} from "../../utils/tagFetcher";
+import {HasPageSelection} from "../../components/multipage/multiPage.domain";
 
-export function commonFetch<S extends HasErrorMessage & HasTagHolder>(): CommonTagFetcher<S> {
-    const identity: Iso<S, any> = Lenses.identity<S>('state')//we need the any because of a typescript compiler bug
+//    identityL: Iso<S, S>,
+//     mainThingL: Lens<S, string>,
+//     tagHolderL: Optional<S, TagHolder>,
+//     onTagFetchError: OnTagFetchErrorFn<S>
+
+export function commonFetch<S extends HasErrorMessage & HasTagHolder & HasPageSelection<Details>, Details>(): CommonTagFetcher<S, Details> {
+    const identityL: Iso<S, S> = Lenses.identity<S>('state')//we need the any because of a typescript compiler bug
+    // @ts-ignore I don't know why this doesn't compile
+    let errorMessageL: Optional<S, string> = identityL.focusQuery('errorMessage');
     return ({
-        tagHolderLens: identity.focusQuery('tags'),
-        onTagFetchError: onTagFetchError(identity.focusQuery('errorMessage'))
+        identityL,
+        mainThingL: identityL.focusOn('pageSelection').focusOn('pageName'),
+        tagHolderL: identityL.focusQuery('tags'),
+        onTagFetchError: onTagFetchError(errorMessageL)
     })
 }
 

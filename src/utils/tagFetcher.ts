@@ -1,5 +1,5 @@
-import {Optional} from "@focuson/lens";
-import {areAllDefined, arraysEqual, Fetcher, loadInfo, MutateFn, partialFnUsageError, ReqFn, Tags} from "@focuson/fetcher";
+import {Iso, Lens, Optional} from "@focuson/lens";
+import {areAllDefined, arraysEqual, Fetcher, ifEEqualsFetcher, loadInfo, MutateFn, partialFnUsageError, ReqFn, Tags} from "@focuson/fetcher";
 import {or} from "./utils";
 
 
@@ -14,35 +14,46 @@ type  OnTagFetchErrorFn<S> = (s: S, status: number, req: any, response: any, ori
 
 export function onTagFetchError<S>(errorMessageL: Optional<S, string>): OnTagFetchErrorFn<S> {
     return (s: S, status: number, req: any, response: any, originalTags?: Tags, currentTags?: Tags) =>
-        errorMessageL.set(s, `Req: ${JSON.stringify(req)}, Resp: ${response}, ${status}, ${originalTags}, ${currentTags}`);
+        errorMessageL.set(s, `Req: ${JSON.stringify(req)}, Resp: ${JSON.stringify(response)}, ${status}, ${originalTags}, ${currentTags}`);
 }
 
 
-export interface CommonTagFetcher<S> {
-    tagHolderLens: Optional<S, TagHolder>,
+export interface CommonTagFetcher<S, Details> {
+    identityL: Iso<S, S>,
+    mainThingL: Lens<S, keyof Details>,
+    tagHolderL: Optional<S, TagHolder>,
     onTagFetchError: OnTagFetchErrorFn<S>
 }
-export interface SpecificTagFetcher<S, T> extends CommonTagFetcher<S> {
+export interface SpecificTagFetcher<S, Details, T> extends CommonTagFetcher<S, Details> {
     targetLens: Optional<S, T>,
     actualTags: (s: S) => Tags,
     reqFn: ReqFn<S>,
     tagLens: Optional<S, Tags>,
     description?: string
 }
-export function specify<S, T>(ctf: CommonTagFetcher<S>, tagName: string, actualTags: (s: S) => Tags, reqFn: ReqFn<S>, targetLens: Optional<S, T>, description?: string): SpecificTagFetcher<S, T> {
-
+export function specify<S, Details, T>(ctf: CommonTagFetcher<S, Details>, tagName: keyof S, actualTags: (s: S) => Tags, reqFn: ReqFn<S>, targetLens: Optional<S, T>, description?: string): SpecificTagFetcher<S, Details, T> {
     return ({
         ...ctf,
         targetLens,
         actualTags,
         reqFn,
-        tagLens: ctf.tagHolderLens.focusQuery(tagName),
-        description: tagName
+        // @ts-ignore  We need this ignore here to avoid the effort of setting up Tag properly. This reduces the work of every page, so I think it's worth it
+        tagLens: ctf.tagHolderL.focusQuery(tagName),
+        description: tagName.toString()
     })
 }
 
 
-export function tagFetcher<S, T>(sf: SpecificTagFetcher<S, T>): Fetcher<S, T> {
+//  return ifEEqualsFetcher(s => (customerIdL.getOption(s) !== undefined && (mainThingL.get(s).pageName === 'statement'||mainThingL.get(s).pageName === 'statement2x2')),
+//         tagFetcher<S, Statement>(statementSF<S>(customerIdL)))
+
+export function simpleTagFetcher<S, Details, K extends keyof S>(ctf: CommonTagFetcher<S, Details>, tagName: K, actualTags: (s: S) => Tags, reqFn: ReqFn<S>, description?: string) {
+    const stf = specify<S, Details, S[K]>(ctf, tagName, actualTags, reqFn, ctf.identityL.focusQuery(tagName))
+    ifEEqualsFetcher<S>(s => ctf.mainThingL.get(s) === tagName.toString(), tagFetcher(stf), description)
+}
+
+
+export function tagFetcher<S, Details, T>(sf: SpecificTagFetcher<S, Details, T>): Fetcher<S, T> {
     const result: Fetcher<S, T> = {
         shouldLoad(s: S) {
             const currentTags = sf.tagLens.getOption(s)

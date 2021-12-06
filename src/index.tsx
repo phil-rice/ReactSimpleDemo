@@ -32,10 +32,24 @@ function Index({state}: IndexProps) {
     let debug = state.json().showPageDebug;
     const page = displayPage(demoAppPageDetails, state, pageSelectionlens(), debug)
     if (debug) console.log("page", page)
+
+    //let startState: FullState = {
+    //     pageSelection: {pageName: 'statement'},
+    //     customerId: "mycid",
+    //     tags: {},
+    //     showPageDebug: false,
+    //     fetcherDebug: {
+    //         fetcherDebug: true,
+    //         loadTreeDebug: true,
+    //         whatLoad: true
+    //     }
+    // }
+
     function changeCustomerId(e?: string) {
         console.log('changeCustId', e);
         if (e) state.focusOn('customerId').setJson(e)
     }
+
     return (<>
         <ul>
             <li>Customer Id<input id='customerId' type='text' onKeyPress={textChangedEvent('customerId', changeCustomerId)} onBlur={e => changeCustomerId(e.target?.value)}/></li>
