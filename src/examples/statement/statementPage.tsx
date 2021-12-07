@@ -20,11 +20,10 @@ export interface HasStatement {
 
 export type StatementRequirements = HasStatement & HasTagHolder & HasErrorMessage & HasCustomerId
 
-export function statementPageDetails<State>(lens: Optional<State, Statement>): OnePageDetails<State, Statement> {
-    return ({lens, pageFunction: StatementPage});
-}
+
 export function statementFetcher<S extends StatementRequirements & HasPageSelection<HasStatement>>(mainThingL: Lens<S, PageSelection<any>>, customerIdL: GetOptioner<S, string>) {
-    return simpleTagFetcher<S,HasStatement, 'statement'>(commonFetch<S, HasStatement>(),
+    return simpleTagFetcher<S, HasStatement, 'statement'>(
+        commonFetch<S, HasStatement>(),
         'statement',
         s => [customerIdL.getOption(s)],
         s => [statementUrl<S>(customerIdL)(s), undefined])
@@ -35,7 +34,7 @@ export interface StatementPageProps<State> extends LensProps<State, Statement>, 
 
 export function StatementPage<State>({state, loading}: StatementPageProps<State>) {
     const {title, address, statementTitles, statementValues} = state.json();
-    return (<Page title={"Main"+ title}>
+    return (<Page title={"Main" + title}>
         <Loading loading={loading}>
             <TwoRowPanel>
                 <TwoColumnPanel title={statementTitles.regularStatement}>

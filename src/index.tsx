@@ -8,18 +8,18 @@ import {fetchWithPrefix} from "./utils/utils";
 
 import {FullState, fullStateIdentityL} from "./examples/common/common.domain";
 import {MultiPageDetails, pageSelectionlens} from "./components/multipage/multiPage.domain";
-import {statementPageDetails} from "./examples/statement/statementPage";
 import {debugPageDetails} from "./components/debug/debug";
-import {statement2x2PageDetails} from "./examples/statement/statementPage2x2";
 import {tree} from "./fetchers";
 import {IndexPage} from "./indexPage";
 import {LensState, lensState} from "@focuson/state";
+import {StatementPage} from "./examples/statement/statementPage";
+import {StatementPage2x2} from "./examples/statement/statementPage2x2";
 // import pact from '@pact-foundation/pact-node';
 
 
 export const demoAppPageDetails: MultiPageDetails<FullState> = {
-    statement: statementPageDetails(fullStateIdentityL.focusQuery('statement')),
-    statement2x2: statement2x2PageDetails(fullStateIdentityL.focusQuery('statement2x2')),
+    statement: {lens: fullStateIdentityL.focusQuery('statement'), pageFunction: StatementPage},
+    statement2x2: {lens: fullStateIdentityL.focusQuery('statement2x2'), pageFunction: StatementPage2x2},
     debug: debugPageDetails()
 }
 

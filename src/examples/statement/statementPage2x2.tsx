@@ -20,9 +20,6 @@ export interface HasStatement2x2 {
 
 export type Statement2x2Requirements = HasStatement2x2 & HasTagHolder & HasErrorMessage & HasCustomerId
 
-export function statement2x2PageDetails<State>(lens: Optional<State, Statement>): OnePageDetails<State, Statement> {
-    return ({lens, pageFunction: StatementPage2x2});
-}
 
 export function statement2x2Fetcher<S extends Statement2x2Requirements & HasPageSelection<HasStatement2x2>>(mainThingL: Lens<S, PageSelection<any>>, customerIdL: GetOptioner<S, string>) {
     return simpleTagFetcher<S, HasStatement2x2, 'statement2x2'>(commonFetch<S, HasStatement2x2>(),

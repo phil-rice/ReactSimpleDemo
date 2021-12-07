@@ -55,9 +55,9 @@ export function commonFetch<S extends HasErrorMessage & HasTagHolder & HasPageSe
     })
 }
 
-export function simpleTagFetcher<S extends Details, Details, K extends keyof Details>(ctf: CommonTagFetcher<S, Details>, tagName: K, actualTags: (s: S) => Tags, reqFn: ReqFn<S>, description?: string) {
-    const stf = specify<S, Details, S[K]>(ctf, tagName, actualTags, reqFn, ctf.identityL.focusQuery(tagName))
-    return ifEEqualsFetcher<S>(s => ctf.mainThingL.get(s) === tagName.toString(), tagFetcher(stf), description)
+export function simpleTagFetcher<S extends Details, Details, K extends keyof Details>(ctf: CommonTagFetcher<S, Details>, pageName: K, actualTags: (s: S) => Tags, reqFn: ReqFn<S>, description?: string) {
+    const stf = specify<S, Details, S[K]>(ctf, pageName, actualTags, reqFn, ctf.identityL.focusQuery(pageName))
+    return ifEEqualsFetcher<S>(s => ctf.mainThingL.get(s) === pageName.toString(), tagFetcher(stf), description)
 }
 
 export function specify<S extends Details, Details, T>(ctf: CommonTagFetcher<S, Details>, tagName: keyof S, actualTags: (s: S) => Tags, reqFn: ReqFn<S>, targetLens: Optional<S, T>, description?: string): SpecificTagFetcher<S, Details, T> {
