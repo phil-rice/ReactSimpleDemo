@@ -8,7 +8,9 @@ import {HasStatement2x2} from "../statement/statementPage2x2";
 
 export interface FullState extends HasStatement, HasStatement2x2, HasCustomerId, HasPageSelection<any>, HasTagHolder {
     fetcherDebug?: FetcherDebug
-    showPageDebug?: boolean
+    showPageDebug?: boolean,
+    stateDebug?: boolean
+
 }
 
 export const fullStateIdentityL = Lenses.identity<FullState>('state')

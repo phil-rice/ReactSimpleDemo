@@ -6,7 +6,7 @@ import {Statement, statementUrl} from "./statement.domain";
 import {Page} from "../../components/page/page";
 import {TwoByTwo} from "../../components/layout/grid/twobytwo/twoByTwo";
 import {TitleAndValues, Values} from "../../components/data/attributeValues/titleValues";
-import {Button} from "../../components/Buttons/button";
+import {Button} from "../../components/buttons/button";
 import {ButtonTitleValue} from "../../components/data/ButtonTitleValue/buttonTitleValue";
 import {LensProps} from "@focuson/state";
 import { HasCustomerId, HasErrorMessage, HasTagHolder} from "../common/common.domain";

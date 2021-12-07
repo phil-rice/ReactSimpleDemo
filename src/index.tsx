@@ -8,9 +8,9 @@ import {fetchWithPrefix} from "./utils/utils";
 
 import {FullState, fullStateIdentityL} from "./examples/common/common.domain";
 import {MultiPageDetails, pageSelectionlens} from "./components/multipage/multiPage.domain";
-import {debugPageDetails} from "./components/debug/debug";
-import {tree} from "./fetchers";
-import {IndexPage} from "./indexPage";
+import {Debug} from "./components/debug/debug";
+import {tree} from "./examples/index/fetchers";
+import {IndexPage} from "./examples/index/indexPage";
 import {LensState, lensState} from "@focuson/state";
 import {StatementPage} from "./examples/statement/statementPage";
 import {StatementPage2x2} from "./examples/statement/statementPage2x2";
@@ -20,7 +20,7 @@ import {StatementPage2x2} from "./examples/statement/statementPage2x2";
 export const demoAppPageDetails: MultiPageDetails<FullState> = {
     statement: {lens: fullStateIdentityL.focusQuery('statement'), pageFunction: StatementPage, clearAtStart: true},
     statement2x2: {lens: fullStateIdentityL.focusQuery('statement2x2'), pageFunction: StatementPage2x2, clearAtStart: true},
-    debug: debugPageDetails()
+    debug: {lens: fullStateIdentityL.focusQuery('stateDebug'), pageFunction: Debug}
 }
 
 export function onError(s: FullState, e: any): FullState {
@@ -92,7 +92,7 @@ export function setJsonForFetchers<State, Element>(fetchFn: FetchFn,
     }
 }
 let setJson: (os: FullState, s: FullState) => Promise<FullState> = setJsonForFetchers(fetchFn, tree, 'mainLoop', onError,
-    state => ReactDOM.render(<IndexPage state={state} pages={['Debug', 'statement', 'statement2x2']}/>, document.getElementById('root')),
+    state => ReactDOM.render(<IndexPage state={state} pages={[ 'statement', 'statement2x2']}/>, document.getElementById('root')),
     preMutate, postMutate, Lenses.identity<FullState>('state').focusQuery('fetcherDebug'))
 
 let startState: FullState = {

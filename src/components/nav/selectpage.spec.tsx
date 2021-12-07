@@ -1,13 +1,9 @@
-import {mount, shallow} from "enzyme";
-import {Page} from "../page/page";
+import {shallow} from "enzyme";
 import React from "react";
 import {enzymeSetup} from "../../enzymeAdapterSetup";
 import {SelectPage} from "./selectPage";
 import {lensState} from "@focuson/state";
-import {StateForStatementTest} from "../../examples/statement/statement.pact.spec";
-import {sampleStatement} from "../../examples/statement/sampleStatement";
 import {HasPageSelection} from "../multipage/multiPage.domain";
-import {Button} from "../Buttons/button";
 
 enzymeSetup()
 

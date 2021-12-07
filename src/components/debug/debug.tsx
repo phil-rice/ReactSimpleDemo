@@ -4,9 +4,6 @@ import {OnePageDetails} from "../multipage/multiPage.domain";
 import {LoadingProps} from "../loading/loading";
 
 
-export function debugPageDetails<State>(): OnePageDetails<State, State> {
-    return ({lens: Lenses.identity<State>('state'), pageFunction: Debug});
-}
-export function Debug<S>({state}: LensProps<S, S> & LoadingProps) {
-    return (<pre>{JSON.stringify(state.json(), null, 2)}</pre>)
+export function Debug<S>({state}: LensProps<S, boolean> & LoadingProps) {
+    return state.optJson() ? (<pre>{JSON.stringify(state.main, null, 2)}</pre>) : <></>
 }

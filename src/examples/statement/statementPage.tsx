@@ -2,7 +2,7 @@
 import {Page} from "../../components/page/page";
 import {Loading, LoadingProps} from "../../components/loading/loading";
 import {TitleAndValues, Values} from "../../components/data/attributeValues/titleValues";
-import {Button} from "../../components/Buttons/button";
+import {Button} from "../../components/buttons/button";
 import React from "react";
 import {Statement, statementUrl} from "./statement.domain";
 import {TwoRowPanel} from "../../components/layout/row/twoRow/twoRowPanel";

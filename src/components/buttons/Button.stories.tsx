@@ -1,7 +1,6 @@
 import React from "react";
 import {Button, ButtonProperties} from "./button";
 
-
 export default {
     component: Button,
     title: 'Components/Buttons/Button',
