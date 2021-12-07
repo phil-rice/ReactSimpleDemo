@@ -9,7 +9,7 @@ import {fetchWithDelay, fetchWithPrefix} from "./utils/utils";
 import {FullDetails, FullState, fullStateIdentityL} from "./examples/common/common.domain";
 import {MultiPageDetails, pageSelectionlens} from "./components/multipage/multiPage.domain";
 import {Debug} from "./components/debug/debug";
-import {tree} from "./examples/index/fetchers";
+import {tree} from "./fetchers";
 import {LensState, lensState} from "@focuson/state";
 import {StatementPage} from "./examples/statement/statementPage";
 import {StatementPage2x2} from "./examples/statement/statementPage2x2";

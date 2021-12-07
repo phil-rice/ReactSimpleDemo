@@ -60,8 +60,8 @@ describe("StatementPage2x2... note that they didn't need to change", () => {
             expect(button.text()).toEqual("Last Statement Date:31st March 2021")
         })
     })
-    describe("when loading ", () => {
-        it("should display loading text only ", () => {
+    describe("when loading", () => {
+        it("should display loading text only", () => {
             const comp = mount(StatementPage2x2<StateForStatement2x2Test>()({state: statementState(undefined)}))
             expect(comp.text()).toEqual("2x2 Loading")
         })
