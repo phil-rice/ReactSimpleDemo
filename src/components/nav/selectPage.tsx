@@ -1,5 +1,5 @@
 import {LensProps} from "@focuson/state";
-import {HasPageSelection, PageSelection} from "../multipage/multiPage.domain";
+import {PageSelection} from "../multipage/multiPage.domain";
 import React from "react";
 
 export interface SelectPageProps<State> extends LensProps<State, PageSelection<any>> {

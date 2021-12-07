@@ -78,12 +78,7 @@ export function tagFetcher<S extends Details, Details, T>(sf: SpecificTagFetcher
         shouldLoad(s: S) {
             const currentTags = sf.tagLens.getOption(s)
             let desiredTags = sf.actualTags(s);
-            // console.log('tagFetcher.tags', currentTags, desiredTags)
-            // console.log('tagFetcher.areAllDefined(desiredTags)', areAllDefined(desiredTags))
-            // console.log('tagFetcher.arraysEqual', arraysEqual(desiredTags, currentTags))
-            // console.log('tagFetcher.undefined', sf.targetLens.getOption(s) === undefined)
             let result = areAllDefined(desiredTags) && (!arraysEqual(desiredTags, currentTags) || sf.targetLens.getOption(s) === undefined);
-            // console.log('tagFetcher.result',result)
             return result
         },
         load(s: S) {

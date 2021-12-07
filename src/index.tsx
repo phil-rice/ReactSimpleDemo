@@ -2,54 +2,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import {Lenses} from "@focuson/lens";
-import {LensProps} from "@focuson/state";
-import {loggingFetchFn, setJsonForFetchers, WouldLoad} from "@focuson/fetcher";
-import {fetchWithPrefix, textChangedEvent} from "./utils/utils";
+import {Lenses, Optional} from "@focuson/lens";
+import {FetcherDebug, FetcherTree, FetchFn, loadTree, loggingFetchFn, wouldLoad, WouldLoad} from "@focuson/fetcher";
+import {fetchWithPrefix} from "./utils/utils";
 
 import {FullState, fullStateIdentityL} from "./examples/common/common.domain";
-import {displayPage, MultiPageDetails, pageSelectionlens} from "./components/multipage/multiPage.domain";
+import {MultiPageDetails, pageSelectionlens} from "./components/multipage/multiPage.domain";
 import {statementPageDetails} from "./examples/statement/statementPage";
 import {debugPageDetails} from "./components/debug/debug";
-import {SelectPage} from "./components/nav/selectPage";
 import {statement2x2PageDetails} from "./examples/statement/statementPage2x2";
 import {tree} from "./fetchers";
+import {IndexPage} from "./indexPage";
+import {LensState, lensState} from "@focuson/state";
 // import pact from '@pact-foundation/pact-node';
 
 
-interface IndexProps extends LensProps<FullState, FullState> {
-}
-
-const demoAppPageDetails: MultiPageDetails<FullState> = {
+export const demoAppPageDetails: MultiPageDetails<FullState> = {
     statement: statementPageDetails(fullStateIdentityL.focusQuery('statement')),
     statement2x2: statement2x2PageDetails(fullStateIdentityL.focusQuery('statement2x2')),
     debug: debugPageDetails()
-}
-
-
-function Index({state}: IndexProps) {
-    let debug = state.json().showPageDebug;
-    const page = displayPage(demoAppPageDetails, state, pageSelectionlens(), debug)
-    if (debug) console.log("page", page)
-
-    const changeCustomerId = (e?: string) => { if (e) state.focusOn('customerId').setJson(e)};
-    let selectPageState = state.focusOn('pageSelection')
-    return (<>
-        <ul>
-            <li>Customer Id<input id='customerId' type='text' onKeyPress={textChangedEvent('customerId', changeCustomerId)} onBlur={e => changeCustomerId(e.target?.value)}/></li>
-            <li>
-                <button onClick={
-                    () => state.focusOn('tags')
-                        // @ts-ignore
-                        .setJson({})}>Reload
-                </button>
-            </li>
-            <li><SelectPage pageName='Debug' state={selectPageState}/></li>
-            <li><SelectPage pageName='statement' state={selectPageState}/></li>
-            <li><SelectPage pageName='statement2x2' state={selectPageState}/></li>
-        </ul>
-        {page}
-    </>)
 }
 
 export function onError(s: FullState, e: any): FullState {
@@ -57,9 +28,21 @@ export function onError(s: FullState, e: any): FullState {
     throw e
 }
 
+/** This clears up the state if it is the first time something is called */
+function preMutate(state: FullState): FullState {
+    console.log("premutate", state)
+    // @ts-ignore
+    const details = demoAppPageDetails[state.pageSelection.pageName]
+
+    if (state.pageSelection.firstTime) {
+        console.log("premutate-firstTime")
+        return pageSelectionlens<FullState>().focusOn('firstTime').combine(details.lens).set(state, [false, undefined])
+    } else
+        return state
+}
 
 //This is the method where we will do the 'first time' and 'loading flag' and fetching of data. For now it's a stub
-function mutateJsonEachCall(state: FullState): Promise<FullState> {
+function postMutate(state: FullState): Promise<FullState> {
     return Promise.resolve(state)
 }
 
@@ -69,9 +52,45 @@ export function wouldLoadSummary(wouldLoad: WouldLoad[]) {
 
 const fetchFn = fetchWithPrefix("http://localhost:8080", loggingFetchFn)
 
+export function setJsonForFetchers<State, Element>(fetchFn: FetchFn,
+                                                   tree: FetcherTree<State>,
+                                                   description: string,
+                                                   onError: (os: State, e: any) => State,
+                                                   fn: (lc: LensState<State, State>) => void,
+                                                   preMutate: (s: State) => State,
+                                                   postMutate: (s: State) => Promise<State>,
+                                                   debugOptional?: Optional<State, FetcherDebug>): (os: State, s: State) => Promise<State> {
+    return async (os: State, main: State): Promise<State> => {
+        const debug = debugOptional?.getOption(main)
+        let newStateFn = (fs: State) => fn(lensState(fs, state => setJsonForFetchers(fetchFn, tree, description, onError, fn, preMutate, postMutate, debugOptional)(fs, state), description))
+        try {
+            if (debug?.fetcherDebug) console.log('setJsonForFetchers - start', main)
+            const withPreMutate = preMutate(main)
+            if (debug?.fetcherDebug) console.log('setJsonForFetchers - after premutate', withPreMutate)
+            if (withPreMutate) newStateFn(withPreMutate)
+            if (debug?.whatLoad) {
+                let w = wouldLoad(tree, withPreMutate);
+                console.log("wouldLoad", wouldLoadSummary(w), w)
+            }
+            let newMain = await loadTree(tree, withPreMutate, fetchFn, debug).//
+                then(s => s ? s : onError(s, Error('could not load tree'))).//
+                catch(e => onError(withPreMutate, e))
+            if (debug?.fetcherDebug) console.log('setJsonForFetchers - after load', newMain)
+            let finalState = await postMutate(newMain)
+            if (debug?.fetcherDebug) console.log('setJsonForFetchers - final', finalState)
+            newStateFn(finalState)
+            return finalState
+        } catch (e) {
+            console.error("An unexpected error occured. Rolling back the state", e)
+            let newMain = onError(os, e);
+            newStateFn(newMain)
+            return newMain
+        }
+    }
+}
 let setJson: (os: FullState, s: FullState) => Promise<FullState> = setJsonForFetchers(fetchFn, tree, 'mainLoop', onError,
-    state => ReactDOM.render(<Index state={state}/>, document.getElementById('root')),
-    mutateJsonEachCall, Lenses.identity<FullState>('state').focusQuery('fetcherDebug'))
+    state => ReactDOM.render(<IndexPage state={state} pages={['Debug', 'statement', 'statement2x2']}/>, document.getElementById('root')),
+    preMutate, postMutate, Lenses.identity<FullState>('state').focusQuery('fetcherDebug'))
 
 let startState: FullState = {
     pageSelection: {pageName: 'statement'},
@@ -84,7 +103,6 @@ let startState: FullState = {
         whatLoad: true
     }
 }
-
 
 setJson(startState, startState)
 
