@@ -3,7 +3,7 @@ import {Button, ButtonProperties} from "./button";
 
 export default {
     component: Button,
-    title: 'Components/Buttons/Button',
+    title: 'Data/Buttons/Button',
     argTypes: {
         label: {
             options: ['title1', 'title2'],

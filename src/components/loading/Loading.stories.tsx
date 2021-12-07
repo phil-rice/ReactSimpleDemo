@@ -6,7 +6,7 @@ import {LoadingStateForTest} from "./loading.spec";
 
 export default {
     component: Loading,
-    title: 'Loading/Loading'
+    title: 'Utility/Loading/Loading'
 }
 
 

@@ -6,7 +6,7 @@ import {SingleChildProps} from "../../utils/utils";
 
 export default {
     component: Page,
-    title: 'Page/Page'
+    title: 'Layout/Page/Page'
 }
 
 

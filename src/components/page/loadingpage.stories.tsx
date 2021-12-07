@@ -7,7 +7,7 @@ import {lensState} from "@focuson/state";
 
 export default {
     component: LoadingPage,
-    title: 'Page/Loading'
+    title: 'Layout/Page/LoadingPage'
 }
 
 interface LoadingPageState extends TitleProps {

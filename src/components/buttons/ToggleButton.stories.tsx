@@ -6,7 +6,7 @@ import {lensState} from "@focuson/state";
 
 export default {
     component: ToggleButton,
-    title: 'Components/Buttons/Toggle'
+    title: 'Data/Buttons/Toggle'
 }
 
 let state  = {
