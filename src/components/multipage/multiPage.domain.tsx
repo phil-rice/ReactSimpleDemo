@@ -9,7 +9,7 @@ export interface MultiPageDetails<State> {
 export interface OnePageDetails<State, PageState> {
     lens: Optional<State, PageState>,
     pageFunction: (props: { loading: boolean, state: LensState<State, PageState> }) => JSX.Element,
-    initialState?: PageState  // if set then the PageState is set to this when the page is initially displayed
+   clearAtStart?: boolean  // if set then the PageState is reset at the beginning
 }
 
 export interface PageSelection<Details> {

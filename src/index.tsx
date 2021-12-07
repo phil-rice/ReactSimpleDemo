@@ -18,8 +18,8 @@ import {StatementPage2x2} from "./examples/statement/statementPage2x2";
 
 
 export const demoAppPageDetails: MultiPageDetails<FullState> = {
-    statement: {lens: fullStateIdentityL.focusQuery('statement'), pageFunction: StatementPage},
-    statement2x2: {lens: fullStateIdentityL.focusQuery('statement2x2'), pageFunction: StatementPage2x2},
+    statement: {lens: fullStateIdentityL.focusQuery('statement'), pageFunction: StatementPage, clearAtStart: true},
+    statement2x2: {lens: fullStateIdentityL.focusQuery('statement2x2'), pageFunction: StatementPage2x2, clearAtStart: true},
     debug: debugPageDetails()
 }
 
@@ -36,7 +36,9 @@ function preMutate(state: FullState): FullState {
 
     if (state.pageSelection.firstTime) {
         console.log("premutate-firstTime")
-        return pageSelectionlens<FullState>().focusOn('firstTime').combine(details.lens).set(state, [false, undefined])
+        if (details.clearAtStart)
+            return pageSelectionlens<FullState>().focusOn('firstTime').combine(details.lens).set(state, [false, undefined])
+        else return pageSelectionlens<FullState>().focusOn('firstTime').set(state, false)
     } else
         return state
 }
@@ -52,6 +54,7 @@ export function wouldLoadSummary(wouldLoad: WouldLoad[]) {
 
 const fetchFn = fetchWithPrefix("http://localhost:8080", loggingFetchFn)
 
+//Will be pushed back to @focuson
 export function setJsonForFetchers<State, Element>(fetchFn: FetchFn,
                                                    tree: FetcherTree<State>,
                                                    description: string,
