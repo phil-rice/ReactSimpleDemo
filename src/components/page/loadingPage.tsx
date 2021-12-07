@@ -2,9 +2,20 @@
 import React from "react";
 import {SingleChildProps} from "../../utils/utils";
 import {TitleProps} from "../data/titles/titles";
-import {Loading, LoadingProps} from "../loading/loading";
+import {Loading} from "../loading/loading";
 import {Page} from "./page";
+import {LensProps, LensState} from "@focuson/state";
 
 
-export const LoadingPage = ({title, loading, children}: TitleProps & SingleChildProps & LoadingProps) =>
-    (<><Page title={title}><Loading loading={loading}>{children}</Loading></Page></>);
+export function LoadingPage<S, D>({state, title, children}: TitleProps & SingleChildProps & LensProps<S, D>) {
+    return (<><Page title={title}><Loading state={state}>{children}</Loading></Page></>);
+}
+
+export const loadingPage = <S extends any, D extends any>(title: (d?: D) => string) =>
+    (pageFn: (state: LensState<S, D>, d: D) => JSX.Element) =>
+        ({state}: LensProps<S, D>) => {
+            const json = state.optJson()
+            console.log("loadingPage", json)
+            return <LoadingPage title={title(state.optJson())} state={state}>{json ? pageFn(state, json) : <div/>}</LoadingPage>;
+        }
+

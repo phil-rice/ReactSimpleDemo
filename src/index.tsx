@@ -14,14 +14,13 @@ import {LensState, lensState} from "@focuson/state";
 import {StatementPage} from "./examples/statement/statementPage";
 import {StatementPage2x2} from "./examples/statement/statementPage2x2";
 import {makeSelectPages} from "./components/demo/selectPages";
-import {NotATableHonest, TitleAndTextInput} from "./components/inputs/textInput";
 import {CustomerId} from "./examples/index/customerId";
 // import pact from '@pact-foundation/pact-node';
 
 
 export const demoAppPageDetails: MultiPageDetails<FullState> = {
-    statement: {lens: fullStateIdentityL.focusQuery('statement'), pageFunction: StatementPage, clearAtStart: true},
-    statement2x2: {lens: fullStateIdentityL.focusQuery('statement2x2'), pageFunction: StatementPage2x2, clearAtStart: true},
+    statement: {lens: fullStateIdentityL.focusQuery('statement'), pageFunction: StatementPage(), clearAtStart: true},
+    statement2x2: {lens: fullStateIdentityL.focusQuery('statement2x2'), pageFunction: StatementPage2x2(), clearAtStart: true},
     debug: {lens: fullStateIdentityL.focusQuery('stateDebug'), pageFunction: Debug}
 }
 
@@ -57,14 +56,14 @@ export function wouldLoadSummary(wouldLoad: WouldLoad[]) {
 const fetchFn = fetchWithDelay(2000, fetchWithPrefix("http://localhost:8080", loggingFetchFn))
 
 //Will be pushed back to @focuson
-export function setJsonForFetchers<State, Element>(fetchFn: FetchFn,
-                                                   tree: FetcherTree<State>,
-                                                   description: string,
-                                                   onError: (os: State, e: any) => State,
-                                                   fn: (lc: LensState<State, State>) => void,
-                                                   preMutate: (s: State) => State,
-                                                   postMutate: (s: State) => Promise<State>,
-                                                   debugOptional?: Optional<State, FetcherDebug>): (os: State, s: State) => Promise<State> {
+export function setJsonForFetchers<State>(fetchFn: FetchFn,
+                                          tree: FetcherTree<State>,
+                                          description: string,
+                                          onError: (os: State, e: any) => State,
+                                          fn: (lc: LensState<State, State>) => void,
+                                          preMutate: (s: State) => State,
+                                          postMutate: (s: State) => Promise<State>,
+                                          debugOptional?: Optional<State, FetcherDebug>): (os: State, s: State) => Promise<State> {
     return async (os: State, main: State): Promise<State> => {
         const debug = debugOptional?.getOption(main)
         let newStateFn = (fs: State) => fn(lensState(fs, state => setJsonForFetchers(fetchFn, tree, description, onError, fn, preMutate, postMutate, debugOptional)(fs, state), description))
@@ -77,9 +76,9 @@ export function setJsonForFetchers<State, Element>(fetchFn: FetchFn,
                 let w = wouldLoad(tree, withPreMutate);
                 console.log("wouldLoad", wouldLoadSummary(w), w)
             }
-            let newMain = await loadTree(tree, withPreMutate, fetchFn, debug).//
-                then(s => s ? s : onError(s, Error('could not load tree'))).//
-                catch(e => onError(withPreMutate, e))
+            let newMain = await loadTree(tree, withPreMutate, fetchFn, debug)
+                .then(s => s ? s : onError(s, Error('could not load tree')))
+                .catch(e => onError(withPreMutate, e))
             if (debug?.fetcherDebug) console.log('setJsonForFetchers - after load', newMain)
             let finalState = await postMutate(newMain)
             if (debug?.fetcherDebug) console.log('setJsonForFetchers - final', finalState)

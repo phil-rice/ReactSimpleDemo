@@ -1,5 +1,7 @@
 import React from "react";
-import {Loading, LoadingProps} from "./loading";
+import {Loading} from "./loading";
+import {lensState} from "@focuson/state";
+import {LoadingStateForTest} from "./loading.spec";
 
 
 export default {
@@ -7,17 +9,18 @@ export default {
     title: 'Loading/Loading'
 }
 
-    const Template = (args: LoadingProps) => <Loading {...args}><p>The Component is now being displayed</p></Loading>;
+
+const Template = ({state}: any) => <Loading state={lensState(state, s => {}, 'loading state')}><p>The Component is now being displayed</p></Loading>;
 export const LoadingFalse = Template.bind({});
 // @ts-ignore
 LoadingFalse.args = {
-    loading: false
+    state: {}
 };
 
 export const LoadingTrue = Template.bind({});
 // @ts-ignore
 LoadingTrue.args = {
-  loading: true
+    state: null
 };
 
 // export const Primary = () => <ButtonTitleValue id='1' titlelabel='title1' titles={sampleTitles} valuelabel='value1' values={sampleValues}/>;

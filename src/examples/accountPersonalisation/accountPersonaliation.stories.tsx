@@ -1,6 +1,8 @@
 import React from "react";
-import {AccountPersonalisationPage, AccountPersonalisationProps} from "./accountPersonalisation";
+import {AccountPersonalisationPage} from "./accountPersonalisation";
 import {sampleAccountPersonalisation} from "./sampleAccountPersonalisation";
+import {AccountPersonalisationDomain} from "./accountPersonalisationDomain";
+import {lensState} from "@focuson/state";
 
 
 export default {
@@ -9,20 +11,18 @@ export default {
 }
 
 
-const Template = (args: AccountPersonalisationProps) =>
-    <AccountPersonalisationPage {...args} />;
+const Template = ({accountPersonalisationDetails}: any) =>
+    AccountPersonalisationPage<AccountPersonalisationDomain>()({state: lensState(accountPersonalisationDetails, s => {}, '')});
 
 export const LoadingFalse = Template.bind({});
 // @ts-ignore
 LoadingFalse.args = {
-    loading: false,
     accountPersonalisationDetails: sampleAccountPersonalisation
 }
 export const LoadingTrue = Template.bind({});
 // @ts-ignore
 LoadingTrue.args = {
-    loading: true,
-    accountPersonalisationDetails: sampleAccountPersonalisation
+    accountPersonalisationDetails: null
 };
 
 // export const Primary = () => <ButtonTitleValue id='1' titlelabel='title1' titles={sampleTitles} valuelabel='value1' values={sampleValues}/>;

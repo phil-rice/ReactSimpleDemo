@@ -3,20 +3,28 @@ import {enzymeSetup} from '../../enzymeAdapterSetup';
 import {mount} from "enzyme";
 import React from "react";
 import {Loading} from "./loading";
+import {lensState} from "@focuson/state";
 
 enzymeSetup()
 
+export interface LoadingStateForTest {}
+
+function state(main?: LoadingStateForTest) {
+    return lensState(main, s => {}, 'loadingState')
+}
+
+
 describe("Loading", () => {
 
-    it("should NOT render the embedded component when loading is true ", () => {
-        const comp = mount(<Loading loading={true}>
+    it("should NOT render the embedded component when state json is undefined ", () => {
+        const comp = mount(<Loading state={state(undefined)}>
             <div>child</div>
         </Loading>)
         expect(comp.find("div").length).toBe(0)
         expect(comp.text()).toEqual("Loading")
     })
-    it("should render the embedded component when loading is false ", () => {
-        const comp = mount(<Loading loading={false}>
+    it("should render the embedded component when state json is defined", () => {
+        const comp = mount(<Loading state={state({})}>
             <div>child</div>
         </Loading>)
         expect(comp.find("div").length).toBe(1)

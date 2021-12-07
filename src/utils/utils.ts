@@ -12,6 +12,9 @@ export function reportErrors(...details: any) {
     //TODO sort out the console.error in the tests!
     console.error(details)
 }
+export function makeTitle(prefix: string, title?: string): string {
+    return prefix + (title ? title : "")
+}
 
 /** So that we get early notification with a nice error message when we mess up! */
 export function stringFrom<K extends keyof Data, Data>(data: Data | undefined, k: K | undefined): string | undefined {

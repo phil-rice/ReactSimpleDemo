@@ -8,8 +8,8 @@ export interface MultiPageDetails<State> {
 }
 export interface OnePageDetails<State, PageState> {
     lens: Optional<State, PageState>,
-    pageFunction: (props: { loading: boolean, state: LensState<State, PageState> }) => JSX.Element,
-   clearAtStart?: boolean  // if set then the PageState is reset at the beginning
+    pageFunction: (props: { state: LensState<State, PageState> }) => JSX.Element,
+    clearAtStart?: boolean  // if set then the PageState is reset at the beginning
 }
 
 export interface PageSelection<Details> {
@@ -26,8 +26,7 @@ export function displaySinglePage<State, PageState>(state: LensState<State, Stat
     if (!pageDetails) return (<p>Unrecognised main page ${pageSelectionName}</p>)
     let props = pageDetails.lens.getOption(state.json());
     if (debug) console.log('displaySinglePage', props)
-    if (!props) return (<p>Cannot find props for main page ${pageSelectionName}</p>)
-    return pageDetails.pageFunction({state: state.chainLens(pageDetails.lens), loading: false})
+    return pageDetails.pageFunction({state: state.chainLens(pageDetails.lens)})
 }
 export function displayPage<State, Details extends MultiPageDetails<State>>(details: Details, state: LensState<State, State>, pageSelectionG: Getter<State, PageSelection<Details>>, debug?: boolean) {
     if (debug) console.log('displayPage', state.json())
