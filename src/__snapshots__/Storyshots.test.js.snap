@@ -8,6 +8,14 @@ exports[`Storyshots Components/Buttons/Button Primary 1`] = `
 </button>
 `;
 
+exports[`Storyshots Components/Buttons/Toggle Primary 1`] = `
+<button
+  onClick={[Function]}
+>
+  title1
+</button>
+`;
+
 exports[`Storyshots Data/AttributeValues/TitleAndValues With Title 1`] = `
 <div>
   <div>

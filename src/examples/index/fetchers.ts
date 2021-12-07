@@ -1,9 +1,9 @@
 import {statementFetcher} from "../statement/statementPage";
-import {customerIdL, FullState} from "../common/common.domain";
+import { FullState} from "../common/common.domain";
 import {pageSelectionlens} from "../../components/multipage/multiPage.domain";
 import {statement2x2Fetcher} from "../statement/statementPage2x2";
 import {FetcherTree} from "@focuson/fetcher";
-
+import {customerIdL} from "./customerId";
 
 
 const sFetcher = statementFetcher<FullState>(pageSelectionlens(), customerIdL)

@@ -4,22 +4,22 @@ import {HasPageSelection} from "../../components/multipage/multiPage.domain";
 import {FetcherDebug} from "@focuson/fetcher";
 import {HasStatement} from "../statement/statementPage";
 import {HasStatement2x2} from "../statement/statementPage2x2";
+import {HasShowPageDebug} from "../../components/demo/selectPages";
+import {HasCustomerId} from "../index/customerId";
 
 
-export interface FullState extends HasStatement, HasStatement2x2, HasCustomerId, HasPageSelection<any>, HasTagHolder {
+export interface FullDetails extends HasStatement, HasStatement2x2{
+
+}
+
+export interface FullState extends FullDetails, HasPageSelection<any>, HasTagHolder, HasShowPageDebug, HasCustomerId {
     fetcherDebug?: FetcherDebug
     showPageDebug?: boolean,
     stateDebug?: boolean
-
 }
 
 export const fullStateIdentityL = Lenses.identity<FullState>('state')
 
-export interface HasCustomerId {
-    customerId?: string
-}
-
-export const customerIdL = Lenses.identity<HasCustomerId>('hasCustomerid').focusQuery('customerId')
 
 /** The tag holder holds all the tags for all the pages. Each page that needs a tagFetcher will have a name and its tags will be stored here*/
 export interface HasTagHolder {

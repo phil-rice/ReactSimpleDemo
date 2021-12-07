@@ -16,8 +16,7 @@ const startState: SelectPageStateForTest = {
 
 describe("Select Page", () => {
     it("should have the name of page in the button", () => {
-        var remembered: SelectPageStateForTest = startState
-        const selectPageState = lensState<SelectPageStateForTest>(startState, (s: SelectPageStateForTest) => {remembered = s}, 'selectPage').focusOn('pageSelection')
+        const selectPageState = lensState<SelectPageStateForTest>(startState, (s: SelectPageStateForTest) => {}, 'selectPage').focusOn('pageSelection')
         const page = shallow(<SelectPage pageName='Statement' state={selectPageState}/>)
         expect(page.text()).toEqual('Statement')
     })

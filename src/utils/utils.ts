@@ -29,12 +29,24 @@ export function fetchWithPrefix(prefix: string, fetchFn: FetchFn): FetchFn {
         else throw new Error(`Cannot handle request ${re}`)
     }
 }
+export function fetchWithDelay(ms: number, fetchFn: FetchFn): FetchFn {
+    return (re: RequestInfo, init?: RequestInit): Promise<[number, any]> => delay(ms).then(() => fetchFn(re, init))
 
-export function textChangedEvent(id: string,fn: (value: string) => void): (e: any) => void {
+}
+
+export function textChangedEvent(id: string, fn: (value: string) => void): (e: any) => void {
     return (e) => {
         // @ts-ignore
-        const value: string=document.getElementById(id)?.value
+        const value: string = document.getElementById(id)?.value
         console.log('keycode', e.keyCode, e.charCode, value, e)
         if (e.charCode === 13 && value) fn(value)
     }
+}
+
+export function delay(ms: number) {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve({})
+        }, ms)
+    })
 }

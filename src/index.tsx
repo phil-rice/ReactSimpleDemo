@@ -4,16 +4,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import {Lenses, Optional} from "@focuson/lens";
 import {FetcherDebug, FetcherTree, FetchFn, loadTree, loggingFetchFn, wouldLoad, WouldLoad} from "@focuson/fetcher";
-import {fetchWithPrefix} from "./utils/utils";
+import {fetchWithDelay, fetchWithPrefix} from "./utils/utils";
 
-import {FullState, fullStateIdentityL} from "./examples/common/common.domain";
+import {FullDetails, FullState, fullStateIdentityL} from "./examples/common/common.domain";
 import {MultiPageDetails, pageSelectionlens} from "./components/multipage/multiPage.domain";
 import {Debug} from "./components/debug/debug";
 import {tree} from "./examples/index/fetchers";
-import {IndexPage} from "./examples/index/indexPage";
 import {LensState, lensState} from "@focuson/state";
 import {StatementPage} from "./examples/statement/statementPage";
 import {StatementPage2x2} from "./examples/statement/statementPage2x2";
+import {makeSelectPages} from "./components/demo/selectPages";
+import {NotATableHonest, TitleAndTextInput} from "./components/inputs/textInput";
+import {CustomerId} from "./examples/index/customerId";
 // import pact from '@pact-foundation/pact-node';
 
 
@@ -52,7 +54,7 @@ export function wouldLoadSummary(wouldLoad: WouldLoad[]) {
     return wouldLoad.filter(w => w.load).map(w => `${w.fetcher.description} ${JSON.stringify(w.reqData)}`).join(", ")
 }
 
-const fetchFn = fetchWithPrefix("http://localhost:8080", loggingFetchFn)
+const fetchFn = fetchWithDelay(2000, fetchWithPrefix("http://localhost:8080", loggingFetchFn))
 
 //Will be pushed back to @focuson
 export function setJsonForFetchers<State, Element>(fetchFn: FetchFn,
@@ -91,8 +93,16 @@ export function setJsonForFetchers<State, Element>(fetchFn: FetchFn,
         }
     }
 }
+
+const SelectPages = makeSelectPages<FullState, FullDetails>(
+    demoAppPageDetails,
+    fullStateIdentityL.focusOn('pageSelection'),
+    fullStateIdentityL.focusQuery('stateDebug'),
+    state => <CustomerId state={state.focusOn('customerId')}/>
+)
+
 let setJson: (os: FullState, s: FullState) => Promise<FullState> = setJsonForFetchers(fetchFn, tree, 'mainLoop', onError,
-    state => ReactDOM.render(<IndexPage state={state} pages={[ 'statement', 'statement2x2']}/>, document.getElementById('root')),
+    state => ReactDOM.render(<SelectPages state={state} pages={['statement', 'statement2x2']}/>, document.getElementById('root')),
     preMutate, postMutate, Lenses.identity<FullState>('state').focusQuery('fetcherDebug'))
 
 let startState: FullState = {

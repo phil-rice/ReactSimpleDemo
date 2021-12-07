@@ -11,7 +11,7 @@ export default {
     title: 'Examples/Statement/StatementPage2x2',
 
 }
-const statementState = lensState<StateForStatement2x2Test>({statement2x2: sampleStatement,tags:{statement: ["someId"]}, pageSelection: {pageName: 'statement2x2'}}, (s: StateForStatementTest) => {}, 'statementState')
+const statementState = lensState<StateForStatement2x2Test>({statement2x2: sampleStatement,tags:{statement: ["someId"]}, pageSelection: {pageName: 'statement2x2'}}, (s: StateForStatement2x2Test) => {}, 'statementState')
     .focusOn('statement2x2')
 
 const Template = (args: StatementPageProps<StateForStatementTest>) =>

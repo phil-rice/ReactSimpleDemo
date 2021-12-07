@@ -1,6 +1,4 @@
 import {LensProps} from "@focuson/state";
-import {Lenses} from "@focuson/lens";
-import {OnePageDetails} from "../multipage/multiPage.domain";
 import {LoadingProps} from "../loading/loading";
 
 

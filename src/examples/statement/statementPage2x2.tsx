@@ -9,16 +9,16 @@ import {TitleAndValues, Values} from "../../components/data/attributeValues/titl
 import {Button} from "../../components/buttons/button";
 import {ButtonTitleValue} from "../../components/data/ButtonTitleValue/buttonTitleValue";
 import {LensProps} from "@focuson/state";
-import { HasCustomerId, HasErrorMessage, HasTagHolder} from "../common/common.domain";
-import {HasPageSelection, OnePageDetails, PageSelection} from "../../components/multipage/multiPage.domain";
-import {GetOptioner, Lens, Optional} from "@focuson/lens";
+import {HasErrorMessage, HasTagHolder} from "../common/common.domain";
+import {HasPageSelection, PageSelection} from "../../components/multipage/multiPage.domain";
+import {GetOptioner, Lens} from "@focuson/lens";
 import {commonFetch, simpleTagFetcher} from "../../utils/tagFetcher";
 
 export interface HasStatement2x2 {
     statement2x2?: Statement
 }
 
-export type Statement2x2Requirements = HasStatement2x2 & HasTagHolder & HasErrorMessage & HasCustomerId
+export type Statement2x2Requirements = HasStatement2x2 & HasTagHolder & HasErrorMessage
 
 
 export function statement2x2Fetcher<S extends Statement2x2Requirements & HasPageSelection<HasStatement2x2>>(mainThingL: Lens<S, PageSelection<any>>, customerIdL: GetOptioner<S, string>) {

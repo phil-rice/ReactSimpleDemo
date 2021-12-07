@@ -11,14 +11,14 @@ import {ButtonTitleValue} from "../../components/data/ButtonTitleValue/buttonTit
 import {LensProps} from "@focuson/state";
 import {GetOptioner, Lens, Optional} from "@focuson/lens";
 import {HasPageSelection, OnePageDetails, PageSelection} from "../../components/multipage/multiPage.domain";
-import {HasCustomerId, HasErrorMessage, HasTagHolder} from "../common/common.domain";
+import { HasErrorMessage, HasTagHolder} from "../common/common.domain";
 import {commonFetch, simpleTagFetcher} from "../../utils/tagFetcher";
 
 export interface HasStatement {
     statement?: Statement
 }
 
-export type StatementRequirements = HasStatement & HasTagHolder & HasErrorMessage & HasCustomerId
+export type StatementRequirements = HasStatement & HasTagHolder & HasErrorMessage
 
 
 export function statementFetcher<S extends StatementRequirements & HasPageSelection<HasStatement>>(mainThingL: Lens<S, PageSelection<any>>, customerIdL: GetOptioner<S, string>) {
