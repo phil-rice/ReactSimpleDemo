@@ -1,4 +1,4 @@
-import {sampleStatement} from "./sampleStatement";
+import {sampleStatement} from "./statement.sample";
 import {provider} from "../../utils/provider";
 import { statementUrl} from "./statement.domain";
 import {fetcherTree, loadTree, loggingFetchFn, wouldLoad} from "@focuson/fetcher";
@@ -118,8 +118,8 @@ describe("reading statement details", () => {
         it("should fetch statement data when needed and add it to the state", async () => {
             let newState = await loadTree(statementFetcherTree, emptyStatementState, fetchWithPrefix("http://localhost:1234", loggingFetchFn), {})
             expect(newState).toEqual({...emptyStatementState, statement: sampleStatement, tags: {statement: ["mycid"]}})
-
         })
+
         it("should fetch different statement data when needed and add it to the state", async () => {
             let newState = await loadTree(statementFetcherTree, {...emptyStatementState, customerId: 'mycid2'}, fetchWithPrefix("http://localhost:1234", loggingFetchFn), {})
             expect(newState).toEqual({...emptyStatementState, customerId: 'mycid2', statement: {...sampleStatement, title: 'Second'}, tags: {statement: ["mycid2"]}})

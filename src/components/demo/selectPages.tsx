@@ -17,7 +17,6 @@ export const makeSelectPages = <S extends Details & HasShowPageDebug, Details ex
     let debug = state.json().showPageDebug;
     const page = displayPage<S, MultiPageDetails<S>>(pageDetails, state, pageSelectionL, debug)
     if (debug) console.log("page", page)
-    if (debug) console.log("page", page)
 
     let selectPageState = state.copyWithLens<PageSelection<Details>>(pageSelectionL)
     let debugState = state.copyWithLens<boolean>(stateDebugL);

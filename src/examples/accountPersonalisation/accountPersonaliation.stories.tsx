@@ -1,7 +1,7 @@
 import React from "react";
 import {AccountPersonalisationPage} from "./accountPersonalisation";
 import {sampleAccountPersonalisation} from "./sampleAccountPersonalisation";
-import {AccountPersonalisationDomain} from "./accountPersonalisationDomain";
+import {AccountPersonalisationDomain} from "./accountPersonalisation.domain";
 import {lensState} from "@focuson/state";
 
 

@@ -1,4 +1,4 @@
-import {AccountPersonalisationDomain} from "./accountPersonalisationDomain";
+import {AccountPersonalisationDomain} from "./accountPersonalisation.domain";
 
 export const sampleAccountPersonalisation: AccountPersonalisationDomain= {
     status: 'Received Complete',

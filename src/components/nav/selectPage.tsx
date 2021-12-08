@@ -7,5 +7,5 @@ export interface SelectPageProps<State> extends LensProps<State, PageSelection<a
 }
 
 export function SelectPage<State>({state, pageName}: SelectPageProps<State>) {
-    return (<button onClick={() => state.setJson({pageName: pageName.toLowerCase(), firstTime: true})}>{pageName}</button>)
+    return (<button onClick={() => state.setJson({pageName: pageName, firstTime: true})}>{pageName}</button>)
 }

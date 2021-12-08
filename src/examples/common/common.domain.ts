@@ -6,9 +6,10 @@ import {HasStatement} from "../statement/statementPage";
 import {HasStatement2x2} from "../statement/statementPage2x2";
 import {HasShowPageDebug} from "../../components/demo/selectPages";
 import {HasCustomerId} from "../index/customerId";
+import {HasAccountPersonalisationDomain} from "../accountPersonalisation/accountPersonalisation.domain";
 
 
-export interface FullDetails extends HasStatement, HasStatement2x2{
+export interface FullDetails extends HasStatement, HasStatement2x2, HasAccountPersonalisationDomain{
 
 }
 

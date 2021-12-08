@@ -2,7 +2,7 @@
 import {enzymeSetup} from '../../enzymeAdapterSetup';
 import {mount, shallow} from "enzyme";
 import React from "react";
-import {sampleStatement} from "./sampleStatement";
+import {sampleStatement} from "./statement.sample";
 import {StatementPage2x2} from "./statementPage2x2";
 import {lensState} from "@focuson/state";
 import {StateForStatement2x2Test, StateForStatementTest} from "./statement.pact.spec";

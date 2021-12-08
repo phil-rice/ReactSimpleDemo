@@ -2,25 +2,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import {Lenses, Optional} from "@focuson/lens";
-import {FetcherDebug, FetcherTree, FetchFn, loadTree, loggingFetchFn, wouldLoad, WouldLoad} from "@focuson/fetcher";
+import {Lenses} from "@focuson/lens";
+import {loggingFetchFn, setJsonForFetcherWithPreMutates} from "@focuson/fetcher";
 import {fetchWithDelay, fetchWithPrefix} from "./utils/utils";
 
 import {FullDetails, FullState, fullStateIdentityL} from "./examples/common/common.domain";
 import {MultiPageDetails, pageSelectionlens} from "./components/multipage/multiPage.domain";
 import {Debug} from "./components/debug/debug";
 import {tree} from "./fetchers";
-import {LensState, lensState} from "@focuson/state";
 import {StatementPage} from "./examples/statement/statementPage";
 import {StatementPage2x2} from "./examples/statement/statementPage2x2";
 import {makeSelectPages} from "./components/demo/selectPages";
 import {CustomerId} from "./examples/index/customerId";
+import {AccountPersonalisationPage} from "./examples/accountPersonalisation/accountPersonalisation";
 // import pact from '@pact-foundation/pact-node';
 
 
 export const demoAppPageDetails: MultiPageDetails<FullState> = {
     statement: {lens: fullStateIdentityL.focusQuery('statement'), pageFunction: StatementPage(), clearAtStart: true},
     statement2x2: {lens: fullStateIdentityL.focusQuery('statement2x2'), pageFunction: StatementPage2x2(), clearAtStart: true},
+    accountPersonalisation: {lens: fullStateIdentityL.focusQuery('accountPersonalisation'), pageFunction: AccountPersonalisationPage(), clearAtStart: true},
     debug: {lens: fullStateIdentityL.focusQuery('stateDebug'), pageFunction: Debug}
 }
 
@@ -35,7 +36,7 @@ function preMutate(state: FullState): FullState {
     // @ts-ignore
     const details = demoAppPageDetails[state.pageSelection.pageName]
 
-    if (state.pageSelection.firstTime) {
+    if (details && state.pageSelection.firstTime) {
         console.log("premutate-firstTime")
         if (details.clearAtStart)
             return pageSelectionlens<FullState>().focusOn('firstTime').combine(details.lens).set(state, [false, undefined])
@@ -44,55 +45,15 @@ function preMutate(state: FullState): FullState {
         return state
 }
 
-//This is the method where we will do the 'first time' and 'loading flag' and fetching of data. For now it's a stub
+//This is the method that mutates the state after fetching. At the moment it does nothing
 function postMutate(state: FullState): Promise<FullState> {
     return Promise.resolve(state)
 }
 
-export function wouldLoadSummary(wouldLoad: WouldLoad[]) {
-    return wouldLoad.filter(w => w.load).map(w => `${w.fetcher.description} ${JSON.stringify(w.reqData)}`).join(", ")
-}
-
+//how we get data from the apis
 const fetchFn = fetchWithDelay(2000, fetchWithPrefix("http://localhost:8080", loggingFetchFn))
 
-//Will be pushed back to @focuson
-export function setJsonForFetchers<State>(fetchFn: FetchFn,
-                                          tree: FetcherTree<State>,
-                                          description: string,
-                                          onError: (os: State, e: any) => State,
-                                          fn: (lc: LensState<State, State>) => void,
-                                          preMutate: (s: State) => State,
-                                          postMutate: (s: State) => Promise<State>,
-                                          debugOptional?: Optional<State, FetcherDebug>): (os: State, s: State) => Promise<State> {
-    return async (os: State, main: State): Promise<State> => {
-        const debug = debugOptional?.getOption(main)
-        let newStateFn = (fs: State) => fn(lensState(fs, state => setJsonForFetchers(fetchFn, tree, description, onError, fn, preMutate, postMutate, debugOptional)(fs, state), description))
-        try {
-            if (debug?.fetcherDebug) console.log('setJsonForFetchers - start', main)
-            const withPreMutate = preMutate(main)
-            if (debug?.fetcherDebug) console.log('setJsonForFetchers - after premutate', withPreMutate)
-            if (withPreMutate) newStateFn(withPreMutate)
-            if (debug?.whatLoad) {
-                let w = wouldLoad(tree, withPreMutate);
-                console.log("wouldLoad", wouldLoadSummary(w), w)
-            }
-            let newMain = await loadTree(tree, withPreMutate, fetchFn, debug)
-                .then(s => s ? s : onError(s, Error('could not load tree')))
-                .catch(e => onError(withPreMutate, e))
-            if (debug?.fetcherDebug) console.log('setJsonForFetchers - after load', newMain)
-            let finalState = await postMutate(newMain)
-            if (debug?.fetcherDebug) console.log('setJsonForFetchers - final', finalState)
-            newStateFn(finalState)
-            return finalState
-        } catch (e) {
-            console.error("An unexpected error occured. Rolling back the state", e)
-            let newMain = onError(os, e);
-            newStateFn(newMain)
-            return newMain
-        }
-    }
-}
-
+//The main page. SelectPages is a react component
 const SelectPages = makeSelectPages<FullState, FullDetails>(
     demoAppPageDetails,
     fullStateIdentityL.focusOn('pageSelection'),
@@ -100,15 +61,17 @@ const SelectPages = makeSelectPages<FullState, FullDetails>(
     state => <CustomerId state={state.focusOn('customerId')}/>
 )
 
-let setJson: (os: FullState, s: FullState) => Promise<FullState> = setJsonForFetchers(fetchFn, tree, 'mainLoop', onError,
-    state => ReactDOM.render(<SelectPages state={state} pages={['statement', 'statement2x2']}/>, document.getElementById('root')),
+
+let pages = ['statement', 'statement2x2', 'accountPersonalisation'];
+let setJson: (os: FullState, s: FullState) => Promise<FullState> = setJsonForFetcherWithPreMutates(fetchFn, tree, 'mainLoop', onError,
+    state => ReactDOM.render(<SelectPages state={state} pages={pages}/>, document.getElementById('root')),
     preMutate, postMutate, Lenses.identity<FullState>('state').focusQuery('fetcherDebug'))
 
 let startState: FullState = {
     pageSelection: {pageName: 'statement'},
     customerId: "mycid",
     tags: {},
-    showPageDebug: false,
+    showPageDebug: true,
     fetcherDebug: {
         fetcherDebug: true,
         loadTreeDebug: true,

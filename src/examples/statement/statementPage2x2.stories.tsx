@@ -1,6 +1,6 @@
 import React from "react";
 import {HasStatement, StatementPageProps} from "./statementPage";
-import {sampleStatement} from "./sampleStatement";
+import {sampleStatement} from "./statement.sample";
 import {HasStatement2x2, StatementPage2x2} from "./statementPage2x2";
 import {lensState} from "@focuson/state";
 import {StateForStatement2x2Test, StateForStatementTest} from "./statement.pact.spec";

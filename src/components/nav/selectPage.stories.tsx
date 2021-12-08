@@ -2,7 +2,7 @@ import React from "react";
 import {SelectPage, SelectPageProps} from "./selectPage";
 import {lensState} from "@focuson/state";
 import {StateForStatementTest} from "../../examples/statement/statement.pact.spec";
-import {sampleStatement} from "../../examples/statement/sampleStatement";
+import {sampleStatement} from "../../examples/statement/statement.sample";
 import {SelectPageStateForTest} from "./selectpage.spec";
 
 export default {
