@@ -1,14 +1,12 @@
 import {sampleStatement} from "./statement.sample";
-import {provider} from "../../utils/provider";
-import { statementUrl} from "./statement.domain";
+import {statementUrl} from "./statement.domain";
 import {fetcherTree, loadTree, loggingFetchFn, wouldLoad} from "@focuson/fetcher";
-import wrapper from "@pact-foundation/pact-node"
-import {} from "../common/common.domain";
 import {HasPageSelection, pageSelectionlens} from "../../components/multipage/multiPage.domain";
 import {fetchWithPrefix} from "../../utils/utils";
-import {statementFetcher, StatementRequirements} from "./statementPage";
+import {statementFetcher, StatementRequirements} from "./statement";
 import {Statement2x2Requirements} from "./statementPage2x2";
 import {customerIdL, HasCustomerId} from "../index/customerId";
+import {pactWith} from "jest-pact";
 
 export interface StateForStatementTest extends StatementRequirements, HasPageSelection<any>, HasCustomerId {
 }
@@ -66,28 +64,19 @@ describe("statement fetcher unit tests", () => {
         expect(wouldLoad(statementFetcherTree, withCorrectStatementTags)).toEqual([{fetcher: sFetcher, load: false}])
     })
 })
+pactWith({consumer: 'Statement', provider: 'StatementApi', cors: true}, provider => {
+    beforeEach(async () => {
 
-async function setUp() {
-    return await provider
-        // (2) Start the mock server
-        .setup()
-        // (3) add interactions to the Mock Server, as many as required
-        .then(async () => {
+
+        }
+    )
+
+    describe("reading statement details", () => {
+
+        it("should fetch statement data when needed and add it to the state", async () => {
             await provider.addInteraction({
                 state: "I have 1 statement 'mycid2'",
                 uponReceiving: "a request for a statement",
-                withRequest: {
-                    method: "GET",
-                    path: "/statement/mycid2"
-                },
-                willRespondWith: {
-                    status: 200,
-                    body: {...sampleStatement, title: "Second"}
-                },
-            })
-            await provider.addInteraction({
-                state: "I have a new statement 2",
-                uponReceiving: "a request for a statement 'mycid'",
                 withRequest: {
                     method: "GET",
                     path: "/statement/mycid"
@@ -97,32 +86,28 @@ async function setUp() {
                     body: sampleStatement
                 },
             })
-        })
-
-}
-
-beforeAll(async () => {
-        process.on("SIGINT", () => {
-            wrapper.removeAllServers()
-        })
-        return setUp()
-    }
-)
-afterAll(async () => {
-        await provider.finalize()
-        wrapper.removeAllServers()
-    }
-)
-describe("reading statement details", () => {
-
-        it("should fetch statement data when needed and add it to the state", async () => {
-            let newState = await loadTree(statementFetcherTree, emptyStatementState, fetchWithPrefix("http://localhost:1234", loggingFetchFn), {})
+            let newState = await loadTree(statementFetcherTree, emptyStatementState, fetchWithPrefix(provider.mockService.baseUrl, loggingFetchFn), {})
             expect(newState).toEqual({...emptyStatementState, statement: sampleStatement, tags: {statement: ["mycid"]}})
         })
+    })
 
-        it("should fetch different statement data when needed and add it to the state", async () => {
-            let newState = await loadTree(statementFetcherTree, {...emptyStatementState, customerId: 'mycid2'}, fetchWithPrefix("http://localhost:1234", loggingFetchFn), {})
-            expect(newState).toEqual({...emptyStatementState, customerId: 'mycid2', statement: {...sampleStatement, title: 'Second'}, tags: {statement: ["mycid2"]}})
-        })
-    }
-)
+    describe("a second pact for statement", () => {
+            it("should fetch different statement data when needed and add it to the state", async () => {
+                await provider.addInteraction({
+                    state: "I have a new statement 2",
+                    uponReceiving: "a request for a statement 'mycid'",
+                    withRequest: {
+                        method: "GET",
+                        path: "/statement/mycid2"
+                    },
+                    willRespondWith: {
+                        status: 200,
+                        body: {...sampleStatement, title: "Second"}
+                    },
+                })
+                let newState = await loadTree(statementFetcherTree, {...emptyStatementState, customerId: 'mycid2'}, fetchWithPrefix(provider.mockService.baseUrl, loggingFetchFn), {})
+                expect(newState).toEqual({...emptyStatementState, customerId: 'mycid2', statement: {...sampleStatement, title: 'Second'}, tags: {statement: ["mycid2"]}})
+            })
+        }
+    )
+})

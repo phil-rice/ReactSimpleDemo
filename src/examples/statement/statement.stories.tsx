@@ -1,26 +1,28 @@
 import React from "react";
-import {HasStatement, StatementPageProps} from "./statementPage";
+import {HasStatement, Statement} from "./statement";
 import {sampleStatement} from "./statement.sample";
-import {HasStatement2x2, StatementPage2x2} from "./statementPage2x2";
 import {lensState} from "@focuson/state";
 import {StateForStatement2x2Test, StateForStatementTest} from "./statement.pact.spec";
-import {Statement} from "./statement.domain";
+import {StatementDomain} from "./statement.domain";
 
 
 export default {
-    component: StatementPage2x2,
-    title: 'Examples/Statement/StatementPage2x2',
+    component: Statement,
+    title: 'Examples/Statement/Statement',
 
 }
-const statementState = (statement2x2?: Statement) => lensState<StateForStatement2x2Test>({statement2x2, tags: {}, pageSelection: {pageName: 'statement'}}, (s: StateForStatementTest) => {}, 'statementState')
-    .focusOn('statement2x2')
+function statementState(statement?: StatementDomain) {
+    return lensState<StateForStatementTest>({statement, tags: {statement: ["someId"]}, pageSelection: {pageName: 'statement'}}, (s: StateForStatementTest) => {}, 'statementState')
+        .focusOn('statement')
+}
 
-const Template = ({statement2x2}: HasStatement2x2) => StatementPage2x2<StateForStatement2x2Test>()({state: statementState(statement2x2)});
+const Template = ({statement}: HasStatement) => Statement<StateForStatement2x2Test>()({state: statementState(statement)});
+
 
 export const LoadingFalse = Template.bind({});
 // @ts-ignore
 LoadingFalse.args = {
-    statement2x2: sampleStatement
+    statement: sampleStatement
 }
 export const LoadingTrue = Template.bind({});
 // @ts-ignore

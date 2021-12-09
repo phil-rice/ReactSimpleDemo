@@ -2,27 +2,27 @@
 import {enzymeSetup} from '../../enzymeAdapterSetup';
 import {mount, shallow} from "enzyme";
 import React from "react";
-import {StatementPage} from "./statementPage";
+import {Statement} from "./statement";
 import {sampleStatement} from "./statement.sample";
 import {lensState} from "@focuson/state";
 import {StateForStatement2x2Test, StateForStatementTest} from "./statement.pact.spec";
-import {Statement} from "./statement.domain";
+import {StatementDomain} from "./statement.domain";
 import {StatementPage2x2} from "./statementPage2x2";
 
 enzymeSetup()
 
-const statementState = (statement?: Statement) => lensState<StateForStatementTest>({statement, tags: {}, pageSelection: {pageName: 'statement'}},
+const statementState = (statement?: StatementDomain) => lensState<StateForStatementTest>({statement, tags: {}, pageSelection: {pageName: 'statement'}},
     (s: StateForStatementTest) => {}, 'statementState')
     .focusOn('statement')
 
 describe("StatementPage", () => {
     describe("when loading is false", () => {
         it("should render without throwing an exception", () => {
-            const comp = mount(StatementPage<StateForStatementTest>()({state: statementState(sampleStatement)}))
+            const comp = mount(Statement<StateForStatementTest>()({state: statementState(sampleStatement)}))
         })
 
         it("should display the address in a values panel that has a 'Statement Address' title", () => {
-            const comp = shallow(StatementPage<StateForStatementTest>()({state: statementState(sampleStatement)}))
+            const comp = shallow(Statement<StateForStatementTest>()({state: statementState(sampleStatement)}))
             const values = comp.find("Values")
             expect(values.length).toBe(1)
             const values0 = values.at(0)
@@ -32,7 +32,7 @@ describe("StatementPage", () => {
             expect(props["labels"]).toEqual(["addLineOne", "addLineTwo", "addLineThree", "addLineFour", "pcd"])
         })
         it("should display the statement details in a TitleAndValues panel without a title", () => {
-            const comp = shallow(StatementPage<StateForStatementTest>()({state: statementState(sampleStatement)}))
+            const comp = shallow(Statement<StateForStatementTest>()({state: statementState(sampleStatement)}))
             const values = comp.find("TitleAndValues")
             expect(values.length).toBe(1)
             const values0 = values.at(0)
@@ -47,14 +47,14 @@ describe("StatementPage", () => {
         })
 
         it("should have a request interim payment button", () => {
-            const comp = mount(StatementPage<StateForStatementTest>()({state: statementState(sampleStatement)}))
+            const comp = mount(Statement<StateForStatementTest>()({state: statementState(sampleStatement)}))
             const buttons = comp.find("button").find('#buttonRequestInterim')
             expect(buttons.length).toBe(1)
             const button = buttons.at(0)
             expect(button.text()).toEqual("Request Interim Payment")
         })
         it("should have a nextStatement button", () => {
-            const comp = mount(StatementPage<StateForStatementTest>()({state: statementState(sampleStatement)}))
+            const comp = mount(Statement<StateForStatementTest>()({state: statementState(sampleStatement)}))
             const buttons = comp.find("button").find('#buttonNextStatement')
             expect(buttons.length).toBe(1)
             const button = buttons.at(0)
@@ -63,7 +63,7 @@ describe("StatementPage", () => {
     })
     describe("when loading it", () => {
         it("should display loading text only", () => {
-            const comp = mount(StatementPage<StateForStatementTest>()({state: statementState(undefined)}))
+            const comp = mount(Statement<StateForStatementTest>()({state: statementState(undefined)}))
             expect(comp.text()).toEqual("Main Loading")
         })
     })

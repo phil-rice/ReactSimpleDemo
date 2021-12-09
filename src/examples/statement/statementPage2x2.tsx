@@ -1,7 +1,7 @@
 //Copyright (c)2020-2021 Philip Rice. <br />Permission is hereby granted, free of charge, to any person obtaining a copyof this software and associated documentation files (the Software), to dealin the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:  <br />The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED AS
 
 
-import {Statement, statementUrl} from "./statement.domain";
+import {StatementDomain, statementUrl} from "./statement.domain";
 import {TwoByTwo} from "../../components/layout/grid/twobytwo/twoByTwo";
 import {TitleAndValues, Values} from "../../components/data/attributeValues/titleValues";
 import {Button} from "../../components/buttons/button";
@@ -15,7 +15,7 @@ import {loadingPage} from "../../components/page/loadingPage";
 import {makeTitle} from "../../utils/utils";
 
 export interface HasStatement2x2 {
-    statement2x2?: Statement
+    statement2x2?: StatementDomain
 }
 
 export type Statement2x2Requirements = HasStatement2x2 & HasTagHolder & HasErrorMessage
@@ -28,11 +28,11 @@ export function statement2x2Fetcher<S extends Statement2x2Requirements & HasPage
         s => [statementUrl<S>(customerIdL)(s), undefined])
 }
 
-export interface StatementPage2x2Props<State> extends LensProps<State, Statement> {
+export interface StatementPage2x2Props<State> extends LensProps<State, StatementDomain> {
 }
 
 export function StatementPage2x2<State>() {
-    return loadingPage<State, Statement>(s => makeTitle("2x2 ", s?.title))(
+    return loadingPage<State, StatementDomain>(s => makeTitle("2x2 ", s?.title))(
         (state, {address, statementTitles, statementValues}) =>
             <TwoByTwo title1={statementTitles.regularStatement} title2={statementTitles.interimStatement}>
                 <Values title={statementTitles.statementAddress} values={address} labels={["addLineOne", "addLineTwo", "addLineThree", "addLineFour", "pcd"]}/>

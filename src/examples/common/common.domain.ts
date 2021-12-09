@@ -2,7 +2,7 @@ import {Lenses} from "@focuson/lens";
 import {TagHolder} from "../../utils/tagFetcher";
 import {HasPageSelection} from "../../components/multipage/multiPage.domain";
 import {FetcherDebug} from "@focuson/fetcher";
-import {HasStatement} from "../statement/statementPage";
+import {HasStatement} from "../statement/statement";
 import {HasStatement2x2} from "../statement/statementPage2x2";
 import {HasShowPageDebug} from "../../components/demo/selectPages";
 import {HasCustomerId} from "../index/customerId";

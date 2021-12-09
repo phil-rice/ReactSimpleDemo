@@ -10,7 +10,7 @@ import {FullDetails, FullState, fullStateIdentityL} from "./examples/common/comm
 import {MultiPageDetails, pageSelectionlens} from "./components/multipage/multiPage.domain";
 import {Debug} from "./components/debug/debug";
 import {tree} from "./fetchers";
-import {StatementPage} from "./examples/statement/statementPage";
+import {Statement} from "./examples/statement/statement";
 import {StatementPage2x2} from "./examples/statement/statementPage2x2";
 import {makeSelectPages} from "./components/demo/selectPages";
 import {CustomerId} from "./examples/index/customerId";
@@ -19,7 +19,7 @@ import {AccountPersonalisationPage} from "./examples/accountPersonalisation/acco
 
 
 export const demoAppPageDetails: MultiPageDetails<FullState> = {
-    statement: {lens: fullStateIdentityL.focusQuery('statement'), pageFunction: StatementPage(), clearAtStart: true},
+    statement: {lens: fullStateIdentityL.focusQuery('statement'), pageFunction: Statement(), clearAtStart: true},
     statement2x2: {lens: fullStateIdentityL.focusQuery('statement2x2'), pageFunction: StatementPage2x2(), clearAtStart: true},
     accountPersonalisation: {lens: fullStateIdentityL.focusQuery('accountPersonalisation'), pageFunction: AccountPersonalisationPage(), clearAtStart: true},
     debug: {lens: fullStateIdentityL.focusQuery('stateDebug'), pageFunction: Debug}

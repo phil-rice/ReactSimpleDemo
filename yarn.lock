@@ -1464,7 +1464,7 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@focuson/fetcher@^0.3.52  ":
+"@focuson/fetcher@^0.3.52":
   version "0.3.52"
   resolved "https://registry.yarnpkg.com/@focuson/fetcher/-/fetcher-0.3.52.tgz#ebe56722dd2b44dfcc7283c063a24eb17a0f5365"
   integrity sha512-U4qX8hV5ySFTYFOhepgCV37MSJjSklLwIqzo50xhVZmIfq175iY/mDmeNpJMpOYf6TXFJ1SsNS56uKbJe3n5oA==
@@ -9747,6 +9747,11 @@ jest-mock@^26.6.2:
   dependencies:
     "@jest/types" "^26.6.2"
     "@types/node" "*"
+
+jest-pact@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/jest-pact/-/jest-pact-0.9.1.tgz#60c6a77a2bff1d8827c666e6dddd9d699bb5f253"
+  integrity sha512-IfM5mCbtPMR+894Dtbj8rwuM8Oxi/Pc9ecPd/ZrI8N5oCeKzsGjEOAN0RFAma2Pc1Gx+npBc4I3oP+ku+1SvLQ==
 
 jest-pnp-resolver@^1.2.2:
   version "1.2.2"

@@ -15,7 +15,7 @@ export const loadingPage = <S extends any, D extends any>(title: (d?: D) => stri
     (pageFn: (state: LensState<S, D>, d: D) => JSX.Element) =>
         ({state}: LensProps<S, D>) => {
             const json = state.optJson()
-            console.log("loadingPage", json)
+            // console.log("loadingPage", json)
             return <LoadingPage title={title(state.optJson())} state={state}>{json ? pageFn(state, json) : <div/>}</LoadingPage>;
         }
 

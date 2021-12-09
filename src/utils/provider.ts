@@ -1,7 +1,8 @@
-import {Pact} from "@pact-foundation/pact";
+import {Pact, PactOptionsComplete} from "@pact-foundation/pact";
 import path from "path";
+import wrapper from "@pact-foundation/pact-node";
 
-export const provider = new Pact({
+export const pactProvider: Pact = new Pact({
     consumer: "Browser",
     provider: "CMSBackend",
     cors: true,
@@ -10,3 +11,17 @@ export const provider = new Pact({
     dir: path.resolve(process.cwd(), "pacts"),
     logLevel: "info",
 })
+
+var count = 0
+
+export async function provider(): Promise<Pact> {
+    count += 1
+    if (count != 1) {
+        process.on("SIGINT", () => {
+            wrapper.removeAllServers()
+        })
+        await pactProvider.setup()
+        return pactProvider
+    }
+    return Promise.resolve(pactProvider)
+}

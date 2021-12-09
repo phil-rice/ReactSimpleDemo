@@ -2,7 +2,7 @@
 import {TitleAndValues, Values} from "../../components/data/attributeValues/titleValues";
 import {Button} from "../../components/buttons/button";
 import React from "react";
-import {Statement, statementUrl} from "./statement.domain";
+import {StatementDomain, statementUrl} from "./statement.domain";
 import {TwoRowPanel} from "../../components/layout/row/twoRow/twoRowPanel";
 import {TwoColumnPanel} from "../../components/layout/columns/twoColumnPanel";
 import {ButtonTitleValue} from "../../components/data/ButtonTitleValue/buttonTitleValue";
@@ -15,7 +15,7 @@ import {loadingPage} from "../../components/page/loadingPage";
 import {makeTitle} from "../../utils/utils";
 
 export interface HasStatement {
-    statement?: Statement
+    statement?: StatementDomain
 }
 
 export type StatementRequirements = HasStatement & HasTagHolder & HasErrorMessage
@@ -29,11 +29,11 @@ export function statementFetcher<S extends StatementRequirements & HasPageSelect
         s => [statementUrl<S>(customerIdL)(s), undefined])
 }
 
-export interface StatementPageProps<State> extends LensProps<State, Statement> {
+export interface StatementPageProps<State> extends LensProps<State, StatementDomain> {
 }
 
-export function StatementPage<State>() {
-    return loadingPage<State, Statement>(s => makeTitle("Main ", s?.title))
+export function Statement<State>() {
+    return loadingPage<State, StatementDomain>(s => makeTitle("Main ", s?.title))
     ((state, {address, statementTitles, statementValues}) =>
         <TwoRowPanel>
             <TwoColumnPanel title={statementTitles.regularStatement}>

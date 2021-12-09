@@ -9,7 +9,7 @@ export const statementUrl = <S>(customerIdL: GetOptioner<S, string>) =>
 
 
 
-export interface Statement extends TitleProps {
+export interface StatementDomain extends TitleProps {
     statementTitles: StatementTitles,
     statementValues: StatementValues,
     address: Address

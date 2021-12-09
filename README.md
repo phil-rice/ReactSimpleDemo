@@ -18,7 +18,7 @@ There is no attempt to make the gui 'beautiful': this is about how we break thin
 
 #Running the pact server
 docker pull pactfoundation/pact-stub-server
-docker run -t -p 8080:8080 -v "$(pwd)/pacts/:/app/pacts" pactfoundation/pact-stub-server -p 8080 -d pacts
+docker run -t -p 8080:8080 -v "$(pwd)/pacts/:/app/pacts" pactfoundation/pact-stub-server -p 8080 -d pact/pacts
 
 test it by going to http://localhost:8080/statement/mycid
 

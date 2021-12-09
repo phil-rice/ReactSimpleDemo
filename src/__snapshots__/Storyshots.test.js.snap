@@ -390,7 +390,7 @@ exports[`Storyshots Examples/AccountPersonalisation Loading True 1`] = `
 </div>
 `;
 
-exports[`Storyshots Examples/Statement/StatementPage Loading False 1`] = `
+exports[`Storyshots Examples/Statement/Statement Loading False 1`] = `
 <div
   className="page"
 >
@@ -500,7 +500,7 @@ exports[`Storyshots Examples/Statement/StatementPage Loading False 1`] = `
 </div>
 `;
 
-exports[`Storyshots Examples/Statement/StatementPage Loading True 1`] = `
+exports[`Storyshots Examples/Statement/Statement Loading True 1`] = `
 <div
   className="page"
 >

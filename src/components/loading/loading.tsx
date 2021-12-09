@@ -8,6 +8,6 @@ export function ShowLoading() {
 }
 
 export function     Loading<S, D>({children, state}: SingleChildProps & LensProps<S, D>) {
-    console.log("loading", state.optJson())
+    // console.log("loading", state.optJson())
     return state.optJson() ? children : <ShowLoading/>
 }
